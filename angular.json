@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "bathtube:build:production",
+            "firebaseProject": "streaming-app-24933",
+            "firebaseHostingSite": "streaming-app-24933"
+          }
         }
       }
     }

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "streaming-app-24933": {
+      "hosting": {
+        "bathtube": [
+          "streaming-app-24933"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "streaming-app-24933"
+  }
+}

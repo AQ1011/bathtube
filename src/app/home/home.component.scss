@@ -1,0 +1,99 @@
+
+* {
+  color: #FED80E;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: linear-gradient(black, transparent);
+  z-index: 0;
+}
+.navs {
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navs ul {
+  cursor: pointer;
+  margin: 8px;
+  padding: 8px;
+}
+
+.navbar * {
+  font-size: 0.9em;
+}
+
+button {
+  background: transparent;
+  border-radius: 5px;
+  border: 1px solid #FED80E;
+  margin: 8px;
+  padding: 8px;
+}
+
+.secondary {
+  border: none;
+}
+
+.primary {
+  background-color: #FED80E;
+  color: black
+}
+
+.banner {
+  padding-left: 5vw;
+  padding-right: 5vw;
+  margin-top: -10vh;
+  padding-top: 96px;
+  padding-bottom: 48px;
+  background-image: url("https://m.media-amazon.com/images/M/MV5BZGFmYWU1OGUtYmUxNS00N2E4LTkxYmMtZGYxM2NmYzhjZjJkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_.jpg");
+}
+
+.banner button {
+  margin: 0;
+  margin-right: 16px;
+}
+
+.title {
+  color: white;
+  font-weight: 900;
+  font-size: 2em;
+  margin-bottom: 16px;
+}
+.description {
+  max-width: 500px;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.popular {
+  padding-top: 16px;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.list-title {
+  color: white;
+  font-size: 1.5em;
+  margin-bottom: 16px;
+}
+
+.popular-list {
+  display: flex;
+  overflow: scroll;
+}
+
+.popular-item {
+  margin-left: 16px;
+  margin-right: 16px;
+  list-style-type: none;
+}
+.movie {
+}
+
+.movie img {
+  width: 320px;
+  height: 180px;
+}

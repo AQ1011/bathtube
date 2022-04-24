@@ -1,0 +1,25 @@
+button {
+  background: transparent;
+  border-radius: 5px;
+  border: 1px solid #FED80E;
+  margin: 8px;
+  padding: 8px;
+  color: #FED80E;
+}
+
+.secondary {
+  border: none;
+}
+
+.primary {
+  background-color: #FED80E;
+  color: black
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 9000px;
+  border: 1px solid #FED80E;
+  object-fit: cover
+}
