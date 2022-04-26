@@ -43,10 +43,4 @@ export class HomeComponent implements OnInit {
   getLink(): void {
     this.time = this.player.getCurrentTime();
   }
-
-  signOut() {
-    this.authService.signOut()
-    window.location.reload();
-  }
-
 }

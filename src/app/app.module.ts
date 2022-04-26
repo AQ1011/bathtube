@@ -14,12 +14,16 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
+    MovieDetailComponent,
+    PlayerComponent,
   ],
   imports: [
     BrowserModule,

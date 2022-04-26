@@ -1,0 +1,42 @@
+* {
+  color: #FED80E;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: linear-gradient(black, transparent);
+  z-index: 0;
+}
+.navs {
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navs ul {
+  cursor: pointer;
+  margin: 8px;
+  padding: 8px;
+}
+
+.navbar * {
+  font-size: 0.9em;
+}
+
+button {
+  background: transparent;
+  border-radius: 5px;
+  border: 1px solid #FED80E;
+  margin: 8px;
+  padding: 8px;
+}
+
+.secondary {
+  border: none;
+}
+
+.primary {
+  background-color: #FED80E;
+  color: black
+}
