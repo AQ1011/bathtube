@@ -1,8 +1,23 @@
 
-<div class="container">
-  <input placeholder="Youtube URL"/>
-  <button class="btn primary">Add Video</button>
-  <div class="player">
-    <youtube-player videoId="{{videoId}}"></youtube-player>
+
+<div class="row">
+  <div class="col">
+    <div class="player">
+      <youtube-player videoId="{{videoId}}"></youtube-player>
+    </div>
+  </div>
+  <div class="col-2">
+    <div class="chat p-4">
+      <li>
+        <ul *ngFor="let message of messages">
+          <div class="message">{{message.user}}: {{message.content}}</div>
+        </ul>
+      </li>
+      <div>
+        <input [(ngModel)]="chatContent" placeholder="type something"/>
+        <button class="primary" (click)="sendChat()">Send</button>
+      </div>
+    </div>
   </div>
 </div>
+

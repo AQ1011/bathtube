@@ -20,3 +20,19 @@ button {
   background-color: #FED80E;
   color: black
 }
+.message {
+  color: white;
+}
+.chat {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: #303030;
+  height: 100%;
+}
+.chat li {
+  overflow: scroll;
+}
+input {
+  width: 100%;
+}

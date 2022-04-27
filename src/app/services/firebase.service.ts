@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { update } from '@angular/fire/database';
+import { Firestore, docSnapshots, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
+import { doc, DocumentData, DocumentSnapshot } from '@firebase/firestore';
+import { Observable } from 'rxjs';
+import { Movie } from '../models/movie.moddel';
+import { Chat } from '../models/room.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FireBaseService {
+
+  constructor(private firestore: Firestore) { }
+
+  get(collection: string, document: string): Observable<DocumentSnapshot<DocumentData>>  {
+    return docSnapshots(doc(this.firestore, collection, document));
+  }
+
+  setMovie(collection: string, document: string, data: Movie): void {
+    setDoc(doc(this.firestore, collection, document), data);
+  }
+
+  setChat(collection: string, document: string, data: any): void {
+    setDoc(doc(this.firestore, collection, document), data);
+  }
+
+}

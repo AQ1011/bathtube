@@ -10,11 +10,11 @@ export class UserService {
   constructor(private auth: Auth) { }
 
   getDisplayName() {
-    return this.auth.currentUser?.displayName;
+    return this.auth.currentUser!.displayName;
   }
 
   getPhotoURL() {
-    return this.auth.currentUser?.photoURL;
+    return this.auth.currentUser!.photoURL;
   }
 
   getUser() {
