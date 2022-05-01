@@ -1,10 +1,12 @@
-import { getUrlScheme } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithPopup, User, UserCredential } from '@angular/fire/auth';
+import { User } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { YouTubePlayer, YouTubePlayerModule } from '@angular/youtube-player';
-import { ActivatedRoute } from '@angular/router';
+import { YouTubePlayer } from '@angular/youtube-player';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MovieService } from '../services/movie.service';
+import { Movie } from '../models/movie.moddel';
+import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +23,17 @@ export class HomeComponent implements OnInit {
   apiLoaded: Boolean = false;
   @ViewChild(YouTubePlayer) player!: YouTubePlayer;
 
+  movieList: Movie[] = []
+
+  currentPopular: number = 0;
+
+
   constructor(
-    private authService: AuthService,
     private userService: UserService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private movieService: MovieService,
+    private storage: Storage,
+    private router: Router) {
       this.user = userService.getUser();
       this.route.queryParams.subscribe(params => {
         this.roomId =  params['roomId'];
@@ -38,9 +47,30 @@ export class HomeComponent implements OnInit {
       document.body.appendChild(tag);
       this.apiLoaded = true;
     }
+
+    this.movieService.getAllMovie().subscribe((movies) => {
+      this.movieList = [...movies];
+      this.movieList.forEach(movie => {
+        if(movie.image)
+          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
+      });
+    })
+    document.getElementsByClassName('movie')[0].className += 'active';
+    setInterval(() => {
+      if(this.currentPopular <= this.movieList.length)
+        this.currentPopular += 1
+      else
+        this.currentPopular = 0;
+      document.getElementById('poplist')?.style.setProperty('transform', 'translateX(' + (-this.currentPopular*352).toString() + 'px)');
+    }, 5000)
   }
 
   getLink(): void {
     this.time = this.player.getCurrentTime();
   }
+
+  goMovie(videoId: string) {
+    this.router.navigate(['player/'+videoId])
+  }
+
 }

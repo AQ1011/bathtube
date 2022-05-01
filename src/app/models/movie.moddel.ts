@@ -1,6 +1,7 @@
 import { User } from "@angular/fire/auth";
 
 export interface Movie {
+  videoId: string;
   name: string;
   description: string;
   serie: string | null;
@@ -10,6 +11,7 @@ export interface Movie {
   daoDien: string;
   dienVien: string;
   tags: string[];
+  image: string;
 }
 
 interface Comment {

@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col">
-    <div class="player">
+    <div #pp class="player w-100" (window:resize)="resize()">
       <youtube-player videoId="{{videoId}}"></youtube-player>
     </div>
   </div>

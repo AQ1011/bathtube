@@ -33,67 +33,21 @@
   <div class="film-video"></div>
   <div class="popular" id="list-film-1">
     <div class="list-title">Thịnh hành</div>
-    <li class="popular-list">
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
+    <li id="poplist" class="popular-list">
+
+      <ul *ngFor="let movie of movieList; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
+        <div class="movie" [ngClass]="{'active': i == currentPopular}">
+          <img [src]="movie.image" class="thumbnail"/>
+          <div class="movie-name">{{movie.name}}</div>
         </div>
       </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
+
     </li>
   </div>
 
   <div class="popular">
     <div class="list-title">Danh sách tiếp tục xem</div>
     <li class="popular-list">
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
-      <ul class="popular-item">
-        <div class="movie">
-          <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>
-          <div class="movie-name">phim abc xyz</div>
-        </div>
-      </ul>
       <ul class="popular-item">
         <div class="movie">
           <img src="https://nbcpalmsprings.com/wp-content/uploads/sites/8/2021/12/BEST-MOVIES-OF-2021.jpeg" class="thumbnail"/>

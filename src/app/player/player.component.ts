@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Firestore, collection, doc, docSnapshots, updateDoc,  } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { YouTubePlayer } from '@angular/youtube-player';
@@ -14,7 +14,8 @@ import { FireBaseService } from '../services/firebase.service';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(YouTubePlayer) player!: YouTubePlayer
+  @ViewChild(YouTubePlayer) player!: YouTubePlayer;
+  @ViewChild('pp') ref!: ElementRef;
 
   videoId?: string;
   apiLoaded = false;
@@ -44,14 +45,15 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.skipTo(docSnapshot.get('time'), docSnapshot.get('state'));
       })
 
-      docSnapshots(doc(this.firestore, 'chat', this.videoId!)).subscribe((docSnapshot) => {
-        // this.messages = [...this.messages, docSnapshot.data() as Chat];
-        console.log(docSnapshot.get('time'));
-      })
+      // docSnapshots(doc(this.firestore, 'chat', this.videoId!)).subscribe((docSnapshot) => {
+      //   this.messages = [...this.messages, docSnapshot.data() as Chat];
+      // })
     }
   }
 
   ngAfterViewInit(): void {
+    this.player.width = this.ref.nativeElement.offsetWidth;
+    this.player.height = this.ref.nativeElement.offsetHeight;
     this.player.stateChange.subscribe((event) => {
       if (event.data == 1) {
         updateDoc(doc(this.firestore, 'room', 'randomRoomId'), {
@@ -89,5 +91,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   play() {
     this.player.playVideo();
+  }
+
+  resize() {
+    this.player.width = this.ref.nativeElement.offsetWidth;
+    this.player.height = this.ref.nativeElement.offsetHeight;
   }
 }

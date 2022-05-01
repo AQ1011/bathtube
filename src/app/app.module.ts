@@ -17,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { FormsModule } from '@angular/forms';
+import { MovieDisplayComponent } from './movie-display/movie-display.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     MovieDetailComponent,
     PlayerComponent,
+    MovieDisplayComponent,
   ],
   imports: [
     BrowserModule,

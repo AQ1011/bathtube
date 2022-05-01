@@ -15,7 +15,9 @@ const routes: Routes = [{
     path: 'movie/:id',       component: MovieDetailComponent
   },{
     path: 'player/:id',       component: PlayerComponent
-  }
+  },{
+    path: '**', redirectTo: ''
+  },
 ];
 
 @NgModule({
