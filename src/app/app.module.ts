@@ -18,7 +18,6 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { FormsModule } from '@angular/forms';
 import { MovieDisplayComponent } from './movie-display/movie-display.component';
-import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -39,8 +38,7 @@ import { IonicModule } from '@ionic/angular';
     provideStorage(() => getStorage()),
     YouTubePlayerModule,
     NgbModule,
-    FormsModule,
-    IonicModule.forRoot()
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
