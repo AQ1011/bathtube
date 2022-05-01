@@ -45,9 +45,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.skipTo(docSnapshot.get('time'), docSnapshot.get('state'));
       })
 
-      // docSnapshots(doc(this.firestore, 'chat', this.videoId!)).subscribe((docSnapshot) => {
-      //   this.messages = [...this.messages, docSnapshot.data() as Chat];
-      // })
+      docSnapshots(doc(this.firestore, 'chat', this.videoId!)).subscribe((docSnapshot) => {
+        if(!docSnapshot.metadata.hasPendingWrites){
+          this.messages = [...this.messages, docSnapshot.data() as Chat];}
+      })
     }
   }
 

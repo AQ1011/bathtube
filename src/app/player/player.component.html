@@ -1,21 +1,33 @@
-
-
-<div class="row">
-  <div class="col">
-    <div #pp class="player w-100" (window:resize)="resize()">
-      <youtube-player videoId="{{videoId}}"></youtube-player>
+<div class="player-container">
+  <div class="row">
+    <div class="col-10">
+      <div class="back">
+        <ion-icon name="arrow-back-outline" class="icon-back"></ion-icon>
+      </div>
+      <div #pp class="player w-100" (window:resize)="resize()">
+        <youtube-player videoId="{{videoId}}"></youtube-player>
+      </div>
     </div>
-  </div>
-  <div class="col-2">
-    <div class="chat p-4">
-      <li>
-        <ul *ngFor="let message of messages">
-          <div class="message">{{message.user}}: {{message.content}}</div>
-        </ul>
-      </li>
-      <div>
-        <input [(ngModel)]="chatContent" placeholder="type something"/>
-        <button class="primary" (click)="sendChat()">Send</button>
+    <div class="col-2">
+      <div class="chat">
+        <div class="hide-chat p-2">
+          <ion-icon name="arrow-forward-outline" class="icon-hide"></ion-icon>
+        </div>
+        <div class="participants p-4">
+          <img src="https://images.unsplash.com/photo-1649649853889-48bf9f53dcd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="" class="avatar">
+          <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
+          <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
+          <div class="avatar avatar-number">+3</div>
+        </div>
+        <div>
+          <div *ngFor="let message of messages">
+            <div class="message">{{message.user}}: {{message.content}}</div>
+          </div>
+        </div>
+        <div>
+          <input [(ngModel)]="chatContent" placeholder="type something"/>
+          <button class="primary" (click)="sendChat()">Send</button>
+        </div>
       </div>
     </div>
   </div>

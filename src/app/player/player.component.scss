@@ -1,8 +1,25 @@
-
-.player {
+*{
+  padding:0;
+  margin:0;
+}
+.row{
+  margin: 0 !important;
+}
+.player{
   width: 100%;
-  height: 90vh;
-  margin: auto;
+  height: 99vh;
+  position: relative;
+}
+.back{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+.icon-back{
+  width: 24px;
+  height: 24px;
+  color: #fff;
 }
 
 button {
@@ -21,19 +38,55 @@ button {
   background-color: #FED80E;
   color: black
 }
+
+.hide-chat{
+  height: 56px;
+  position: relative;
+}
+.icon-hide{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+// member
+.participants{
+  display: flex;
+  align-items: center;
+  background-color: #737070;
+}
+.avatar{
+  width: 36px;
+  height: 36px;
+  border-radius: 50px;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px #fff;
+}
+.avatar:not(:first-child){
+  margin-left: -10px;
+}
+.avatar-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #908D8D;
+}
+
 .message {
   color: white;
 }
 .chat {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
   background-color: #303030;
   height: 100%;
-}
-.chat li {
-  overflow: scroll;
+  width: 100%;
 }
 input {
   width: 100%;
+}
+.col-2{
+  padding: 0;
 }
