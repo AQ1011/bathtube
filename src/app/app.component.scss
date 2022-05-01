@@ -1,28 +1,6 @@
 * {
   color: #FED80E;
 }
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-image: linear-gradient(black, transparent);
-  z-index: 0;
-}
-.navs {
-  width: fit-content;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.navs ul {
-  cursor: pointer;
-  margin: 8px;
-  padding: 8px;
-}
-
-.navbar * {
-  font-size: 0.9em;
-}
 
 button {
   background: transparent;

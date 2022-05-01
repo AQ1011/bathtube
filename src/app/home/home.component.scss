@@ -2,12 +2,17 @@
 * {
   color: #FED80E;
 }
+.header-container{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  background-image: linear-gradient(black, transparent);
+}
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(black, transparent);
-  z-index: 0;
 }
 .navs {
   width: fit-content;
@@ -41,13 +46,31 @@ button {
   background-color: #FED80E;
   color: black
 }
-
+.home {
+  position: relative;
+}
 .banner {
+  position: relative;
+  height: 864px;
   padding-left: 5vw;
   padding-right: 5vw;
   margin-top: -10vh;
   padding-top: 96px;
   padding-bottom: 48px;
+  z-index: 2;
+}
+.film-information{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.film-video{
+  top: 0;
+  z-index: -1;
+  height: 864px;
+  width:100%;
+  position: absolute;
+  background-position: center;
   background-image: url("https://m.media-amazon.com/images/M/MV5BZGFmYWU1OGUtYmUxNS00N2E4LTkxYmMtZGYxM2NmYzhjZjJkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_.jpg");
 }
 
@@ -73,7 +96,9 @@ button {
   padding-left: 5vw;
   padding-right: 5vw;
 }
-
+#list-film-1{
+  margin-top: -280px;
+}
 .list-title {
   color: white;
   font-size: 1.5em;
