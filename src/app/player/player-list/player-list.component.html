@@ -1,0 +1,12 @@
+
+  <div class="search-player">
+    <input type="text"/>
+  </div>
+  <div class="list-player">
+    <div class="movie" *ngFor="let movie of movieList">
+      <img [src]="movie.image" class="thumbnail"/>
+      <div class="movie-name">{{movie.name}}</div>
+      <button class="btn btn-primary" (click)="addMovieToQueue(movie)">Add</button>
+    </div>
+  </div>
+

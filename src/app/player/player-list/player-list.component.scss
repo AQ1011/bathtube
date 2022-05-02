@@ -1,0 +1,23 @@
+.search-player{
+  background-color: #515151;
+  height: 56px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  text-align: center;
+}
+.search-player input{
+  height: 36px;
+  width: 385px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.list-player{
+  padding-top: 20px;
+  background-color: #2F2F2F;
+  border-radius: 0 0 4px 4px;
+}
+.movie img {
+  width: 280px;
+  height: 100px;
+}

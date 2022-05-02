@@ -18,6 +18,8 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { FormsModule } from '@angular/forms';
 import { MovieDisplayComponent } from './movie-display/movie-display.component';
+import { PlayerListComponent } from './player/player-list/player-list.component';
+import { InviteComponent } from './player/invite/invite.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { MovieDisplayComponent } from './movie-display/movie-display.component';
     MovieDetailComponent,
     PlayerComponent,
     MovieDisplayComponent,
+    PlayerListComponent,
+    InviteComponent,
   ],
   imports: [
     BrowserModule,

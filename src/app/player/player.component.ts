@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Firestore, collection, doc, docSnapshots, updateDoc,  } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { YouTubePlayer } from '@angular/youtube-player';
@@ -6,10 +6,13 @@ import { onSnapshot, query, setDoc } from '@firebase/firestore';
 import { Chat } from '../models/room.model';
 import { UserService } from '../services/user.service';
 import { FireBaseService } from '../services/firebase.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { QueuePlayerService } from '../services/queue-player.service';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
@@ -22,13 +25,18 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   isSync = true;
   messages: Chat[] = [];
   chatContent: string = '';
+  showChat: boolean = true;
+  showSearch: boolean = false;
+  queueMovie: any = [];
 
 
   constructor(
     private route: ActivatedRoute,
     private firestore: Firestore,
     private fbSvc: FireBaseService,
-    private userSvc: UserService) {
+    private userSvc: UserService,
+    private modalService: NgbModal,
+    private queuePlayerService: QueuePlayerService) {
     this.route.params.subscribe((params) => {
       this.videoId = params['id'];
     })
@@ -48,6 +56,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       docSnapshots(doc(this.firestore, 'chat', this.videoId!)).subscribe((docSnapshot) => {
         if(!docSnapshot.metadata.hasPendingWrites){
           this.messages = [...this.messages, docSnapshot.data() as Chat];}
+      })
+      this.queuePlayerService.getMovie().subscribe((movie) => {
+        this.queueMovie = movie;
+        console.log(this.queueMovie);
       })
     }
   }
@@ -97,5 +109,20 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   resize() {
     this.player.width = this.ref.nativeElement.offsetWidth;
     this.player.height = this.ref.nativeElement.offsetHeight;
+  }
+
+  showChatBtn(){
+    this.showChat = true;
+    this.showSearch = false;
+  }
+  showSearchBtn(){
+    this.showSearch = true;
+    this.showChat = false;
+  }
+  openSearchPlayer(longContent : any) {
+    this.modalService.open(longContent, { size: 'lg' });
+  }
+  openInviteUser(content: any){
+    this.modalService.open(content);
   }
 }
