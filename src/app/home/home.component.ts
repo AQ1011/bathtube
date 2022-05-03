@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ViewEncapsulation } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
@@ -7,10 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie.service';
 import { Movie } from '../models/movie.moddel';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
@@ -33,7 +35,8 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private movieService: MovieService,
     private storage: Storage,
-    private router: Router) {
+    private router: Router,
+    private modalService: NgbModal) {
       this.user = userService.getUser();
       this.route.queryParams.subscribe(params => {
         this.roomId =  params['roomId'];
@@ -70,7 +73,9 @@ export class HomeComponent implements OnInit {
   }
 
   goMovie(videoId: string) {
-    this.router.navigate(['player/'+videoId])
+    // this.router.navigate(['player/'+videoId])
   }
-
+  getDetail(content: any){
+    this.modalService.open(content, { size: 'lg' });
+  }
 }
