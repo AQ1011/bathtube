@@ -2,13 +2,21 @@
   padding:0;
   margin:0;
 }
+
 .row{
   margin: 0 !important;
 }
+
+
+.actions {
+  width: fit-content;
+}
+
 .player{
   width: 100%;
-  height: 99vh;
-  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 .back{
   position: absolute;
@@ -39,14 +47,9 @@ button {
   color: black
 }
 
-.hide-chat{
-  height: 56px;
-  position: relative;
-}
+.hide-chat{}
+
 .icon-hide{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   width: 24px;
   height: 24px;
   color: #fff;
@@ -73,25 +76,49 @@ button {
   align-items: center;
   background-color: #908D8D;
 }
-
 .message {
   color: white;
+  font-size: small;
+  padding-bottom: 8px;
 }
+.message::-webkit-scrollbar {
+  width: 1em;
+}
+
+.message::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.message::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.overlap {
+  position: relative;
+}
+
 .chat {
-  display: flex;
-  flex-direction: column;
   background-color: #2F2F2F;
   height: 100%;
   width: 100%;
-  position: relative;
 }
 .user-chat{
-  position: absolute;
-  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
 .user-chat-range{
   overflow-y: scroll;
+  background-color: #2F2F2F;
+  padding: 0px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
+
+
 .type-chat{
   display: flex;
   align-items: center;
@@ -99,8 +126,15 @@ button {
 input {
   width: 100%;
   height: 41px;
-  border-radius: 4px;
+  border-radius: 5px;
+  padding-left: 8px;
+  border: none;
 }
+
+input:focus{
+  outline: none;
+}
+
 .chat-enter{
   background-color: transparent;
   border: none;
@@ -111,15 +145,17 @@ input {
 }
 
 .player-option{
+  position: absolute;
+  left:-57px;
+  top: 10%;
   width: 57px;
-  height: auto;
+  height: fit-content;
   padding: 16px 0;
   background-color: red;
   border-radius: 4px 0 0 4px;
-  position: absolute;
-  left: -57px;
-  top: 56px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-list-player{
@@ -127,4 +163,11 @@ input {
 }
 .add-player{
 //
+}
+
+.player-container {
+}
+
+.maxh {
+  height: 100%;
 }

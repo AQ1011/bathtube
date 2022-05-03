@@ -13,13 +13,14 @@ import { HomeComponent } from './home/home.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { LoginComponent } from './login/login.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { FormsModule } from '@angular/forms';
 import { MovieDisplayComponent } from './movie-display/movie-display.component';
 import { PlayerListComponent } from './player/player-list/player-list.component';
 import { InviteComponent } from './player/invite/invite.component';
+import { TruncatePipe } from './common/pipe/TruncatePipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { InviteComponent } from './player/invite/invite.component';
     MovieDisplayComponent,
     PlayerListComponent,
     InviteComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
@@ -42,9 +44,9 @@ import { InviteComponent } from './player/invite/invite.component';
     provideStorage(() => getStorage()),
     YouTubePlayerModule,
     NgbModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [],
+  providers: [NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

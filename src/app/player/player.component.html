@@ -1,49 +1,49 @@
-<div class="player-container">
-  <div class="row">
-    <div class="col-10">
+  <div class="d-flex maxh">
+    <div class="p-0 flex-grow-1">
       <div class="back">
       </div>
-      <!-- <div #pp class="player w-100" (window:resize)="resize()">
+      <div #pp class="player w-100" (window:resize)="resize()">
         <youtube-player videoId="{{videoId}}"></youtube-player>
-      </div> -->
+      </div>
     </div>
-    <div class="col-2">
-      <div class="chat">
-        <div class="player-option">
-          <button class="primary" (click)="openInviteUser(content)" class="chat-enter">
-            <img src="../../assets/icons/user-plus.png" style="height:24px;width:24px" alt="">
-          </button>
-          <button class="primary" (click)="showChatBtn()" class="chat-enter">
-            <img src="../../assets/icons/message-circle.png" style="height:24px;width:24px" alt="">
-          </button>
-          <button class="primary" (click)="showSearchBtn()" class="chat-enter">
-            <img src="../../assets/icons/zoom-in.png" style="height:24px;width:24px" alt="">
-          </button>
-          <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
-        </div>
-        <div class="" *ngIf="showChat">
-          <div class="hide-chat p-2">
+    <div class="d-flex p-0 actions">
+      <div class="player-option">
+        <button class="primary py-4" (click)="openInviteUser(content)" class="chat-enter">
+          <img src="../../assets/icons/user-plus.png" style="height:24px;width:24px" alt="">
+        </button>
+        <button class="primary py-4" (click)="showChatBtn()" class="chat-enter">
+          <img src="../../assets/icons/message-circle.png" style="height:24px;width:24px" alt="">
+        </button>
+        <button class="primary py-4" (click)="showSearchBtn()" class="chat-enter">
+          <img src="../../assets/icons/zoom-in.png" style="height:24px;width:24px" alt="">
+        </button>
+        <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
+      </div>
+      <div id="chat" class="d-flex flex-column chat">
+          <div class="hide-chat p-2 ">
+            <span class="material-icons  align-middle" [style.color]="'white'" (click)="hideChat()">
+              arrow_forward
+            </span>
           </div>
-          <div class="participants p-4">
+          <!-- <div class="participants p-4">
             <img src="https://images.unsplash.com/photo-1649649853889-48bf9f53dcd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="" class="avatar">
             <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
             <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
             <div class="avatar avatar-number">+3</div>
-          </div>
-          <div class="user-chat">
-            <div class="user-chat-range">
+          </div> -->
+          <div class="user-chat flex-grow-1">
+            <div class="user-chat-range flex-grow-1">
               <div *ngFor="let message of messages">
-                <div class="message">{{message.user}}: {{message.content}}</div>
+                <div class="message"><span class="font-weight-bold">{{message.user}}: </span>{{message.content}}</div>
               </div>
             </div>
             <div class="type-chat p-2">
-              <input [(ngModel)]="chatContent" placeholder="type something"/>
+              <input [(ngModel)]="chatContent" placeholder="Chat" (keyup.enter)="sendChat()"/>
               <button class="primary" (click)="sendChat()" class="chat-enter">
                 <img src="../../assets/icons/Paper Plane.png" style="height:24px;width:24px" alt="">
               </button>
             </div>
           </div>
-        </div>
         <div *ngIf="showSearch">
           <div class="modal-list-player">
             <div class="queue-player">
@@ -52,7 +52,7 @@
               </div>
             </div>
             <div class="add-player">
-              <button class="primary btn-add-player" (click)="openSearchPlayer(longContent)" >+</button>
+              <button class="primary btn-add-player" (click)="openSearchPlayer(longContent)" >+ Thêm phim</button>
             </div>
           </div>
         </div>
@@ -65,5 +65,3 @@
   <ng-template #content let-modal>
     <app-invite></app-invite>
   </ng-template>
-</div>
-

@@ -8,6 +8,7 @@ import { MovieService } from '../services/movie.service';
 import { Movie } from '../models/movie.moddel';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
 
 @Component({
   selector: 'app-home',
@@ -75,7 +76,8 @@ export class HomeComponent implements OnInit {
   goMovie(videoId: string) {
     // this.router.navigate(['player/'+videoId])
   }
-  getDetail(content: any){
-    this.modalService.open(content, { size: 'lg' });
+  getDetail(content: Movie){
+    const modalRef = this.modalService.open(MovieDetailComponent, { size: 'lg' } );
+    modalRef.componentInstance.movie = content;
   }
 }

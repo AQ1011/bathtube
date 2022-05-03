@@ -2,11 +2,19 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
-body {
+html, body {
   background-color: black;
+  height: 100%;
 }
 * {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
+}
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }

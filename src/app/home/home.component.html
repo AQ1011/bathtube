@@ -38,7 +38,7 @@
       <ul *ngFor="let movie of movieList; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
         <div class="movie" [ngClass]="{'active': i == currentPopular}">
           <img [src]="movie.image" class="thumbnail"/>
-          <div class="movie-name" (click)="getDetail(content)">{{movie.name}}</div>
+          <div class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
         </div>
       </ul>
 
@@ -57,6 +57,3 @@
     </li>
   </div>
 </section>
-<ng-template #content let-modal>
-  <app-movie-detail></app-movie-detail>
-</ng-template>

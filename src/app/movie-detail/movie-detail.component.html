@@ -1,408 +1,201 @@
 
-        <div class="modal-popup">
-            <div class="modal_header">
-                <div class="modal_header_top">
-                    <div id="circle_button"></div>
+<div class="modal-popup">
+    <div class="modal_header" [style.background-image]="'url(' + movie.image + ')'">
+        <div class="modal_header_top">
+            <div id="circle_button" (click)="activeModal.dismiss()"></div>
+        </div>
+        <div class="modal_header_bottom">
+            <div class="modal_header_bottom_left">
+                <div id="play_button" (click)="goToMovie(movie)">Play</div>
+                <div id="add_button">+</div>
+                <div id="subtract_button">-</div>
+            </div>
+            <div class="modal_header_bottom_right">
+                <div id="volumn_button">
+                    <img src="../../assets/icons/volumn.svg" alt="volumn" />
                 </div>
-                <div class="modal_header_bottom">
-                    <div class="modal_header_bottom_left">
-                        <div id="play_button">Play</div>
-                        <div id="add_button">+</div>
-                        <div id="subtract_button">-</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal_body p-5">
+        <div class="row justify-content-between">
+            <div class=" col-6">
+                <div class="modal_body_introduce_left_ratings">
+                    <span>4.5</span>
+                    <div id="stars">
+                        <!-- <img src="./images/start_full.svg" alt="start_full">
+                        <img src="./images/start_full.svg" alt="start_full">
+                        <img src="./images/start_full.svg" alt="start_full">
+                        <img src="./images/start_half.svg" alt="start_half">
+                        <img src="./images/start_blank.svg" alt="start_blank"> -->
                     </div>
-                    <div class="modal_header_bottom_right">
-                        <div id="volumn_button">
-                            <img src="../../assets/icons/volumn.svg" alt="volumn" />
+                </div>
+                <div class="modal_body_introduce_left_production">
+                    <span>2022</span>
+                    <div>16+</div>
+                    <span>1 season</span>
+                    <div>HD</div>
+                </div>
+                <div class="modal_body_introduce_left_describe">
+                    <div id="describe_name">
+                        Mùa 1: Tập 1
+                    </div>
+                    <div id="describe_content">
+                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to
+                        reverse his actions, but discover Thanos has already destroyed them to prevent further
+                        use
+                    </div>
+                </div>
+            </div>
+            <div class=" col-6">
+                <span>Diễn viên:</span>
+                <span><strong>Anh Quốc, Quốc Hưng, Nhi Huỳnh, Quốc Hưng</strong></span>
+                <br />
+                <span>Đạo diễn:</span>
+                <span><strong>San San</strong></span>
+                <br />
+                <span>Thể loại:</span>
+                <span><strong>Nhật, Anime</strong></span>
+            </div>
+        </div>
+        <div class="modal_body_chapters">
+            <div class="modal_body_chapters_info">
+                <div id="info_chapter"><strong>Tập</strong></div>
+                <div id="info_name"><strong>Mùa 1</strong></div>
+            </div>
+
+            <div class="modal_body_chapters_list">
+                <div class="modal_body_chapters_list_item" id="chapter_1" >
+                    <div class="chapter_index">1</div>
+                    <div class="chapter_thumbnail">
+                        <img src="../../assets/icons/thumbnail.png" alt="thumbnail">
+                    </div>
+                    <div class="chapter_content">
+                        <div class="chapter_content_general">
+                            <div class="chapter_content_general_name">Tập 1</div>
+                            <div class="chapter_content_general_time">49p</div>
+                        </div>
+                        <div class="chapter_content_detail">Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal_body_chapters_more_button">
+                <img src="./images/arrow_down.svg" alt="more">
+            </div>
+        </div>
+        <div class="modal_body_comments">
+            <div class="modal_body_comments_title">
+                Bình luận
+            </div>
+            <div class="modal_body_comments_content">
+                <div *ngIf="user"  class="modal_body_comments_content_create">
+                    <div class="comment_avatar">
+                        <img [src]="user.photoURL" alt="avatar">
+                    </div>
+                    <div class="comment_new_content">Thêm bình luận...</div>
+                </div>
+                <div class="modal_body_comments_content_list">
+                    <div class="modal_body_comments_content_list_item" id="comment_1" >
+                        <div class="comment_avatar">
+                            <img src="./images/avatar.svg" alt="avatar">
+                        </div>
+                        <div class="comment_detail">
+                            <div class="comment_detail_username">San</div>
+                            <div class="comment_detail_content">Bộ phim xuất sắc</div>
+                        </div>
+                        <div class="comment_time">1 tháng trước</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal_body_comments_footer">
+                <div class="modal_body_comments_footer_more_button">
+                    <img src="./images/arrow_down.svg" alt="more">
+                </div>
+            </div>
+        </div>
+        <div class="modal_body_relevant">
+            <div class="modal_body_relevant_title">
+                Nội dung tương tự
+            </div>
+            <div class="modal_body_relevant_content">
+                <div class="modal_body_relevant_content_list">
+                    <div *ngFor="let movie of similars" class="modal_body_relevant_content_list_item" id="relevant_1">
+                        <div class="relevant_thumbnail">
+                            <img [src]="movie.image" alt="thumbnail">
+                        </div>
+                        <div class="relevant_body">
+                            <div class="relevant_body_info">
+                                <div class="relevant_body_info_left">
+                                    <div>16+</div>
+                                    <span>2022</span>
+                                </div>
+                                <div class="relevant_body_info_right">
+                                    <div id="add_button">+</div>
+                                </div>
+                            </div>
+                            <div class="relevant_body_describe">
+                              {{ movie.name }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal_body">
-                <div class="row gy-5 justify-content-md-center">
-                    <div class=" col-5">
-                        <div class="modal_body_introduce_left_ratings">
-                            <span>4.5</span>
-                            <div id="stars">
-                                <img src="./images/start_full.svg" alt="start_full">
-                                <img src="./images/start_full.svg" alt="start_full">
-                                <img src="./images/start_full.svg" alt="start_full">
-                                <img src="./images/start_half.svg" alt="start_half">
-                                <img src="./images/start_blank.svg" alt="start_blank">
-                            </div>
-                        </div>
-                        <div class="modal_body_introduce_left_production">
-                            <span>2022</span>
-                            <div>16+</div>
-                            <span>1 season</span>
-                            <div>HD</div>
-                        </div>
-                        <div class="modal_body_introduce_left_describe">
-                            <div id="describe_name">
-                                Mùa 1: Tập 1
-                            </div>
-                            <div id="describe_content">
-                                Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to
-                                reverse his actions, but discover Thanos has already destroyed them to prevent further
-                                use
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" col-5">
-                        <span>Diễn viên:</span>
-                        <span><strong>Anh Quốc, Quốc Hưng, Nhi Huỳnh, Quốc Hưng</strong></span>
-                        <br />
-                        <span>Đạo diễn:</span>
-                        <span><strong>San San</strong></span>
-                        <br />
-                        <span>Thể loại:</span>
-                        <span><strong>Nhật, Anime</strong></span>
-                    </div>
+            <div class="modal_body_comments_footer">
+                <div class="modal_body_comments_footer_more_button">
+                    <img src="./images/arrow_down.svg" alt="more">
                 </div>
-                <div class="modal_body_chapters">
-                    <div class="modal_body_chapters_info">
-                        <div id="info_chapter"><strong>Tập</strong></div>
-                        <div id="info_name"><strong>Mùa 1</strong></div>
-                    </div>
-                    <div class="modal_body_chapters_list">
-                        <div class="modal_body_chapters_list_item" id="chapter_1" >
-                            <div class="chapter_index">1</div>
-                            <div class="chapter_thumbnail">
-                                <img src="../../assets/icons/thumbnail.png" alt="thumbnail">
-                            </div>
-                            <div class="chapter_content">
-                                <div class="chapter_content_general">
-                                    <div class="chapter_content_general_name">Tập 1</div>
-                                    <div class="chapter_content_general_time">49p</div>
-                                </div>
-                                <div class="chapter_content_detail">Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use</div>
-                            </div>
+            </div>
+        </div>
+        <div class="modal_body_trailers">
+            <div class="modal_body_trailers_title">
+                Trailer
+            </div>
+            <div class="modal_body_trailers_content">
+                <div class="modal_body_trailers_content_list">
+                    <div class="modal_body_trailers_content_list_item" id="trailer_1">
+                        <div class="trailer_thumbnail">
+                            <img src="./images/thumbnail_2.png" alt="thumbnail_2">
                         </div>
-
-                        <div class="modal_body_chapters_list_item" id="chapter_2" >
-                            <div class="chapter_index">2</div>
-                            <div class="chapter_thumbnail">
-                                <img src="./images/thumbnail.png" alt="thumbnail">
-                            </div>
-                            <div class="chapter_content">
-                                <div class="chapter_content_general">
-                                    <div class="chapter_content_general_name">Tập 2</div>
-                                    <div class="chapter_content_general_time">49p</div>
-                                </div>
-                                <div class="chapter_content_detail">Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use</div>
-                            </div>
-                        </div>
-
-                        <div class="modal_body_chapters_list_item" id="chapter_3" >
-                            <div class="chapter_index">3</div>
-                            <div class="chapter_thumbnail">
-                                <img src="./images/thumbnail.png" alt="thumbnail">
-                            </div>
-                            <div class="chapter_content">
-                                <div class="chapter_content_general">
-                                    <div class="chapter_content_general_name">Tập 3</div>
-                                    <div class="chapter_content_general_time">49p</div>
-                                </div>
-                                <div class="chapter_content_detail">Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use</div>
-                            </div>
+                        <div class="trailer_body">
+                            Mùa 1: (Trailer): Jujusu Kaisen
                         </div>
                     </div>
-                    <div class="modal_body_chapters_more_button">
-                        <img src="./images/arrow_down.svg" alt="more">
-                    </div>
-                </div>
-                <div class="modal_body_comments">
-                    <div class="modal_body_comments_title">
-                        Bình luận
-                    </div>
-                    <div class="modal_body_comments_content">
-                        <div class="modal_body_comments_content_create">
-                            <div class="comment_avatar">
-                                <img src="./images/avatar.svg" alt="avatar">
-                            </div>
-                            <div class="comment_new_content">Thêm bình luận...</div>
+                    <div class="modal_body_trailers_content_list_item" id="trailer_2">
+                        <div class="trailer_thumbnail">
+                            <img src="./images/thumbnail_2.png" alt="thumbnail_2">
                         </div>
-                        <div class="modal_body_comments_content_list">
-                            <div class="modal_body_comments_content_list_item" id="comment_1" >
-                                <div class="comment_avatar">
-                                    <img src="./images/avatar.svg" alt="avatar">
-                                </div>
-                                <div class="comment_detail">
-                                    <div class="comment_detail_username">San</div>
-                                    <div class="comment_detail_content">Bộ phim xuất sắc</div>
-                                </div>
-                                <div class="comment_time">1 tháng trước</div>
-                            </div>
-                            <div class="modal_body_comments_content_list_item" id="comment_1" >
-                                <div class="comment_avatar">
-                                    <img src="./images/avatar.svg" alt="avatar">
-                                </div>
-                                <div class="comment_detail">
-                                    <div class="comment_detail_username">San</div>
-                                    <div class="comment_detail_content">Cũng đcc</div>
-                                </div>
-                                <div class="comment_time">1 tháng trước</div>
-                            </div>
-                            <div class="modal_body_comments_content_list_item" id="comment_1" >
-                                <div class="comment_avatar">
-                                    <img src="./images/avatar.svg" alt="avatar">
-                                </div>
-                                <div class="comment_detail">
-                                    <div class="comment_detail_username">San</div>
-                                    <div class="comment_detail_content">Bộ phim này nên cấm chiếu</div>
-                                </div>
-                                <div class="comment_time">1 tháng trước</div>
-                            </div>
-                            <div class="modal_body_comments_content_list_item" id="comment_1" >
-                                <div class="comment_avatar">
-                                    <img src="./images/avatar.svg" alt="avatar">
-                                </div>
-                                <div class="comment_detail">
-                                    <div class="comment_detail_username">San</div>
-                                    <div class="comment_detail_content">Bộ phim gì mà chán v~~~</div>
-                                </div>
-                                <div class="comment_time">1 tháng trước</div>
-                            </div>
+                        <div class="trailer_body">
+                            Mùa 1: (Trailer): Jujusu Kaisen
                         </div>
                     </div>
-                    <div class="modal_body_comments_footer">
-                        <div class="modal_body_comments_footer_more_button">
-                            <img src="./images/arrow_down.svg" alt="more">
+                    <div class="modal_body_trailers_content_list_item" id="trailer_3">
+                        <div class="trailer_thumbnail">
+                            <img src="./images/thumbnail_2.png" alt="thumbnail_2">
+                        </div>
+                        <div class="trailer_body">
+                            Mùa 1: (Trailer): Jujusu Kaisen
                         </div>
                     </div>
-                </div>
-                <div class="modal_body_relevant">
-                    <div class="modal_body_relevant_title">
-                        Nội dung tương tự
-                    </div>
-                    <div class="modal_body_relevant_content">
-                        <div class="modal_body_relevant_content_list">
-                            <div class="modal_body_relevant_content_list_item" id="relevant_1">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_2">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_3">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_4">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_5">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_6">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_7">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_8">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal_body_relevant_content_list_item" id="relevant_9">
-                                <div class="relevant_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="relevant_body">
-                                    <div class="relevant_body_info">
-                                        <div class="relevant_body_info_left">
-                                            <div>16+</div>
-                                            <span>2022</span>
-                                        </div>
-                                        <div class="relevant_body_info_right">
-                                            <div id="add_button">+</div>
-                                        </div>
-                                    </div>
-                                    <div class="relevant_body_describe">
-                                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="modal_body_trailers_content_list_item" id="trailer_4">
+                        <div class="trailer_thumbnail">
+                            <img src="./images/thumbnail_2.png" alt="thumbnail_2">
+                        </div>
+                        <div class="trailer_body">
+                            Mùa 1: (Trailer): Jujusu Kaisen
                         </div>
                     </div>
-                    <div class="modal_body_comments_footer">
-                        <div class="modal_body_comments_footer_more_button">
-                            <img src="./images/arrow_down.svg" alt="more">
+                    <div class="modal_body_trailers_content_list_item" id="trailer_5">
+                        <div class="trailer_thumbnail">
+                            <img src="./images/thumbnail_2.png" alt="thumbnail_2">
                         </div>
-                    </div>
-                </div>
-                <div class="modal_body_trailers">
-                    <div class="modal_body_trailers_title">
-                        Trailer
-                    </div>
-                    <div class="modal_body_trailers_content">
-                        <div class="modal_body_trailers_content_list">
-                            <div class="modal_body_trailers_content_list_item" id="trailer_1">
-                                <div class="trailer_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="trailer_body">
-                                    Mùa 1: (Trailer): Jujusu Kaisen
-                                </div>
-                            </div>
-                            <div class="modal_body_trailers_content_list_item" id="trailer_2">
-                                <div class="trailer_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="trailer_body">
-                                    Mùa 1: (Trailer): Jujusu Kaisen
-                                </div>
-                            </div>
-                            <div class="modal_body_trailers_content_list_item" id="trailer_3">
-                                <div class="trailer_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="trailer_body">
-                                    Mùa 1: (Trailer): Jujusu Kaisen
-                                </div>
-                            </div>
-                            <div class="modal_body_trailers_content_list_item" id="trailer_4">
-                                <div class="trailer_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="trailer_body">
-                                    Mùa 1: (Trailer): Jujusu Kaisen
-                                </div>
-                            </div>
-                            <div class="modal_body_trailers_content_list_item" id="trailer_5">
-                                <div class="trailer_thumbnail">
-                                    <img src="./images/thumbnail_2.png" alt="thumbnail_2">
-                                </div>
-                                <div class="trailer_body">
-                                    Mùa 1: (Trailer): Jujusu Kaisen
-                                </div>
-                            </div>
+                        <div class="trailer_body">
+                            Mùa 1: (Trailer): Jujusu Kaisen
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
