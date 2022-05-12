@@ -8,6 +8,7 @@ import { UserService } from '../services/user.service';
 import { FireBaseService } from '../services/firebase.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QueuePlayerService } from '../services/queue-player.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-player',
@@ -28,7 +29,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   showChat: boolean = true;
   showSearch: boolean = false;
   queueMovie: any = [];
-
+  showSlideRight: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +55,11 @@ export class PlayerComponent implements OnInit, AfterViewInit {
           this.skipTo(docSnapshot.get('time'), docSnapshot.get('state'));
         }
       })
+
+      // docSnapshots(doc(this.firestore, 'chat', this.videoId!)).pipe(map((docSnapshot) => {
+      //   if(!docSnapshot.metadata.hasPendingWrites){
+      //     this.messages = [...this.messages, docSnapshot.data() as Chat];}
+      // })).subscribe();
 
       docSnapshots(doc(this.firestore, 'chat', this.videoId!)).subscribe((docSnapshot) => {
         if(!docSnapshot.metadata.hasPendingWrites){
@@ -92,6 +98,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   hideChat() {
     let chat = document.getElementById('chat') as HTMLElement;
     chat.style.width = '0';
+    document.getElementById('user-join')!.style.display = "none";
     this.resize();
   }
 
@@ -122,6 +129,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   showChatBtn(){
     this.showChat = true;
     this.showSearch = false;
+    let chat = document.getElementById('chat') as HTMLElement;
+    chat.style.width = '100%';
   }
 
   showSearchBtn(){

@@ -1,6 +1,7 @@
 *{
   padding:0;
   margin:0;
+
 }
 
 .row{
@@ -10,6 +11,7 @@
 
 .actions {
   width: fit-content;
+  position: relative;
 }
 
 .player{
@@ -110,7 +112,8 @@ button {
 }
 
 .user-chat-range{
-  overflow-y: scroll;
+  // overflow-y: scroll;
+  overflow-x: auto;
   background-color: #2F2F2F;
   padding: 0px 16px;
   display: flex;
@@ -160,6 +163,7 @@ input:focus{
 
 .modal-list-player{
   position: relative;
+  height: 600px;
 }
 .add-player{
 //
@@ -170,4 +174,8 @@ input:focus{
 
 .maxh {
   height: 100%;
+}
+
+.queue-player{
+  overflow-y: auto
 }

@@ -9,6 +9,7 @@ import { Movie } from '../models/movie.moddel';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
+import { MovieWatchedService } from '../services/movie-watched.service';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(YouTubePlayer) player!: YouTubePlayer;
 
   movieList: Movie[] = []
+  movieWatched: Movie[] = [];
 
   currentPopular: number = 0;
 
@@ -37,7 +39,8 @@ export class HomeComponent implements OnInit {
     private movieService: MovieService,
     private storage: Storage,
     private router: Router,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private movieWatchedService: MovieWatchedService) {
       this.user = userService.getUser();
       this.route.queryParams.subscribe(params => {
         this.roomId =  params['roomId'];
@@ -67,6 +70,11 @@ export class HomeComponent implements OnInit {
         this.currentPopular = 0;
       document.getElementById('poplist')?.style.setProperty('transform', 'translateX(' + (-this.currentPopular*352).toString() + 'px)');
     }, 5000)
+
+    this.movieWatchedService.getMovieWatched().subscribe((movie) => {
+      this.movieWatched = movie;
+      console.log(this.movieWatched);
+    })
   }
 
   getLink(): void {

@@ -1,27 +1,27 @@
-import { Movie } from './../models/movie.moddel';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Movie } from '../models/movie.moddel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QueuePlayerService {
+export class MovieWatchedService {
   public playerItemList: Movie[] = [];
   public movieList = new BehaviorSubject<any>([]);
-constructor() { }
-  getMovie(){
-    const dataWatched = JSON.parse(localStorage.getItem('myList')!);
+  constructor() { }
+  getMovieWatched(){
+    const dataWatched = JSON.parse(localStorage.getItem('myWatched')!);
     this.movieList.next(dataWatched);
     return this.movieList.asObservable();
   }
-  setMovie(movie: any){
+  setMovieWatched(movie: any){
     this.playerItemList.push(...movie);
     this.movieList.next(movie);
   }
-  addMovie(movie: any){
+  addMovieWatched(movie: any){
     this.playerItemList.push(movie);
     this.movieList.next(this.playerItemList);
     const jsonData = JSON.stringify(this.playerItemList)
-    localStorage.setItem('myList', jsonData)
+    localStorage.setItem('myWatched', jsonData)
   }
 }

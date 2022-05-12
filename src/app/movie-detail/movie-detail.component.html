@@ -6,9 +6,9 @@
         </div>
         <div class="modal_header_bottom">
             <div class="modal_header_bottom_left">
-                <div id="play_button" (click)="goToMovie(movie)">Play</div>
+                <div id="play_button" (click)="goToMovie(movie)" (click)="saveMovie(movie)">Play</div>
                 <div id="add_button">+</div>
-                <div id="subtract_button">-</div>
+                <!-- <div id="subtract_button">-</div> -->
             </div>
             <div class="modal_header_bottom_right">
                 <div id="volumn_button">
@@ -40,25 +40,22 @@
                     <div id="describe_name">
                         Mùa 1: Tập 1
                     </div>
-                    <div id="describe_content">
-                        Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to
-                        reverse his actions, but discover Thanos has already destroyed them to prevent further
-                        use
+                    <div id="describe_content">{{movie.description}}
                     </div>
                 </div>
             </div>
             <div class=" col-6">
                 <span>Diễn viên:</span>
-                <span><strong>Anh Quốc, Quốc Hưng, Nhi Huỳnh, Quốc Hưng</strong></span>
+                <span><strong>{{movie.dienVien}}</strong></span>
                 <br />
                 <span>Đạo diễn:</span>
-                <span><strong>San San</strong></span>
+                <span><strong>{{movie.daoDien}}</strong></span>
                 <br />
                 <span>Thể loại:</span>
                 <span><strong>Nhật, Anime</strong></span>
             </div>
         </div>
-        <div class="modal_body_chapters">
+        <!-- <div class="modal_body_chapters">
             <div class="modal_body_chapters_info">
                 <div id="info_chapter"><strong>Tập</strong></div>
                 <div id="info_name"><strong>Mùa 1</strong></div>
@@ -83,7 +80,7 @@
             <div class="modal_body_chapters_more_button">
                 <img src="./images/arrow_down.svg" alt="more">
             </div>
-        </div>
+        </div> -->
         <div class="modal_body_comments">
             <div class="modal_body_comments_title">
                 Bình luận
