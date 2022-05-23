@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild,ViewEncapsulation } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   movieWatched: Movie[] = [];
 
   currentPopular: number = 0;
+  navbarfixed: boolean = false;
 
 
   constructor(
@@ -87,5 +88,13 @@ export class HomeComponent implements OnInit {
   getDetail(content: Movie){
     const modalRef = this.modalService.open(MovieDetailComponent, { size: 'lg' } );
     modalRef.componentInstance.movie = content;
+  }
+
+  @HostListener('window:scroll',['$event']) onScroll(){
+    if(window.scrollY > 100){
+      this.navbarfixed = true;
+    }else{
+      this.navbarfixed = false;
+    }
   }
 }

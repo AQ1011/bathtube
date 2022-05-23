@@ -1,4 +1,4 @@
-<header class="header-container">
+<header class="header-container" (scroll)="onScroll()" [ngClass]="navbarfixed ? 'fixed':'nofixed'">
   <div class="container">
     <div class="navbar">
       <div class="brand">Film</div>
@@ -19,30 +19,38 @@
     </div>
   </div>
 </header>
-<section class="home">
-  <div class="banner">
-    <div class="film-information">
-      <div class="title">Avenger Endgame</div>
-      <div class="description">In 2018, twenty-three days after Thanos killed half of all life in the universe, Carol Danvers rescues Tony Stark and Nebula from deep space and they reunite with the remaining Avengers—Bruce Banner, Steve Rogers, Thor, Natasha Romanoff, and James Rhodes—and Rocket on Earth. Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use. Enraged, Thor decapitates Thanos. </div>
-      <div class="actions">
-        <button class="primary">Xem phim</button>
-        <button class="" routerLink="movie/1">Chi tiết</button>
-      </div>
+<main class="home">
+  <section class="banner">
+    <div class="banner-img ride"></div>
+    <div class="banner-caption">
+        <div class="container">
+            <div class="row">
+                <div class="col-11 col-sm-8 col-lg-6">
+                  <div class="title">Avenger Endgame</div>
+                  <div class="description">In 2018, twenty-three days after Thanos killed half of all life in the universe, Carol Danvers rescues Tony Stark and Nebula from deep space and they reunite with the remaining Avengers—Bruce Banner, Steve Rogers, Thor, Natasha Romanoff, and James Rhodes—and Rocket on Earth. Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use. Enraged, Thor decapitates Thanos. </div>
+                  <div class="actions">
+                    <button class="primary">Xem phim</button>
+                    <button class="" routerLink="movie/1">Chi tiết</button>
+                  </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="film-video">
-  </div>
+  </section>
   <div class="popular" id="list-film-1">
     <div class="list-title">Thịnh hành</div>
     <li id="poplist" class="popular-list">
 
       <ul *ngFor="let movie of movieList; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
-        <div class="movie" [ngClass]="{'active': i == currentPopular}">
+        <div class="movie">
           <img [src]="movie.image" class="thumbnail"/>
-          <div class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
+          <!-- <div class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div> -->
         </div>
       </ul>
-
+      <div class="btn-area">
+        <button type="button" class="btn-prev" appPrev>Prev</button>
+        <button type="button" class="btn-next" appNext>Next</button>
+      </div>
     </li>
   </div>
 
@@ -57,4 +65,4 @@
       </ul>
     </li>
   </div>
-</section>
+</main>

@@ -21,6 +21,8 @@ import { MovieDisplayComponent } from './movie-display/movie-display.component';
 import { PlayerListComponent } from './player/player-list/player-list.component';
 import { InviteComponent } from './player/invite/invite.component';
 import { TruncatePipe } from './common/pipe/TruncatePipe';
+import { NextDirective } from './shared/next.directive';
+import { PrevDirective } from './shared/prev.directive';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { TruncatePipe } from './common/pipe/TruncatePipe';
     MovieDisplayComponent,
     PlayerListComponent,
     InviteComponent,
-    TruncatePipe
+    TruncatePipe,
+    NextDirective,
+    PrevDirective
   ],
   imports: [
     BrowserModule,
