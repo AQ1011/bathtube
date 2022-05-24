@@ -43,8 +43,12 @@
 
       <ul *ngFor="let movie of movieList; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
         <div class="movie">
-          <img [src]="movie.image" class="thumbnail"/>
-          <!-- <div class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div> -->
+          <img [src]="movie.image" class="thumbnail"
+            (mouseenter)="showName(i)"
+            (mouseleave)="hideName(i)"/>
+          <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
+            (mouseenter)="showName(i)"
+            (mouseleave)="hideName(i)">{{movie.name}}</div>
         </div>
       </ul>
       <div class="btn-area">

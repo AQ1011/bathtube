@@ -134,6 +134,9 @@ button {
   border-radius: 4px;
 }
 
+.movie {
+  position: relative;
+}
 
 .movie:hover {
   transform: scale(1.5);
@@ -141,10 +144,19 @@ button {
   transition-delay: 1s;
   background-color: black;
   border-radius: 4px;
+  z-index: 10;
+}
+
+.hover-bg {
+  background-color:#c4c4c4;
 }
 
 .movie-name {
   padding: 8px;
+  display: none;
+  position: absolute;
+  top: 128px;
+  left: 0px;
 }
 
 .btn-next {
@@ -184,4 +196,8 @@ button {
 }
 .modal-content{
   border: none!important;
+}
+
+.show {
+  display: block;
 }

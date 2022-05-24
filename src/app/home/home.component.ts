@@ -97,4 +97,16 @@ export class HomeComponent implements OnInit {
       this.navbarfixed = false;
     }
   }
+
+  showName(i: number) {
+    let title = document.getElementById(i.toString()) as HTMLElement;
+    title.className += ' show';
+    title.parentElement!.className += ' hover-bg';
+  }
+
+  hideName(i: number) {
+    let title = document.getElementById(i.toString()) as HTMLElement;
+    title.className = 'movie-name';
+    title.parentElement!.className = 'movie';
+  }
 }
