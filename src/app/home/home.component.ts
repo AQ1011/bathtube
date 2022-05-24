@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild,ViewEncapsulation } from '@angular/core';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { YouTubePlayer } from '@angular/youtube-player';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +9,9 @@ import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
 import { MovieWatchedService } from '../services/movie-watched.service';
+import { RoomService } from '../services/room.service';
+import { Room } from '../models/room.model';
+import { doc, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -35,13 +37,15 @@ export class HomeComponent implements OnInit {
 
 
   constructor(
+    private firestore: Firestore,
     private userService: UserService,
     private route: ActivatedRoute,
     private movieService: MovieService,
     private storage: Storage,
     private router: Router,
     private modalService: NgbModal,
-    private movieWatchedService: MovieWatchedService) {
+    private movieWatchedService: MovieWatchedService,
+    private roomService: RoomService) {
       this.user = userService.getUser();
       this.route.queryParams.subscribe(params => {
         this.roomId =  params['roomId'];
@@ -84,8 +88,8 @@ export class HomeComponent implements OnInit {
 
   goMovie(videoId: string) {
     let roomId = this.makeid(9);
-    let viewer = [this.userService.getDisplayName()];
-
+    let viewer = [this.userService.getDisplayName() || 'annon ' + this.makeid(4)];
+    this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer))
     this.router.navigate(['player/'+ roomId])
   }
   getDetail(content: Movie){

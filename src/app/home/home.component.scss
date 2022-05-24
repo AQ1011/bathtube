@@ -141,22 +141,22 @@ button {
 .movie:hover {
   transform: scale(1.5);
   transition: ease-in 0.1s;
-  transition-delay: 1s;
-  background-color: black;
+  transition-delay: 0.5s;
+  background-color: #282828;
   border-radius: 4px;
   z-index: 10;
-}
-
-.hover-bg {
-  background-color:#c4c4c4;
+  padding: 4px;
 }
 
 .movie-name {
+  background-color: #282828;
+  width: 100%;
   padding: 8px;
   display: none;
   position: absolute;
-  top: 128px;
+  top: 132px;
   left: 0px;
+  border-radius: 4px;
 }
 
 .btn-next {
@@ -169,6 +169,7 @@ button {
   width: 60px;
   background: linear-gradient(to left, rgb(20, 20, 20) 0%,transparent 100%);
   opacity: 0;
+  z-index: 20;
 }
 .btn-next:hover{
   opacity: 1;

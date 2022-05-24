@@ -3,7 +3,8 @@
       <div class="back">
       </div>
       <div #pp class="player w-100" (window:resize)="resize()">
-        <youtube-player videoId="{{videoId}}"></youtube-player>
+        <!-- <youtube-player videoId="{{currentVideoId}}"></youtube-player> -->
+        <div id="yt-player"></div>
       </div>
     </div>
     <div class="d-flex p-0 actions">
@@ -19,7 +20,7 @@
         </button>
         <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
       </div>
-      <div id="chat" class="d-flex flex-column chat">
+      <div id="chat" class="d-flex flex-column chat" >
           <div class="hide-chat p-2 ">
             <span class="material-icons  align-middle" [style.color]="'white'" (click)="hideChat()">
               arrow_forward
@@ -51,6 +52,11 @@
                 <img [src]="movie.image" alt="" style="width: 50px">
               </div>
             </div>
+            <ul>
+              <li *ngFor="let movie of playList">
+                <img [src]="'https://img.youtube.com/vi/' + movie.id + '/default.jpg'" />
+              </li>
+            </ul>
             <div class="add-player">
               <button class="primary btn-add-player" (click)="openSearchPlayer(longContent)" >+ Thêm phim</button>
             </div>

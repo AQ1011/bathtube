@@ -1,16 +1,17 @@
+*{
+  color: #fff;
+}
 .search-player{
   background-color: #515151;
   height: 56px;
   border-radius: 4px 4px 0 0;
   position: relative;
   text-align: center;
+  vertical-align: middle;
 }
 .search-player input{
   height: 36px;
   width: 385px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
 }
 // .list-player{
 //   padding-top: 20px;
@@ -23,10 +24,11 @@
 // }
 .modal_body_relevant_content {
   padding: 8px 0px;
-  background-color: #f2f2f2;
+  background: #2F2F2F;
 }
 
 .modal_body_relevant_content_list {
+  background-color: #2F2F2F;
   display: -ms-grid;
   display: grid;
   gap: 12px;
@@ -37,6 +39,7 @@
 .modal_body_relevant_content_list_item {
   display: block;
   margin-bottom: 20px;
+  background-color: #404040;
 }
 
 .modal_body_relevant_content_list_item .relevant_thumbnail {

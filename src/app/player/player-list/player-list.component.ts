@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { doc, DocumentReference, Firestore } from '@angular/fire/firestore';
 import { getDownloadURL, ref,  Storage } from '@angular/fire/storage';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MovieService } from 'src/app/services/movie.service';
 import { QueuePlayerService } from 'src/app/services/queue-player.service';
 import { Movie } from '../../models/movie.moddel';
@@ -11,8 +13,13 @@ import { Movie } from '../../models/movie.moddel';
 })
 export class PlayerListComponent implements OnInit {
   movieList: Movie[] = []
+  movieAdd: DocumentReference[] = [];
   apiLoaded: Boolean = false;
-  constructor(private movieService: MovieService,private storage: Storage,private queuePlayerService: QueuePlayerService) { }
+  constructor(
+    private movieService: MovieService,
+    private storage: Storage,
+    private firestore: Firestore,
+    public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     if(!this.apiLoaded){
@@ -25,8 +32,9 @@ export class PlayerListComponent implements OnInit {
       })
     }
   }
-  addMovieToQueue(movie: any){
-    this.queuePlayerService.addMovie(movie);
+  addMovieToQueue(movie: Movie){
+    this.movieAdd.push(doc(this.firestore, 'video', movie.videoId))
+    this.activeModal.close(this.movieAdd)
   }
 
 }

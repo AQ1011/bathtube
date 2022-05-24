@@ -12,6 +12,7 @@ export interface Movie {
   dienVien: string;
   tags: string[];
   image: string;
+  age: number;
 }
 
 interface Comment {

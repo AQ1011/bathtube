@@ -1,23 +1,31 @@
 import { Injectable } from '@angular/core';
-import { doc, DocumentSnapshot, Firestore, setDoc } from '@angular/fire/firestore';
-import { Action, AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { collection } from '@firebase/firestore';
+import { arrayUnion, doc, docSnapshots, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import { DocumentReference, updateDoc } from '@firebase/firestore';
 import { Room } from '../models/room.model';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
 
-  constructor(private firestore: Firestore,
-      private afs: AngularFirestore) { }
+  constructor(private firestore: Firestore) { }
 
   setRoom(room: Room): void {
-    setDoc(doc(this.firestore, 'room', room.id), room);
+    setDoc(doc(this.firestore, 'room', room.id), Object.assign({}, room));
   }
 
-  getRoom(roomId: string): Observable<DocumentSnapshot<Room>> {
-    return this.afs.doc<Room>('room/' + roomId)
+  getRoom(roomId: string): Observable<Room> {
+    return docSnapshots(doc(this.firestore, 'room', roomId))
+      .pipe(map(doc => doc.data() as Room))
+  }
+
+  addMovieToList(roomId: string, videos: DocumentReference[]) {
+    updateDoc(doc(this.firestore, 'room', roomId),
+      {
+        videos: arrayUnion(...videos)
+      }
+    );
   }
 }

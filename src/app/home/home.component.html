@@ -45,7 +45,8 @@
         <div class="movie">
           <img [src]="movie.image" class="thumbnail"
             (mouseenter)="showName(i)"
-            (mouseleave)="hideName(i)"/>
+            (mouseleave)="hideName(i)"
+            (click)= "goMovie(movie.videoId)"/>
           <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
             (mouseenter)="showName(i)"
             (mouseleave)="hideName(i)">{{movie.name}}</div>

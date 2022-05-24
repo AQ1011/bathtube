@@ -6,7 +6,7 @@ export class Room {
   id: string;
   videos: DocumentReference[];
   viewer: string[];
-
+  currentPlay: number = 0;
   constructor(id: string, videos: DocumentReference[], viewer: string[]) {
     this.id = id;
     this.videos = videos;
