@@ -82,10 +82,24 @@ export class HomeComponent implements OnInit {
   }
 
   goMovie(videoId: string) {
-    // this.router.navigate(['player/'+videoId])
+    let roomId = this.makeid(9);
+    let viewer = [this.userService.getDisplayName()];
+
+    this.router.navigate(['player/'+ roomId])
   }
   getDetail(content: Movie){
     const modalRef = this.modalService.open(MovieDetailComponent, { size: 'lg' } );
     modalRef.componentInstance.movie = content;
+  }
+
+  makeid(length: number) {
+    var result           = '';
+    var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() *
+    charactersLength));
+   }
+   return result;
   }
 }

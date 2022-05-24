@@ -1,17 +1,16 @@
 import { User } from "@angular/fire/auth";
+import { DocumentReference } from "@angular/fire/firestore";
 import { userInfo } from "os";
 
 export class Room {
   id: string;
-  videoId: string;
-  participants: User[];
-  password: string;
+  videos: DocumentReference[];
+  viewer: string[];
 
-  constructor() {
-    this.id = '';
-    this.videoId = '';
-    this.password = '';
-    this.participants = new Array<User>();
+  constructor(id: string, videos: DocumentReference[], viewer: string[]) {
+    this.id = id;
+    this.videos = videos;
+    this.viewer = viewer;
   }
 
 }
