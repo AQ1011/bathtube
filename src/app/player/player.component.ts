@@ -39,6 +39,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   chatLog: Chat[] = []
   chatRef!: DocumentReference;
   noVideo = false;
+  color: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -64,6 +65,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         )
       }
     )
+    this.getChatColor();
     docSnapshots(doc(this.firestore, 'room', this.roomId!))
       .subscribe(
         (docSnapshot) => {
@@ -122,6 +124,20 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getChatColor() {
+    if (!localStorage.getItem('chatColor')) {
+      let letters = '0123456789ABCDEF';
+      this.color = '#'; // <-----------
+      for (var i = 0; i < 6; i++) {
+          this.color += letters[Math.floor(Math.random() * 16)];
+      }
+      localStorage.setItem('chatColor', this.color);
+      console.log(this.color);
+    } else {
+      this.color = localStorage.getItem('chatColor')!;
+    }
+  }
+
   onPlayerReady() {
     this.resize()
     this.vId.subscribe(id => {
@@ -151,12 +167,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   sendChat() {
-    if(this.chatContent)
-    this.fbSvc.setChat(this.chatRef,
-      {
-        user: this.userSvc.getDisplayName() || 'guest ;_;',
-        content: this.chatContent, time: new Date()
-      })
+    if(this.chatContent) {
+      this.fbSvc.setChat(this.chatRef,
+        {
+          user: this.userSvc.getDisplayName() || 'guest ;_;',
+          content: this.chatContent, time: new Date(),
+          color: this.color || '#ffffff',
+        })
+    }
     this.chatContent = ''
   }
 
