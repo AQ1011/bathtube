@@ -47,9 +47,16 @@ export class MovieDetailComponent implements OnInit {
     this.activeModal.dismiss();
     let roomId = this.makeid(9);
     let viewer = [this.userService.getDisplayName() || 'annon ' + this.makeid(4)];
-    this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer))
+    this.roomService.setRoom(
+      new Room(
+        roomId,
+        [doc(this.firestore, 'video', videoId)],
+        viewer,
+        doc(this.firestore, 'chat', roomId)
+      ))
     this.router.navigate(['player/'+ roomId])
   }
+
   makeid(length: number) {
     var result           = '';
     var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';

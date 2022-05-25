@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild,ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild,ViewEncapsulation,DoCheck } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { UserService } from '../services/user.service';
 import { YouTubePlayer } from '@angular/youtube-player';
@@ -12,6 +12,7 @@ import { MovieWatchedService } from '../services/movie-watched.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room.model';
 import { doc, Firestore } from '@angular/fire/firestore';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ import { doc, Firestore } from '@angular/fire/firestore';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,DoCheck {
 
 
   user: User | null;
@@ -31,6 +32,8 @@ export class HomeComponent implements OnInit {
 
   movieList: Movie[] = []
   movieWatched: Movie[] = [];
+  public searchInput : string = '';
+  searchKey:string ="";
 
   currentPopular: number = 0;
   navbarfixed: boolean = false;
@@ -82,6 +85,13 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  ngDoCheck(){
+    this.movieService.search.subscribe((val :any) =>{
+      console.log(val);
+      this.searchKey = val;
+      console.log(this.searchKey);
+    })
+  }
   getLink(): void {
     this.time = this.player.getCurrentTime();
   }
@@ -89,7 +99,7 @@ export class HomeComponent implements OnInit {
   goMovie(videoId: string) {
     let roomId = this.makeid(9);
     let viewer = [this.userService.getDisplayName() || 'annon ' + this.makeid(4)];
-    this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer))
+    this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer, doc(this.firestore, 'chat', roomId)))
     this.router.navigate(['player/'+ roomId])
   }
   getDetail(content: Movie){
@@ -126,5 +136,11 @@ export class HomeComponent implements OnInit {
     let title = document.getElementById(i.toString()) as HTMLElement;
     title.className = 'movie-name';
     title.parentElement!.className = 'movie';
+  }
+  search(event: any){
+    this.searchInput = (event.target as HTMLInputElement).value;
+    console.log(this.searchInput);
+    this.movieService.search.next(this.searchInput);
+    console.log(this.movieService.search);
   }
 }

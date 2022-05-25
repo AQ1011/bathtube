@@ -4,12 +4,14 @@ import { ref, Storage, getDownloadURL } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Movie } from '../models/movie.moddel';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
 
+  public search = new BehaviorSubject<string>("");
   constructor(private firestore: Firestore,
     private storage: Storage) {
   }

@@ -28,4 +28,8 @@ export class RoomService {
       }
     );
   }
+
+  getChat(roomId: string): Promise<DocumentReference> {
+    return getDoc(doc(this.firestore, 'room', roomId)).then((doc) => { return doc.get('chat') as DocumentReference})
+  }
 }

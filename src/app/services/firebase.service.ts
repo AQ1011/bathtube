@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { update } from '@angular/fire/database';
 import { Firestore, docSnapshots, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
-import { doc, DocumentData, DocumentSnapshot } from '@firebase/firestore';
+import { doc, DocumentData, DocumentReference, DocumentSnapshot } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { Movie } from '../models/movie.moddel';
 import { Chat } from '../models/room.model';
@@ -21,8 +21,8 @@ export class FireBaseService {
     setDoc(doc(this.firestore, collection, document), data);
   }
 
-  setChat(collection: string, document: string, data: any): void {
-    setDoc(doc(this.firestore, collection, document), data);
+  setChat(docRef: DocumentReference, data: any): void {
+    setDoc(docRef, data);
   }
 
 }

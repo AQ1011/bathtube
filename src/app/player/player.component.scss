@@ -19,13 +19,24 @@
   height: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 }
+
+.no-vid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: black;
+}
+
 .back{
   position: absolute;
   left: 0;
   top: 0;
   z-index: 2;
 }
+
 .icon-back{
   width: 24px;
   height: 24px;
@@ -166,12 +177,28 @@ input:focus{
   text-align: center;
   overflow-y: auto;
 }
-.play-list:first-child{
-  background-color: #737070;
-}
+
 .play-list{
-  margin-bottom: 8px;
+  margin: 8px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #515151;
+
+  img {
+    width: 95%;
+    height: 127px;
+    object-fit: cover;
+    margin-bottom: 8px;
+  }
+  .queue-title {
+    color: white;
+  }
 }
+
+.current {
+  border: 2px solid var(--primary);
+}
+
 .add-player{
 //
 }

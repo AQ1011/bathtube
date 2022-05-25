@@ -23,6 +23,7 @@ import { InviteComponent } from './player/invite/invite.component';
 import { TruncatePipe } from './common/pipe/TruncatePipe';
 import { NextDirective } from './shared/next.directive';
 import { PrevDirective } from './shared/prev.directive';
+import { FilterPipe } from './common/pipe/filter.pipe'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PrevDirective } from './shared/prev.directive';
     InviteComponent,
     TruncatePipe,
     NextDirective,
-    PrevDirective
+    PrevDirective,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

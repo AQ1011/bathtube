@@ -33,9 +33,12 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   currentVideoId: string = '';
   player: any;
   vId = new BehaviorSubject<string>('');
-  playList: DocumentReference[] = []
+  playList: Movie[] = []
   playerState: number = -1;
   room!: Room;
+  chatLog: Chat[] = []
+  chatRef!: DocumentReference;
+  noVideo = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,20 +53,37 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.roomService.getChat(this.roomId).then(
+      (chatRef) => {
+        this.chatRef = chatRef;
+        docSnapshots(chatRef).subscribe(
+          (doc) => {
+            if(!doc.metadata.hasPendingWrites)
+              this.chatLog.push(doc.data() as Chat)
+          }
+        )
+      }
+    )
     docSnapshots(doc(this.firestore, 'room', this.roomId!))
       .subscribe(
         (docSnapshot) => {
           if(!docSnapshot.metadata.hasPendingWrites){
             this.room = docSnapshot.data() as Room;
             let videoRefs = docSnapshot.get('videos') as DocumentReference[];
-            this.playList = videoRefs;
-            console.log(this.playList);
+            if(this.room.currentPlay > videoRefs.length - 1) {
+              this.noVideo = true;
+            }
             if(this.playerState != 0) {
               getDoc(videoRefs[this.room.currentPlay]).then(v => {
                 this.currentVideoId = (v.data() as Movie).videoId;
                 this.vId.next((v.data() as Movie).videoId)
               })
             }
+            videoRefs.forEach(ref => {
+              getDoc(ref)
+                .then( video => this.playList.push(video.data() as Movie)
+                ).catch(err => console.log(err));
+            })
           }
         },
         (error) => {
@@ -122,18 +142,22 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   nextVideo() {
     this.room.currentPlay++;
-    if(this.room.currentPlay > this.room.videos.length)
+    if(this.room.currentPlay > this.room.videos.length) {
+      this.noVideo = true;
       return;
+    }
     this.roomService.setRoom(this.room);
-    this.player.loadVideoById(this.playList[this.room.currentPlay].id, 0);
+    this.player.loadVideoById(this.playList[this.room.currentPlay].videoId, 0);
   }
 
   sendChat() {
-    this.fbSvc.setChat('chat', this.roomId!,
+    if(this.chatContent)
+    this.fbSvc.setChat(this.chatRef,
       {
         user: this.userSvc.getDisplayName() || 'guest ;_;',
         content: this.chatContent, time: new Date()
       })
+    this.chatContent = ''
   }
 
   hideChat() {

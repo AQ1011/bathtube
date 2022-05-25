@@ -2,10 +2,13 @@
     <div class="p-0 flex-grow-1">
       <div class="back">
       </div>
-      <div #pp class="player w-100" (window:resize)="resize()">
+      <div #pp class="player w-100" (window:resize)="resize()" *ngIf="!noVideo ;else noVid">
         <!-- <youtube-player videoId="{{currentVideoId}}"></youtube-player> -->
         <div id="yt-player"></div>
       </div>
+      <ng-template #noVid class="no-vid">
+        KHONG CO PHIM GI HET
+      </ng-template>
     </div>
     <div class="d-flex p-0 actions">
       <div class="player-option">
@@ -35,7 +38,7 @@
           </div>
           <div class="user-chat flex-grow-1">
             <div class="user-chat-range flex-grow-1">
-              <div *ngFor="let message of messages">
+              <div *ngFor="let message of chatLog">
                 <div class="message"><span class="font-weight-bold">{{message.user}}: </span>{{message.content}}</div>
               </div>
             </div>
@@ -50,8 +53,10 @@
         <div *ngIf="showSearch" class="text-center">
           <div class="modal-list-player">
             <ul>
-              <li *ngFor="let movie of playList" class="play-list">
-                <img [src]="'https://img.youtube.com/vi/' + movie.id + '/default.jpg'" style="width: 227px; "/>
+              <li *ngFor="let movie of playList;let i = index" class="play-list"
+                [ngClass]="{'current': movie.videoId === currentVideoId}">
+                <img [src]="'https://img.youtube.com/vi/' + movie.videoId + '/sddefault.jpg'"/>
+                <div class="queue-title">{{movie.name}}</div>
               </li>
             </ul>
           </div>

@@ -7,10 +7,12 @@ export class Room {
   videos: DocumentReference[];
   viewer: string[];
   currentPlay: number = 0;
-  constructor(id: string, videos: DocumentReference[], viewer: string[]) {
+  chat: DocumentReference;
+  constructor(id: string, videos: DocumentReference[], viewer: string[], chat: DocumentReference) {
     this.id = id;
     this.videos = videos;
     this.viewer = viewer;
+    this.chat = chat;
   }
 
 }
