@@ -26,6 +26,7 @@
               arrow_forward
             </span>
           </div>
+          <ng-container *ngIf="showChat">
           <div id="user-join" class="participants p-4">
             <img src="https://images.unsplash.com/photo-1649649853889-48bf9f53dcd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="" class="avatar">
             <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
@@ -45,21 +46,17 @@
               </button>
             </div>
           </div>
-        <div *ngIf="showSearch">
+        </ng-container>
+        <div *ngIf="showSearch" class="text-center">
           <div class="modal-list-player">
-            <div class="queue-player">
-              <div class="div" *ngFor="let movie of queueMovie">
-                <img [src]="movie.image" alt="" style="width: 50px">
-              </div>
-            </div>
             <ul>
-              <li *ngFor="let movie of playList">
-                <img [src]="'https://img.youtube.com/vi/' + movie.id + '/default.jpg'" />
+              <li *ngFor="let movie of playList" class="play-list">
+                <img [src]="'https://img.youtube.com/vi/' + movie.id + '/default.jpg'" style="width: 227px; "/>
               </li>
             </ul>
-            <div class="add-player">
-              <button class="primary btn-add-player" (click)="openSearchPlayer(longContent)" >+ Thêm phim</button>
-            </div>
+          </div>
+          <div class="add-player">
+            <button class="primary btn-add-player" (click)="openSearchPlayer(longContent)" >+ Thêm phim</button>
           </div>
         </div>
       </div>

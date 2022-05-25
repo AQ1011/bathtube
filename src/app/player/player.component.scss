@@ -162,6 +162,15 @@ input:focus{
 .modal-list-player{
   position: relative;
   height: 600px;
+  width: 284px;
+  text-align: center;
+  overflow-y: auto;
+}
+.play-list:first-child{
+  background-color: #737070;
+}
+.play-list{
+  margin-bottom: 8px;
 }
 .add-player{
 //

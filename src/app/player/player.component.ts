@@ -29,7 +29,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   chatContent: string = '';
   showChat: boolean = true;
   showSearch: boolean = false;
-  queueMovie: any = [];
   showSlideRight: boolean = true;
   currentVideoId: string = '';
   player: any;
@@ -190,4 +189,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   openInviteUser(content: any){
     this.modalService.open(content);
   }
+  // copyLink(){
+  //   this.clipboard.copy
+  // }
 }
