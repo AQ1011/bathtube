@@ -21,7 +21,8 @@ export class Chat {
   user: string;
   content: string;
   time: Date;
-  constructor( user?: string, content?: string, time?: Date) {
+  color: string;
+  constructor( user?: string, content?: string, time?: Date, color?: string) {
     this.user = 'guest ;_;';
     this.content = '';
     this. time = new Date();
@@ -33,6 +34,11 @@ export class Chat {
     }
     if(time) {
       this.time = time;
+    }
+    if(color) {
+      this.color = color;
+    } else {
+      this.color = '#ffffff'
     }
   }
 }

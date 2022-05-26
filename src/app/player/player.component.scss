@@ -118,16 +118,17 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-height: 600px;
 }
 
 .user-chat-range{
-  // overflow-y: scroll;
-  overflow-x: auto;
+  max-height: 600px;
   background-color: #2F2F2F;
   padding: 0px 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: flex-end;
+  overflow-y: scroll;
 }
 .flex-grow-1{
   overflow-y: auto;
@@ -170,7 +171,12 @@ input:focus{
   text-align: center;
   display: flex;
   flex-direction: column;
+  opacity: 0.1;
 }
+.player-option:hover {
+    opacity: 1;
+}
+
 
 .modal-list-player{
   position: relative;

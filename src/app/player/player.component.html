@@ -37,9 +37,15 @@
             <div class="avatar avatar-number">+3</div>
           </div>
           <div class="user-chat flex-grow-1">
-            <div class="user-chat-range flex-grow-1">
+            <div class="user-chat-range">
               <div *ngFor="let message of chatLog">
-                <div class="message"><span class="font-weight-bold">{{message.user}}: </span>{{message.content}}</div>
+                <div class="message">
+                  <span class="font-weight-bold"
+                    [ngStyle]="{'color': message.color}">
+                    {{message.user}}:
+                  </span>
+                  {{message.content}}
+                </div>
               </div>
             </div>
             <div class="type-chat p-2">
