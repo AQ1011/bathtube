@@ -481,9 +481,12 @@
 .modal_body_relevant_content_list_item {
   display: block;
   margin-bottom: 20px;
+  background-color: #737070
 }
 
 .modal_body_relevant_content_list_item .relevant_thumbnail {
+  width: 227px;
+  height: 134px;
   border-radius: 5px;
   cursor: pointer;
 }

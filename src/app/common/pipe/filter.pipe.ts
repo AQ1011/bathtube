@@ -10,7 +10,9 @@ export class FilterPipe implements PipeTransform {
     if(!value || filterString === '' || propName === ''){
       return value;
     }
+    console.log("value",value);
     value.forEach((a:any)=>{
+      console.log(a);
       if(a[propName].trim().toLowerCase().includes(filterString.toLowerCase())){
         result.push(a);
       }

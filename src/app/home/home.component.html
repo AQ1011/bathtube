@@ -32,8 +32,8 @@
   </div>
 </header>
 <section *ngIf="searchKey != ''" class="search__film">
-  <div class="search__film-list">
-  <ng-container *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="search__film-item">
+  <div class="search__film-list row row-cols-5">
+  <div *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="search__film-item col">
     <div class="movie">
       <img [src]="movie.image" class="thumbnail"
         (mouseenter)="showName(i)"
@@ -43,7 +43,7 @@
         (mouseenter)="showName(i)"
         (mouseleave)="hideName(i)">{{movie.name}}</div>
     </div>
-  </ng-container>
+  </div>
   </div>
 </section>
 <main class="home" *ngIf="searchKey === ''">

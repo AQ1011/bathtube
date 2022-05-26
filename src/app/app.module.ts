@@ -23,7 +23,9 @@ import { InviteComponent } from './player/invite/invite.component';
 import { TruncatePipe } from './common/pipe/TruncatePipe';
 import { NextDirective } from './shared/next.directive';
 import { PrevDirective } from './shared/prev.directive';
-import { FilterPipe } from './common/pipe/filter.pipe'
+import { FilterPipe } from './common/pipe/filter.pipe';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { SignInComponent } from './sign-in/sign-in.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { FilterPipe } from './common/pipe/filter.pipe'
     NextDirective,
     PrevDirective,
     FilterPipe,
+    NotFoundComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,

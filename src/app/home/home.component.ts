@@ -81,28 +81,27 @@ export class HomeComponent implements OnInit,DoCheck {
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
     })
-    document.getElementsByClassName('movie')[0].className += 'active';
-    setInterval(() => {
-      if(this.currentPopular <= this.movieList.length)
-        this.currentPopular += 1
-      else
-        this.currentPopular = 0;
-      document.getElementById('poplist')?.style.setProperty('transform', 'translateX(' + (-this.currentPopular*352).toString() + 'px)');
-    }, 5000)
+    // document.getElementsByClassName('movie')[0].className += 'active';
+    // setInterval(() => {
+    //   if(this.currentPopular <= this.movieList.length)
+    //     this.currentPopular += 1
+    //   else
+    //     this.currentPopular = 0;
+    //   document.getElementById('poplist')?.style.setProperty('transform', 'translateX(' + (-this.currentPopular*352).toString() + 'px)');
+    // }, 5000)
 
     this.movieWatchedService.getMovieWatched().subscribe((movie) => {
       this.movieWatched = movie;
       console.log(this.movieWatched);
     })
+    this.movieService.search.subscribe((val :any) =>{
+      console.log(val)
+      this.searchKey = val;
+      console.log(typeof(this.searchKey));
+    })
   }
 
   ngDoCheck(){
-    this.movieService.search.
-    subscribe((val :any) =>{
-      console.log(val);
-      this.searchKey = val;
-      console.log(this.searchKey);
-    })
   }
   getLink(): void {
     this.time = this.player.getCurrentTime();
@@ -151,9 +150,7 @@ export class HomeComponent implements OnInit,DoCheck {
   }
   search(event: any){
     this.searchInput = (event.target as HTMLInputElement).value;
-    console.log(this.searchInput);
     this.movieService.search.next(this.searchInput);
-    console.log(this.movieService.search);
   }
   removeSearch(){
     this.searchInput ='';

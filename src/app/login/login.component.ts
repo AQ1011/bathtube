@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   avatar: string = '';
   constructor(
     private authService: AuthService,
-    private userService: UserService,) { }
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit(): void {
     if(this.userService.getUser()) {
@@ -39,6 +41,7 @@ export class LoginComponent implements OnInit {
   signOut() {
     this.authService.signOut();
     this.isSignedIn = false;
+    this.router.navigate(['/login']);
   }
 
 }
