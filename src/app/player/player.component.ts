@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Firestore, doc, docSnapshots, getDoc,  } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentReference } from '@firebase/firestore';
 import { Chat, Room } from '../models/room.model';
 import { UserService } from '../services/user.service';
 import { FireBaseService } from '../services/firebase.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { QueuePlayerService } from '../services/queue-player.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Movie } from '../models/movie.moddel';
 import { RoomService } from '../services/room.service';
 import { PlayerListComponent } from './player-list/player-list.component';
+import { debounce, debounceTime } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-player',
@@ -20,14 +21,14 @@ import { PlayerListComponent } from './player-list/player-list.component';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('pp', { static: true }) ref!: ElementRef;
+  @ViewChild('pp') ref!: ElementRef;
 
   roomId: string = '';
   apiLoaded = false;
   isSync = true;
   messages: Chat[] = [];
   chatContent: string = '';
-  showChat: boolean = true;
+  showChat = true;
   showSearch: boolean = false;
   showSlideRight: boolean = true;
   currentVideoId: string = '';
@@ -40,6 +41,17 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   chatRef!: DocumentReference;
   noVideo = false;
   color: string = '';
+  showHeader = false;
+
+  @HostListener('mousemove', ['$event']) onMouseMove(event: MouseEvent) {
+    if (event.clientY < 66)
+    {
+      this.showHeader = true;
+    }
+    else {
+      this.showHeader = false;
+    }
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +59,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     private fbSvc: FireBaseService,
     private userSvc: UserService,
     private modalService: NgbModal,
-    private roomService: RoomService) {
+    private roomService: RoomService,
+    private router: Router) {
     this.route.params.subscribe((params) => {
       this.roomId = params['id'];
     })
@@ -59,8 +72,11 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.chatRef = chatRef;
         docSnapshots(chatRef).subscribe(
           (doc) => {
-            if(!doc.metadata.hasPendingWrites)
+            if(!doc.metadata.hasPendingWrites && doc.data()) {
               this.chatLog.push(doc.data() as Chat)
+              var element = document.getElementById("chat-log");
+              element!.scrollTop = element!.scrollHeight;
+            }
           }
         )
       }
@@ -70,10 +86,20 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       .subscribe(
         (docSnapshot) => {
           if(!docSnapshot.metadata.hasPendingWrites){
-            this.room = docSnapshot.data() as Room;
+            let temp = docSnapshot.data() as Room;
             let videoRefs = docSnapshot.get('videos') as DocumentReference[];
             if(this.room.currentPlay > videoRefs.length - 1) {
               this.noVideo = true;
+            }
+            if (this.userSvc.getDisplayName() !== temp.viewer[0]) {
+              this.room = temp;
+              this.skipTo(temp.videoTime, temp.videoState);
+            } else {
+              if(this.room) {
+                temp.videoState = this.room.videoState;
+                temp.videoTime = this.room.videoTime;
+              }
+              this.room = temp;
             }
             if(this.playerState != 0) {
               getDoc(videoRefs[this.room.currentPlay]).then(v => {
@@ -81,6 +107,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
                 this.vId.next((v.data() as Movie).videoId)
               })
             }
+            this.playList = [];
             videoRefs.forEach(ref => {
               getDoc(ref)
                 .then( video => this.playList.push(video.data() as Movie)
@@ -107,7 +134,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.player = new YT.Player('yt-player', {
           height: '320',
           width: '640',
-          videoId: '0srVchY9Z4A',
+          videoId: '',//heck is this id
           playerVars: {
             'origin': 'http://localhost:4200',
             'controls': 1,
@@ -151,9 +178,22 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   onPlayerStateChange(e: any) {
-    switch(e.data) {
-      case 0: this.nextVideo()
+    if(e.data === 3 || e.data === -1)
+      return;
+    if(this.userSvc.getDisplayName() === this.room.viewer[0]) {
+      let temp = this.room;
+      temp.videoTime = this.player.getCurrentTime();
+      temp.videoState = e.data;
+      this.roomService.setRoom(temp);
     }
+    else {
+      switch(e.data) {
+        case 0:
+          this.nextVideo();
+          break;
+      };
+    }
+
   }
 
   nextVideo() {
@@ -178,22 +218,9 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.chatContent = ''
   }
 
-  hideChat() {
-    let chat = document.getElementById('chat') as HTMLElement;
-    chat.style.width = '0';
-    document.getElementById('user-join')!.style.display = "none";
-    this.resize();
-  }
-
   skipTo(time: number, state: number) {
-    if(this.isSync) {
-      this.player.seekTo(time, true);
-      this.player.setPlaybackRate(1);
-      this.isSync = false;
-    }
-    setTimeout(() => {
-      this.isSync = true;
-    }, 2000)
+    console.log('aaaaa')
+    this.player.seekTo(time, state);
   }
 
   pause() {
@@ -205,20 +232,17 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   resize() {
+    console.log(this.ref.nativeElement.offsetHeight);
     this.player.setSize(
       this.ref.nativeElement.offsetWidth,
       this.ref.nativeElement.offsetHeight - 12
     )
   }
 
-  showChatBtn(){
-    this.showChat = true;
-    this.showSearch = false;
-  }
-
   showSearchBtn(){
-    this.showSearch = true;
-    this.showChat = false;
+    this.showSearch = !this.showSearch;
+    if(this.showSearch)
+      this.showChat = true;
   }
 
   openSearchPlayer(longContent : any) {
@@ -234,4 +258,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   // copyLink(){
   //   this.clipboard.copy
   // }
+  BackToHomeBtn(){
+    this.router.navigate(['/home']);
+  }
 }

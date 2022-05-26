@@ -1,13 +1,14 @@
-*{
-  padding:0;
-  margin:0;
-
+.header {
+  display: flex;
+  background-color: black;
+  max-height: 64px;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 0.8;
 }
-
-.row{
-  margin: 0 !important;
-}
-
 
 .actions {
   width: fit-content;
@@ -16,10 +17,11 @@
 
 .player{
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
+  background-color: black;
 }
 
 .no-vid {
@@ -28,19 +30,6 @@
   height: 100%;
   z-index: 100;
   background-color: black;
-}
-
-.back{
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
-}
-
-.icon-back{
-  width: 24px;
-  height: 24px;
-  color: #fff;
 }
 
 button {
@@ -121,103 +110,104 @@ button {
   max-height: 600px;
 }
 
-.user-chat-range{
-  max-height: 600px;
-  background-color: #2F2F2F;
-  padding: 0px 16px;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: flex-end;
-  overflow-y: scroll;
-}
-.flex-grow-1{
-  overflow-y: auto;
-}
-
 .type-chat{
   display: flex;
   align-items: center;
 }
+
 input {
   width: 100%;
-  height: 41px;
   border-radius: 5px;
   padding-left: 8px;
   border: none;
 }
 
-input:focus{
-  outline: none;
-}
-
-.chat-enter{
-  background-color: transparent;
-  border: none;
-  margin: 0;
-}
-.chat-enter:hover{
-  background-color: #515151;
-}
-
 .player-option{
   position: absolute;
-  left:-57px;
-  top: 10%;
-  width: 57px;
+  right: 0px;
+  top: 40px;
+  width: 50px;
   height: fit-content;
-  padding: 16px 0;
-  background-color: red;
-  border-radius: 4px 0 0 4px;
+  padding: 8px 4px;
+  background-color: #2F2F2F;
+  color:#FED80E;
+  border-radius: 5px 0 0 5px;
   text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   opacity: 0.1;
 }
+
 .player-option:hover {
     opacity: 1;
 }
 
-
-.modal-list-player{
-  position: relative;
-  height: 600px;
-  width: 284px;
-  text-align: center;
-  overflow-y: auto;
+.queue-container {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  padding: 8px;
+  height: 80%;
+  width: 100%;
+  align-items: center;
 }
 
-.play-list{
-  margin: 8px;
-  padding: 5px;
+.queue {
+  width: 100%;
+  flex: 1;
+  padding: 8px;
   border-radius: 5px;
-  background-color: #515151;
+  background-color: #232323;
+  list-style: none;
+  overflow: scroll;
+  margin-bottom: 0px;
 
-  img {
-    width: 95%;
-    height: 127px;
-    object-fit: cover;
+  .queue-item {
+    border-radius: 5px;
+    padding: 8px;
+    text-align: center;
     margin-bottom: 8px;
-  }
-  .queue-title {
-    color: white;
+    background-color: #121212;
+
+    img {
+      border-radius: 5px;
+      width: 100%;
+      height: 128px;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+
+    color: #FED80E;
   }
 }
 
 .current {
-  border: 2px solid var(--primary);
+  border: 1px solid var(--primary);
+  background-color: #232323;
 }
 
-.add-player{
-//
+.chat-log {
+  border-radius: 5px;
+  background-color: #232323;
+  overflow-y: scroll;
+  justify-content: end;
 }
 
-.player-container {
-}
-
-.maxh {
-  height: 100%;
-}
 
 .queue-player{
   overflow-y: auto
+}
+
+button span {
+  color:#FED80E;
+}
+
+.chat-box {
+  max-height: 100vh;
+  transition: 0.25s ease-in-out;
+}
+
+.search-enable {
+  height: 80%;
 }

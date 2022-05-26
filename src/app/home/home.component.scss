@@ -155,7 +155,6 @@ button {
   position: relative;
 }
 
-
 .list-title {
   color: white;
   font-size: 1.5em;
@@ -193,7 +192,7 @@ button {
   position: relative;
 }
 
-.movie:hover {
+.movie:hover{
   transform: scale(1.5);
   transition: ease-in 0.1s;
   transition-delay: 0.5s;
@@ -284,6 +283,7 @@ footer{
   padding: 0 4%;
   height: 300px;
   z-index: -1;
+  background-color: transparent;
 }
 
 .search__film-list {

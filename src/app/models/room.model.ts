@@ -8,6 +8,8 @@ export class Room {
   viewer: string[];
   currentPlay: number = 0;
   chat: DocumentReference;
+  videoTime = 0;
+  videoState = 0;
   constructor(id: string, videos: DocumentReference[], viewer: string[], chat: DocumentReference) {
     this.id = id;
     this.videos = videos;

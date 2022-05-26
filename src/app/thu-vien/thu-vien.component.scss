@@ -1,0 +1,52 @@
+.search__film{
+    margin-top: 80px;
+    padding: 45px;
+    &-list{
+      padding: 0 60px;
+      &-item{
+        box-sizing: border-box;
+      z-index: 1;
+      display: inline-block;
+      position: relative;
+      white-space: normal;
+      vertical-align: top;
+      padding: 0 0.2vw;
+      }
+    }
+}
+
+.search__film-list {
+    .search__film-item {
+      margin-bottom: 48px;
+    }
+  }
+
+  .movie img {
+    width: 227px;
+    height: 128px;
+    border-radius: 4px;
+  }
+
+  .movie {
+    position: relative;
+    &:hover{
+        transform: scale(1.5);
+        transition: ease-in 0.1s;
+        transition-delay: 0.5s;
+        background-color: #282828;
+        border-radius: 4px;
+        z-index: 100;
+        padding: 4px;
+    }
+    &-name{
+        background-color: #282828;
+        width: 100%;
+        padding: 8px;
+        display: none;
+        position: absolute;
+        top: 132px;
+        left: 0px;
+        border-radius: 4px;
+        font-size: 8px;
+    }
+  }

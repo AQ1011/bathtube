@@ -1,78 +1,106 @@
-  <div class="d-flex maxh">
-    <div class="p-0 flex-grow-1">
-      <div class="back">
-      </div>
-      <div #pp class="player w-100" (window:resize)="resize()" *ngIf="!noVideo ;else noVid">
-        <!-- <youtube-player videoId="{{currentVideoId}}"></youtube-player> -->
-        <div id="yt-player"></div>
-      </div>
-      <ng-template #noVid class="no-vid">
-        KHONG CO PHIM GI HET
-      </ng-template>
-    </div>
-    <div class="d-flex p-0 actions">
-      <div class="player-option">
-        <button class="primary py-4" (click)="openInviteUser(content)" class="chat-enter">
-          <img src="../../assets/icons/user-plus.png" style="height:24px;width:24px" alt="">
-        </button>
-        <button class="primary py-4" (click)="showChatBtn()" class="chat-enter">
-          <img src="../../assets/icons/message-circle.png" style="height:24px;width:24px" alt="">
-        </button>
-        <button class="primary py-4" (click)="showSearchBtn()" class="chat-enter">
-          <img src="../../assets/icons/zoom-in.png" style="height:24px;width:24px" alt="">
-        </button>
-        <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
-      </div>
-      <div id="chat" class="d-flex flex-column chat" >
-          <div class="hide-chat p-2 ">
-            <span class="material-icons  align-middle" [style.color]="'white'" (click)="hideChat()">
-              arrow_forward
-            </span>
-          </div>
-          <ng-container *ngIf="showChat">
-          <div id="user-join" class="participants p-4">
-            <img src="https://images.unsplash.com/photo-1649649853889-48bf9f53dcd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="" class="avatar">
-            <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
-            <img src="https://images.unsplash.com/photo-1649605184337-c4dc52c6e32e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=408&q=80" alt="" class="avatar">
-            <div class="avatar avatar-number">+3</div>
-          </div>
-          <div class="user-chat flex-grow-1">
-            <div class="user-chat-range">
-              <div *ngFor="let message of chatLog">
-                <div class="message">
-                  <span class="font-weight-bold"
-                    [ngStyle]="{'color': message.color}">
-                    {{message.user}}:
-                  </span>
-                  {{message.content}}
-                </div>
-              </div>
-            </div>
-            <div class="type-chat p-2">
-              <input [(ngModel)]="chatContent" placeholder="Chat" (keyup.enter)="sendChat()"/>
-              <button class="primary" (click)="sendChat()" class="chat-enter">
-                <img src="../../assets/icons/Paper Plane.png" style="height:24px;width:24px" alt="">
-              </button>
-            </div>
-          </div>
-        </ng-container>
-        <div *ngIf="showSearch" class="text-center">
-          <div class="modal-list-player">
-            <ul>
-              <li *ngFor="let movie of playList;let i = index" class="play-list"
-                [ngClass]="{'current': movie.videoId === currentVideoId}">
-                <img [src]="'https://img.youtube.com/vi/' + movie.videoId + '/sddefault.jpg'"/>
-                <div class="queue-title">{{movie.name}}</div>
-              </li>
+<nz-layout>
+  <nz-header class="header" *ngIf="showHeader">
+    <div nz-row nzJustify="space-between" class="w-100">
+      <div nz-col [nzSpan]="6" class="brand">Film</div>
+        <div nz-col>
+          <li class="navs">
+            <ul class="nav-item">
+              Trang chủ
             </ul>
+            <ul class="nav-item">
+              Series
+            </ul>
+            <ul class="nav-item">
+              Thư viện
+            </ul>
+          </li>
+        </div>
+        <div nz-col [nzSpan]="6" class="account">
+          <div nz-row>
+            <div nz-col [nzSpan]="12">
+              <app-login></app-login>
+            </div>
           </div>
-          <div class="add-player">
-            <button class="primary btn-add-player" (click)="openSearchPlayer(longContent)" >+ Thêm phim</button>
+        </div>
+    </div>
+  </nz-header>
+
+  <nz-layout>
+    <nz-content>
+      <div class="p-0 flex-grow-1" [style.min-height]="'100vh'" [style.position]="'relative'">
+        <div class="back">
+        </div>
+        <div #pp class="player w-100" (window:resize)="resize()" *ngIf="!noVideo ;else noVid">
+          <div id="yt-player"></div>
+        </div>
+        <ng-template #noVid class="no-vid">
+          KHONG CO PHIM GI HET
+        </ng-template>
+        <div class="player-option">
+          <button nz-button nzType="text" (click)="openInviteUser(content)">
+            <span class="material-symbols-outlined">
+              person_add
+            </span>
+          </button>
+          <button nz-button nzType="text" (click)="showChat = !showChat">
+            <span class="material-symbols-outlined">
+              chat
+            </span>
+          </button>
+          <button nz-button nzType="text" (click)="showSearchBtn()">
+            <span class="material-symbols-outlined">
+              search
+            </span>
+          </button>
+          <button nz-button nzType="text" (click)="BackToHomeBtn()">
+            <span class="material-symbols-outlined">
+              keyboard_return
+            </span>
+          </button>
+          <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
+        </div>
+      </div>
+    </nz-content>
+    <nz-sider nzCollapsible
+      [nzCollapsedWidth]="0" [nzTrigger]="null"
+      [nzCollapsed]="!showChat" [nzWidth]="300"
+      >
+    <div class="d-flex flex-column h-100" [style.max-height]="'100vh'">
+      <div id="chat-log" [style.flex]="'1'" class="m-2 p-2 chat-log" nzAlign="top">
+        <div nz-row *ngFor="let message of chatLog">
+          <div nz-col [nzSpan]="24" class="message">
+            <span class="font-weight-bold"
+              [ngStyle]="{'color': message.color}">
+              {{message.user}}:
+            </span>
+            {{message.content}}
           </div>
         </div>
       </div>
+      <div nz-row class="p-2 chat-box">
+        <nz-input-group nz-col [nzSpan]="24" [nzSuffix]="sendBtn" class="">
+          <input nz-input [(ngModel)]="chatContent" placeholder="Chat" (keyup.enter)="sendChat()"/>
+        </nz-input-group>
+        <ng-template #sendBtn class="primary" (click)="sendChat()" class="chat-enter">
+          <img src="../../assets/icons/Paper Plane.png" style="height:24px;width:24px" alt="">
+        </ng-template>
+      </div>
+      <div nz-row *ngIf="showSearch" class="queue-container">
+        <ul class="queue">
+          <li *ngFor="let movie of playList;let i = index" class="queue-item"
+            [ngClass]="{'current': movie.videoId === currentVideoId}">
+            <img [src]="'https://img.youtube.com/vi/' + movie.videoId + '/sddefault.jpg'"/>
+            <div class="queue-title">{{movie.name}}</div>
+          </li>
+        </ul>
+        <div class="add-player">
+          <button class="primary mb-0" (click)="openSearchPlayer(longContent)" >+ Thêm phim</button>
+        </div>
+      </div>
     </div>
-  </div>
+    </nz-sider>
+  </nz-layout>
+</nz-layout>
   <ng-template #longContent let-modal>
     <app-player-list></app-player-list>
   </ng-template>

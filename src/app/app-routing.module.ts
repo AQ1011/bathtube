@@ -6,6 +6,7 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { PlayerComponent } from './player/player.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ThuVienComponent } from './thu-vien/thu-vien.component';
 
 // const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 // const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -16,6 +17,8 @@ const routes: Routes = [{
     path: 'login', component: SignInComponent
   },{
     path: 'home', redirectTo: '',canActivate: [AuthGuard]
+  },{
+    path: 'library', component: ThuVienComponent
   },{
     path: 'movie/:id',       component: MovieDetailComponent
   },{

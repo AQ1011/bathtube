@@ -7,6 +7,18 @@
   height: 100%;
   overflow: hidden;
   z-index: 0;
+  &-header{
+    height: 68px;
+    background-color: rgb(20, 20, 20);
+    position: relative;
+    z-index: 20;
+    & span{
+      position: absolute;
+      top:22px;
+      left: 40px;
+      font-weight: 700;
+    }
+  }
   &-content{
     position: absolute;
     top: 50%;

@@ -25,7 +25,20 @@ import { NextDirective } from './shared/next.directive';
 import { PrevDirective } from './shared/prev.directive';
 import { FilterPipe } from './common/pipe/filter.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { SignInComponent } from './sign-in/sign-in.component'
+import { SignInComponent } from './sign-in/sign-in.component';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { ThuVienComponent } from './thu-vien/thu-vien.component';
+
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -43,6 +56,7 @@ import { SignInComponent } from './sign-in/sign-in.component'
     FilterPipe,
     NotFoundComponent,
     SignInComponent,
+    ThuVienComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,8 +69,14 @@ import { SignInComponent } from './sign-in/sign-in.component'
     YouTubePlayerModule,
     NgbModule,
     FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    NzInputModule,
+    NzGridModule,
+    NzLayoutModule,
+    NzButtonModule,
   ],
-  providers: [NgbActiveModal],
+  providers: [NgbActiveModal, { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,7 @@ import { MovieWatchedService } from '../services/movie-watched.service';
 import { MovieService } from '../services/movie.service';
 import { RoomService } from '../services/room.service';
 import { UserService } from '../services/user.service';
+import { QueuePlayerService } from '../services/queue-player.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -30,7 +31,8 @@ export class MovieDetailComponent implements OnInit {
     private storage: Storage,
     private router: Router,
     private movieWatchedService: MovieWatchedService,
-    private roomService: RoomService) {
+    private roomService: RoomService,
+    private queueService: QueuePlayerService) {
       this.user = userService.getUser();
     }
 
@@ -75,5 +77,7 @@ export class MovieDetailComponent implements OnInit {
   saveMovie(movie: Movie) {
     this.movieWatchedService.addMovieWatched(movie);
   }
-
+  addLibraby(movie: Movie){
+    this.queueService.addMovie(movie)
+  }
 }

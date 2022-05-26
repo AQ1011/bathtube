@@ -12,7 +12,8 @@ import { MovieWatchedService } from '../services/movie-watched.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room.model';
 import { doc, Firestore } from '@angular/fire/firestore';
-import { debounceTime, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { QueuePlayerService } from '../services/queue-player.service';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit,DoCheck {
   movieList: Movie[] = []
   movieYear: Movie[] = []
   movieWatched: Movie[] = [];
+  movieLike: Movie[] = [];
   public searchInput : string = '';
   searchKey:string ="";
 
@@ -49,7 +51,8 @@ export class HomeComponent implements OnInit,DoCheck {
     private router: Router,
     private modalService: NgbModal,
     private movieWatchedService: MovieWatchedService,
-    private roomService: RoomService) {
+    private roomService: RoomService,
+    private queueService: QueuePlayerService,) {
       this.user = userService.getUser();
       this.route.queryParams.subscribe(params => {
         this.roomId =  params['roomId'];
@@ -95,10 +98,13 @@ export class HomeComponent implements OnInit,DoCheck {
       console.log(this.movieWatched);
     })
     this.movieService.search.subscribe((val :any) =>{
-      console.log(val)
       this.searchKey = val;
-      console.log(typeof(this.searchKey));
     })
+    this.queueService.getMovie().pipe(
+      map((movie:Movie[]) =>{
+        this.movieLike = movie
+      })
+    ).subscribe()
   }
 
   ngDoCheck(){
