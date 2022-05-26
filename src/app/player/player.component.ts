@@ -20,7 +20,7 @@ import { PlayerListComponent } from './player-list/player-list.component';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('pp') ref!: ElementRef;
+  @ViewChild('pp', { static: true }) ref!: ElementRef;
 
   roomId: string = '';
   apiLoaded = false;

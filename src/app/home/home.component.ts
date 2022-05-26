@@ -86,7 +86,8 @@ export class HomeComponent implements OnInit,DoCheck {
   }
 
   ngDoCheck(){
-    this.movieService.search.subscribe((val :any) =>{
+    this.movieService.search.
+    subscribe((val :any) =>{
       console.log(val);
       this.searchKey = val;
       console.log(this.searchKey);
@@ -114,8 +115,8 @@ export class HomeComponent implements OnInit,DoCheck {
     for ( var i = 0; i < length; i++ ) {
           result += characters.charAt(Math.floor(Math.random() *
     charactersLength));
-   }
-   return result;
+    }
+    return result;
   }
 
   @HostListener('window:scroll',['$event']) onScroll(){
@@ -142,5 +143,10 @@ export class HomeComponent implements OnInit,DoCheck {
     console.log(this.searchInput);
     this.movieService.search.next(this.searchInput);
     console.log(this.movieService.search);
+  }
+  removeSearch(){
+    this.searchInput ='';
+    this.movieService.search.next(this.searchInput);
+    this.searchKey = '';
   }
 }

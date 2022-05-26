@@ -84,6 +84,11 @@ button {
   width: 212px;
   outline: 0;
 }
+.searchInput .icon-close{
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0 6px;
+}
 .secondary {
   border: none;
 }
@@ -174,6 +179,7 @@ button {
 .popular-item {
   margin-right: 6px;
   list-style-type: none;
+  cursor: pointer;
 }
 
 .movie img {
@@ -258,7 +264,15 @@ button {
   margin-top: 80px;
   padding: 45px;
   &-list{
-    display: flex;
     padding: 0 60px;
+    &-item{
+      box-sizing: border-box;
+    z-index: 1;
+    display: inline-block;
+    position: relative;
+    white-space: normal;
+    vertical-align: top;
+    padding: 0 0.2vw;
+    }
   }
 }
