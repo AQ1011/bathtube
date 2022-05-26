@@ -95,4 +95,24 @@
       </ul>
     </li>
   </div>
+  <div class="popular">
+    <div class="list-title">Phát hành trong năm</div>
+    <li id="poplist" class="popular-list">
+      <ul *ngFor="let movie of movieYear; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
+        <div class="movie">
+          <img [src]="movie.image" class="thumbnail"
+            (mouseenter)="showName(i)"
+            (mouseleave)="hideName(i)"
+            (click)= "goMovie(movie.videoId)"/>
+          <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
+            (mouseenter)="showName(i)"
+            (mouseleave)="hideName(i)">{{movie.name}}</div>
+        </div>
+      </ul>
+    </li>
+    <button type="button" class="btn-prev" appPrev>Prev</button>
+    <button type="button" class="btn-next" appNext>Next</button>
+  </div>
 </main>
+<footer>
+</footer>

@@ -13,6 +13,7 @@ export interface Movie {
   tags: string[];
   image: string;
   age: number;
+  theLoai: string;
 }
 
 interface Comment {

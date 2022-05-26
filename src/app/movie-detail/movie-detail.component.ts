@@ -4,6 +4,7 @@ import { doc, Firestore } from '@angular/fire/firestore';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { map } from 'rxjs/operators';
 import { Movie } from '../models/movie.moddel';
 import { Room } from '../models/room.model';
 import { MovieWatchedService } from '../services/movie-watched.service';
@@ -34,7 +35,10 @@ export class MovieDetailComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.movieService.getAllMovie().subscribe((movies) => {
+    this.movieService.getAllMovie().pipe(
+      map((data: any) =>data.map((videoS:Movie) => ({...videoS})).filter((videoS:Movie) => videoS.age >= this.movie.age))
+    )
+    .subscribe((movies) => {
       this.similars = movies;
       this.similars.forEach(movie => {
         if(movie.image)

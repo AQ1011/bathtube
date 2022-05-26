@@ -12,7 +12,7 @@ import { MovieWatchedService } from '../services/movie-watched.service';
 import { RoomService } from '../services/room.service';
 import { Room } from '../models/room.model';
 import { doc, Firestore } from '@angular/fire/firestore';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit,DoCheck {
   @ViewChild(YouTubePlayer) player!: YouTubePlayer;
 
   movieList: Movie[] = []
+  movieYear: Movie[] = []
   movieWatched: Movie[] = [];
   public searchInput : string = '';
   searchKey:string ="";
@@ -66,6 +67,16 @@ export class HomeComponent implements OnInit,DoCheck {
     this.movieService.getAllMovie().subscribe((movies) => {
       this.movieList = [...movies];
       this.movieList.forEach(movie => {
+        if(movie.image)
+          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
+      });
+    })
+    this.movieService.getAllMovie().pipe(
+      map((data: any) =>data.map((videoYear:Movie) => ({...videoYear})).filter((videoYear:Movie) => videoYear.year == 2022))
+    )
+    .subscribe((movies) => {
+      this.movieYear = [...movies];
+      this.movieYear.forEach(movie => {
         if(movie.image)
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
