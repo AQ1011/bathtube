@@ -25,12 +25,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   roomId: string = '';
   apiLoaded = false;
-  isSync = true;
   messages: Chat[] = [];
   chatContent: string = '';
   showChat = true;
   showSearch: boolean = false;
-  showSlideRight: boolean = true;
   currentVideoId: string = '';
   player: any;
   vId = new BehaviorSubject<string>('');
@@ -44,7 +42,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   showHeader = false;
 
   @HostListener('mousemove', ['$event']) onMouseMove(event: MouseEvent) {
-    if (event.clientY < 66)
+    if (event.clientY < 80)
     {
       this.showHeader = true;
     }
@@ -67,6 +65,13 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getChatColor();
+    if (!this.apiLoaded) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+    }
+
     this.roomService.getChat(this.roomId).then(
       (chatRef) => {
         this.chatRef = chatRef;
@@ -81,51 +86,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         )
       }
     )
-    this.getChatColor();
-    docSnapshots(doc(this.firestore, 'room', this.roomId!))
-      .subscribe(
-        (docSnapshot) => {
-          if(!docSnapshot.metadata.hasPendingWrites){
-            let temp = docSnapshot.data() as Room;
-            let videoRefs = docSnapshot.get('videos') as DocumentReference[];
-            if(this.room.currentPlay > videoRefs.length - 1) {
-              this.noVideo = true;
-            }
-            if (this.userSvc.getDisplayName() !== temp.viewer[0]) {
-              this.room = temp;
-              this.skipTo(temp.videoTime, temp.videoState);
-            } else {
-              if(this.room) {
-                temp.videoState = this.room.videoState;
-                temp.videoTime = this.room.videoTime;
-              }
-              this.room = temp;
-            }
-            if(this.playerState != 0) {
-              getDoc(videoRefs[this.room.currentPlay]).then(v => {
-                this.currentVideoId = (v.data() as Movie).videoId;
-                this.vId.next((v.data() as Movie).videoId)
-              })
-            }
-            this.playList = [];
-            videoRefs.forEach(ref => {
-              getDoc(ref)
-                .then( video => this.playList.push(video.data() as Movie)
-                ).catch(err => console.log(err));
-            })
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-
-    if (!this.apiLoaded) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.body.appendChild(tag);
-    }
-
   }
 
   ngAfterViewInit(): void {
@@ -134,16 +94,19 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.player = new YT.Player('yt-player', {
           height: '320',
           width: '640',
-          videoId: '',//heck is this id
+          videoId: '',
+          host: 'https://www.youtube.com',
           playerVars: {
             'origin': 'http://localhost:4200',
             'controls': 1,
             'modestbranding': 0,
             'rel': 0,
-            'color': 'white'
+            'color': 'white',
+            'autoplay': 0,
+            'fs' : 0,
           },
           events: {
-            'onReady': this.onPlayerReady.bind(this),
+            'onReady': this.onReady.bind(this),
             'onStateChange': this.onPlayerStateChange.bind(this),
           }
         });
@@ -165,8 +128,17 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onPlayerReady() {
+  onReady() {
     this.resize()
+    console.log('ready')
+    getDoc(doc(this.firestore, 'room', this.roomId!))
+      .then((doc) => {
+        this.room = doc.data() as Room;
+        if(this.room.viewer[0] !== this.userSvc.getDisplayName())
+          this.syncWithHost();
+        this.player.loadVideoById(this.room.videos[this.room.currentPlay].id, this.room.videoTime);
+      });
+
     this.vId.subscribe(id => {
       this.player.loadVideoById(id, 0);
     })
@@ -175,23 +147,33 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.resize()
+    window.scrollBy(80,0);
   }
 
   onPlayerStateChange(e: any) {
-    if(e.data === 3 || e.data === -1)
-      return;
     if(this.userSvc.getDisplayName() === this.room.viewer[0]) {
-      let temp = this.room;
-      temp.videoTime = this.player.getCurrentTime();
-      temp.videoState = e.data;
-      this.roomService.setRoom(temp);
+      this.room.videoState = e.data;
+      this.room.videoTime = this.player.getCurrentTime();
+      this.roomService.setRoom(this.room);
     }
-    else {
-      switch(e.data) {
-        case 0:
+    // else {
+    //   switch(e.data) {
+    //     case 0:
+    //       this.nextVideo();
+    //       break;
+    //     case e.data !== this.room.videoState:
+    //   };
+    // }
+    switch (this.room.videoState) {
+      case 0:
           this.nextVideo();
           break;
-      };
+      case 1:
+        this.player.playVideo();
+        break;
+      case 2:
+        this.player.pauseVideo();
+        break;
     }
 
   }
@@ -218,25 +200,12 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.chatContent = ''
   }
 
-  skipTo(time: number, state: number) {
-    console.log('aaaaa')
-    this.player.seekTo(time, state);
-  }
-
-  pause() {
-    this.player.pauseVideo();
-  }
-
-  play() {
-    this.player.playVideo();
-  }
-
   resize() {
-    console.log(this.ref.nativeElement.offsetHeight);
     this.player.setSize(
       this.ref.nativeElement.offsetWidth,
-      this.ref.nativeElement.offsetHeight - 12
+      this.ref.nativeElement.offsetHeight
     )
+    window.scrollBy(80,0);
   }
 
   showSearchBtn(){
@@ -260,5 +229,51 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   // }
   BackToHomeBtn(){
     this.router.navigate(['/home']);
+  }
+
+  syncWithHost() {
+    docSnapshots(doc(this.firestore, 'room', this.roomId!))
+    .subscribe(
+      (docSnapshot) => {
+        if(!docSnapshot.metadata.hasPendingWrites){
+
+          this.room = docSnapshot.data() as Room;
+          let videoRefs = docSnapshot.get('videos') as DocumentReference[];
+
+          if(this.playerState !== this.room.videoState) {
+            if(this.playerState === 1) {
+              this.player.seekTo(this.room.videoTime)
+            } else {
+              this.player.cueVideoById(this.currentVideoId, this.room.videoTime);
+              if(this.room.videoState === 1) {
+                this.player.playVideo();
+              }
+            }
+          }
+
+          this.playerState = this.room.videoState;
+          if(this.room.videoState === 2) {
+            this.player.pauseVideo();
+          }
+
+          if(this.playerState != 0 && this.currentVideoId !== videoRefs[this.room.currentPlay].id) {
+            getDoc(videoRefs[this.room.currentPlay]).then(v => {
+              this.currentVideoId = (v.data() as Movie).videoId;
+              this.vId.next((v.data() as Movie).videoId)
+            })
+          }
+
+          this.playList = [];
+          videoRefs.forEach(ref => {
+            getDoc(ref)
+              .then( video => this.playList.push(video.data() as Movie)
+              ).catch(err => console.log(err));
+          })
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 }

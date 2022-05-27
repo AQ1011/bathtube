@@ -237,7 +237,8 @@ button {
   top:0;
   left:0;
   width: 100vw;
-  height: calc(100vh - 80px);
+  height: fit-content;
+  min-height: calc(100vh - 80px);
   margin-top: 80px;
   padding: 45px;
   z-index: 10000;
