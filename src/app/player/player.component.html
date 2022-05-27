@@ -1,36 +1,10 @@
 <nz-layout>
-  <nz-header class="header" *ngIf="showHeader">
-    <div nz-row nzJustify="space-between" class="w-100">
-      <div nz-col [nzSpan]="6" class="brand">Film</div>
-        <div nz-col>
-          <li class="navs">
-            <ul class="nav-item">
-              Trang chủ
-            </ul>
-            <ul class="nav-item">
-              Series
-            </ul>
-            <ul class="nav-item">
-              Thư viện
-            </ul>
-          </li>
-        </div>
-        <div nz-col [nzSpan]="6" class="account">
-          <div nz-row>
-            <div nz-col [nzSpan]="12">
-              <app-login></app-login>
-            </div>
-          </div>
-        </div>
-    </div>
-  </nz-header>
-
   <nz-layout>
     <nz-content>
       <div class="p-0 flex-grow-1" [style.min-height]="'100vh'" [style.position]="'relative'">
         <div class="back">
         </div>
-        <div #pp class="player w-100" (window:resize)="resize()" *ngIf="!noVideo ;else noVid">
+        <div #pp class="player w-100" (window:resize)="resize()" *ngIf="!queueEnded ;else noVid">
           <div id="yt-player"></div>
         </div>
         <ng-template #noVid class="no-vid">

@@ -20,7 +20,7 @@ export class UserService {
   getUser() {
     var user: User | null;
     try {
-      user = JSON.parse(localStorage.getItem("CURRENT_USER") || "");
+      user = JSON.parse(localStorage.getItem("USER_CREDENTIAL") || "");
     } catch  {
       user = null;
     }

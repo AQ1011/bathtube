@@ -1,6 +1,5 @@
 
 * {
-  color: #FED80E;
   --item-width: 227px;
 }
 .header-container{
@@ -104,7 +103,7 @@ button {
 .banner{
   position: relative;
   width: 100%;
-  height: 864px;
+  height: 60vh;
   overflow: hidden;
   z-index: 0;
 }
@@ -152,6 +151,7 @@ button {
 .popular {
   padding-top: 30px;
   padding-left: 4vw;
+  padding-bottom: 30px;
   position: relative;
 }
 
@@ -199,7 +199,6 @@ button {
   background-color: #282828;
   border-radius: 4px;
   z-index: 100;
-  padding: 4px;
 }
 
 .movie-name {
@@ -290,4 +289,12 @@ footer{
   .search__film-item {
     margin-bottom: 48px;
   }
+}
+
+.home-footer {
+  background-color: #282828;
+  width: 100vw;
+  margin-top: 48px !important;
+  height: 400px;
+  margin: 0;
 }

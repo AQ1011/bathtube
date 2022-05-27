@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Auth, getRedirectResult } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -10,17 +11,22 @@ import { AuthService } from '../services/auth.service';
 export class SignInComponent implements OnInit {
 
   constructor(private authService: AuthService,
+    private auth: Auth,
     private router: Router,) { }
 
   ngOnInit(): void {
+    getRedirectResult(this.auth).then(
+      (userCredential) => {
+        if(userCredential) {
+          localStorage.setItem('USER_CREDENTIAL', JSON.stringify(userCredential))
+        }
+      }
+    )
   }
+
   signIn(){
     this.authService.signOut();
-    this.authService.signIn().then((userCredential) => {
-      localStorage.setItem("CURRENT_USER",JSON.stringify(userCredential.user));
-      this.router.navigate(['/home'])
-    })
-
+    this.authService.signIn()
   }
 
 }

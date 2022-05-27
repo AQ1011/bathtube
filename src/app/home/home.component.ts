@@ -95,7 +95,6 @@ export class HomeComponent implements OnInit,DoCheck {
 
     this.movieWatchedService.getMovieWatched().subscribe((movie) => {
       this.movieWatched = movie;
-      console.log(this.movieWatched);
     })
     this.movieService.search.subscribe((val :any) =>{
       this.searchKey = val;

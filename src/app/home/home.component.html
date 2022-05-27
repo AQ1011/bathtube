@@ -1,60 +1,4 @@
-<header class="header-container" (scroll)="onScroll()" [ngClass]="navbarfixed ? 'fixed':'nofixed'">
-  <div class="container">
-    <div nz-row nzJustify="space-between" class="navbar">
-      <div nz-col [nzSpan]="6" class="brand">Film</div>
-        <div nz-col>
-          <li class="navs">
-            <ul class="nav-item">
-              Trang chủ
-            </ul>
-            <ul class="nav-item">
-              Series
-            </ul>
-            <ul class="nav-item" routerLink="/library">
-              Thư viện
-            </ul>
-          </li>
-        </div>
-        <div nz-col [nzSpan]="6" class="account">
-          <div nz-row nzAlign="middle">
-            <nz-input-group nz-col [nzSpan]="12" [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix" nzSize="large" class="my-2">
-              <input nz-input nzBorderless type="text" placeholder="" (keyup)="search($event)"/>
-            </nz-input-group>
-            <ng-template #searchPrefix>
-              <span class="material-symbols-outlined">
-                search
-              </span>
-            </ng-template>
-            <ng-template #removeSuffix>
-              <span class="material-symbols-outlined" style="cursor: pointer;" *ngIf="searchInput != ''" (click)="removeSearch()" >
-                close
-              </span>
-            </ng-template>
-            <div nz-col [nzSpan]="12">
-              <app-login></app-login>
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-</header>
-<section *ngIf="searchKey != ''" class="search__film">
-  <div class="search__film-list row row-cols-5">
-  <div *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="search__film-item col">
-    <div class="movie">
-      <img [src]="movie.image" class="thumbnail"
-        (mouseenter)="showName(i)"
-        (mouseleave)="hideName(i)"
-        (click)= "goMovie(movie.videoId)"/>
-      <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
-        (mouseenter)="showName(i)"
-        (mouseleave)="hideName(i)">{{movie.name}}</div>
-    </div>
-  </div>
-  </div>
-</section>
-
-<main class="home" *ngIf="searchKey === ''">
+<main class="home">
   <section class="banner">
     <div class="banner-img ride"></div>
     <div class="banner-caption">
@@ -64,8 +8,8 @@
                   <div class="title">Avenger Endgame</div>
                   <div class="description">In 2018, twenty-three days after Thanos killed half of all life in the universe, Carol Danvers rescues Tony Stark and Nebula from deep space and they reunite with the remaining Avengers—Bruce Banner, Steve Rogers, Thor, Natasha Romanoff, and James Rhodes—and Rocket on Earth. Locating Thanos on an uninhabited planet, they plan to use the Infinity Stones to reverse his actions, but discover Thanos has already destroyed them to prevent further use. Enraged, Thor decapitates Thanos. </div>
                   <div class="actions">
-                    <button class="primary">Xem phim</button>
-                    <button class="" routerLink="movie/1">Chi tiết</button>
+                    <button nz-button nzType="primary" nzSize="large">Xem phim</button>
+                    <button nz-button nzType="default" nzSize="large" routerLink="movie/1">Chi tiết</button>
                   </div>
                 </div>
             </div>
@@ -92,7 +36,7 @@
     <button type="button" class="btn-next" appNext>Next</button>
   </div>
 
-  <div class="popular" id="list-film-2">
+  <div class="popular" id="list-film-2" *ngIf="movieWatched">
     <div class="list-title">Danh sách tiếp tục xem</div>
     <li class="popular-list">
       <ul *ngFor="let movie of movieWatched; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
@@ -122,5 +66,5 @@
     <button type="button" class="btn-next" appNext>Next</button>
   </div>
 </main>
-<footer>
-</footer>
+<div class="home-footer">
+</div>

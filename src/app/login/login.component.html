@@ -1,7 +1,0 @@
-<div *ngIf="!isSignedIn; else SignedIn">
-  <button class="primary" (click)="signIn()">Đăng nhập</button>
-</div>
-<ng-template #SignedIn>
-  <button class="secondary"  (click)="signOut()">Đăng xuất</button>
-  <img src="{{avatar}}" class="avatar"/>
-</ng-template>

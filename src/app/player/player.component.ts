@@ -37,19 +37,9 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   room!: Room;
   chatLog: Chat[] = []
   chatRef!: DocumentReference;
-  noVideo = false;
+  queueEnded = false;
   color: string = '';
   showHeader = false;
-
-  @HostListener('mousemove', ['$event']) onMouseMove(event: MouseEvent) {
-    if (event.clientY < 80)
-    {
-      this.showHeader = true;
-    }
-    else {
-      this.showHeader = false;
-    }
-  }
 
   constructor(
     private route: ActivatedRoute,
@@ -66,12 +56,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getChatColor();
-    if (!this.apiLoaded) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.body.appendChild(tag);
-    }
-
     this.roomService.getChat(this.roomId).then(
       (chatRef) => {
         this.chatRef = chatRef;
@@ -86,15 +70,24 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         )
       }
     )
+    this.roomService.getRoom(this.roomId).subscribe((room) => {
+      this.room = room;
+    })
   }
 
   ngAfterViewInit(): void {
+    if (!this.apiLoaded) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+    }
+
     if (!window.YT || !window.YT.Player) {
       window.onYouTubeIframeAPIReady = () => {
         this.player = new YT.Player('yt-player', {
           height: '320',
           width: '640',
-          videoId: '',
+          videoId: this.currentVideoId,
           host: 'https://www.youtube.com',
           playerVars: {
             'origin': 'http://localhost:4200',
@@ -103,7 +96,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
             'rel': 0,
             'color': 'white',
             'autoplay': 0,
-            'fs' : 0,
           },
           events: {
             'onReady': this.onReady.bind(this),
@@ -130,7 +122,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   onReady() {
     this.resize()
-    console.log('ready')
     getDoc(doc(this.firestore, 'room', this.roomId!))
       .then((doc) => {
         this.room = doc.data() as Room;
@@ -156,18 +147,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       this.room.videoTime = this.player.getCurrentTime();
       this.roomService.setRoom(this.room);
     }
-    // else {
-    //   switch(e.data) {
-    //     case 0:
-    //       this.nextVideo();
-    //       break;
-    //     case e.data !== this.room.videoState:
-    //   };
-    // }
     switch (this.room.videoState) {
       case 0:
-          this.nextVideo();
-          break;
+        this.nextVideo();
+        break;
       case 1:
         this.player.playVideo();
         break;
@@ -181,7 +164,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   nextVideo() {
     this.room.currentPlay++;
     if(this.room.currentPlay > this.room.videos.length) {
-      this.noVideo = true;
+      this.queueEnded = true;
       return;
     }
     this.roomService.setRoom(this.room);
@@ -241,19 +224,19 @@ export class PlayerComponent implements OnInit, AfterViewInit {
           let videoRefs = docSnapshot.get('videos') as DocumentReference[];
 
           if(this.playerState !== this.room.videoState) {
-            if(this.playerState === 1) {
-              this.player.seekTo(this.room.videoTime)
-            } else {
-              this.player.cueVideoById(this.currentVideoId, this.room.videoTime);
-              if(this.room.videoState === 1) {
+            this.playerState = this.room.videoState;
+            switch (this.playerState) {
+              case 0:
+                this.nextVideo();
+                break;
+              case 1:
+                this.player.seekTo(this.room.videoTime)
                 this.player.playVideo();
-              }
+                break;
+              case 2:
+                this.player.pauseVideo();
+                break;
             }
-          }
-
-          this.playerState = this.room.videoState;
-          if(this.room.videoState === 2) {
-            this.player.pauseVideo();
           }
 
           if(this.playerState != 0 && this.currentVideoId !== videoRefs[this.room.currentPlay].id) {

@@ -1,55 +1,67 @@
-<div class="container">
-  <div nz-row nzJustify="space-between" class="navbar">
-    <div nz-col [nzSpan]="6" nzLg="6" nzMd="12" nzSm="12" nzXs="12" class="brand">Film</div>
-      <div nz-col  nzLg="12" nzMd="0" nzSm="0" nzXs="0">
-        <li class="navs">
-          <ul class="nav-item">
-            Trang chủ
-          </ul>
-          <ul class="nav-item">
-            Series
-          </ul>
-          <ul class="nav-item" routerLink="/library">
-            Thư viện
-          </ul>
-        </li>
-      </div>
-      <div nz-col [nzSpan]="6"  nzLg="6" nzMd="12" nzSm="12" nzXs="12" class="account">
-        <div nz-row nzAlign="middle">
-          <nz-input-group nz-col [nzSpan]="12" [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix" nzSize="large" class="my-2">
-            <input nz-input nzBorderless type="text" placeholder="" [(ngModel)]="searchInput"
-              (ngModelChange)="search()"/>
-          </nz-input-group>
-          <ng-template #searchPrefix>
-            <span class="material-symbols-outlined">
-              search
-            </span>
-          </ng-template>
-          <ng-template #removeSuffix>
-            <span class="material-symbols-outlined" style="cursor: pointer;" *ngIf="searchInput != ''" (click)="removeSearch()" >
-              close
-            </span>
-          </ng-template>
-          <div nz-col [nzSpan]="12">
-            <app-login></app-login>
-          </div>
-        </div>
-      </div>
+<nz-header nz-row>
+  <div class="logo">FILM</div>
+  <li nz-col nzFlex="300px" nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+    <ul nz-menu-item routerLink="/" >
+      Trang chủ
+    </ul>
+    <ul nz-menu-item>
+      Series
+    </ul>
+    <ul nz-menu-item routerLink="/library">
+      Thư viện
+    </ul>
+  </li>
+  <div nz-col nzFlex="auto" class="text-center">
+    <nz-input-group
+      [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix"
+      nzSize="large" class="my-2" [style.max-width]="'400px'">
+      <input nz-input nzBorderless type="text" placeholder="" [(ngModel)]="searchInput"
+        (ngModelChange)="search()"/>
+    </nz-input-group>
   </div>
-</div>
+
+  <div nz-col nzFlex="200px">
+    <div nz-row [nzAlign]="'middle'" [style.margin-top]="'4px'">
+      <div *ngIf="!isSignedIn; else SignedIn">
+        <button nz-button nzType="primary" (click)="signIn()" [style.height]="'100%'">Đăng nhập</button>
+      </div>
+      <ng-template #SignedIn>
+        <button nz-button nzType="default" (click)="showModal()" [style.height]="'100%'" class="mr-4">Đăng xuất</button>
+        <nz-avatar nzIcon="user" [nzSrc]="avatar" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
+        </nz-avatar>
+      </ng-template>
+    </div>
+  </div>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu [style.background-color]="'#232323'">
+      <li class="menu-item" (click)="signOut()" >Đăng xuất</li>
+    </ul>
+  </nz-dropdown-menu>
+
+</nz-header>
 
 <section *ngIf="searchInput" class="search__film">
-  <div nz-row [nzGutter]="24">
-    <div nz-col *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="pb-4">
-      <div class="movie">
-        <img [src]="movie.image" class="thumbnail"
-          (mouseenter)="showName(i)"
-          (mouseleave)="hideName(i)"
-          (click)= "goMovie(movie.videoId)"/>
-        <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
-          (mouseenter)="showName(i)"
-          (mouseleave)="hideName(i)">{{movie.name}}</div>
+  <div class="container">
+    <div nz-row [nzGutter]="24" [style.width]="'100%'">
+      <div nz-col nzFlex="1" *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="pb-4">
+        <div class="search-item">
+          <img [src]="movie.image"
+            (click)= "goMovie(movie.videoId)"/>
+          <div (click)="getDetail(movie)">{{movie.name}}</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<ng-template #searchPrefix>
+  <span class="material-symbols-outlined">
+    search
+  </span>
+</ng-template>
+<ng-template #removeSuffix>
+  <span class="material-symbols-outlined" style="cursor: pointer;" *ngIf="searchInput != ''" (click)="removeSearch()" >
+    close
+  </span>
+</ng-template>

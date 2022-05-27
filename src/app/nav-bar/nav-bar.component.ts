@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Auth, User } from '@angular/fire/auth';
 import { Firestore, doc } from '@angular/fire/firestore';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Movie } from '../models/movie.moddel';
 import { Room } from '../models/room.model';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
+import { AuthService } from '../services/auth.service';
 import { MovieWatchedService } from '../services/movie-watched.service';
 import { MovieService } from '../services/movie.service';
 import { QueuePlayerService } from '../services/queue-player.service';
@@ -22,6 +26,11 @@ export class NavBarComponent implements OnInit {
   public searchInput : string = '';
   searchKey:string ="";
   movieList: Movie[] = []
+  isSignedIn: boolean = false;
+  user?: User;
+  avatar: string = '';
+  isVisible = false;
+  confirmModal?: NzModalRef;
 
   constructor(
     private firestore: Firestore,
@@ -34,6 +43,10 @@ export class NavBarComponent implements OnInit {
     private movieWatchedService: MovieWatchedService,
     private roomService: RoomService,
     private queueService: QueuePlayerService,
+    private modal: NzModalService,
+    private authService: AuthService,
+    private auth: Auth,
+    private notification: NzNotificationService
     ) { }
 
   ngOnInit(): void {
@@ -44,6 +57,17 @@ export class NavBarComponent implements OnInit {
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
     })
+    this.auth.onAuthStateChanged(
+      (user) => {
+        if(user) {
+          this.user = user;
+          this.avatar = user.photoURL || '';
+          this.isSignedIn = true;
+        }
+        else
+          this.isSignedIn = false;
+      }
+    )
   }
 
   makeid(length: number) {
@@ -88,6 +112,31 @@ export class NavBarComponent implements OnInit {
     this.searchInput ='';
     this.movieService.search.next(this.searchInput);
     this.searchKey = '';
+  }
+
+  signIn() {
+    this.authService.signOut();
+    this.authService.signIn();
+  }
+
+  signOut() {
+    this.isVisible = true;
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+    this.confirmModal = this.modal.confirm({
+      nzTitle: 'Bạn có muốn đăng xuất ?',
+      nzOnOk: () =>  {
+        this.authService.signOut();
+        this.isSignedIn = false;
+        this.notification.create('success',
+          'Thông báo',
+          'Đăng xuất thành công',
+          { nzDuration: 1000  }
+        );
+      },
+    });
   }
 
 }

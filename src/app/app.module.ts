@@ -10,9 +10,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { HomeComponent } from './home/home.component';
-import { AngularFireModule } from '@angular/fire/compat';
 import { YouTubePlayerModule } from '@angular/youtube-player';
-import { LoginComponent } from './login/login.component';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { PlayerComponent } from './player/player.component';
@@ -38,6 +36,12 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ThuVienComponent } from './thu-vien/thu-vien.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 registerLocaleData(en);
 
@@ -45,7 +49,6 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
     MovieDetailComponent,
     PlayerComponent,
     MovieDisplayComponent,
@@ -77,8 +80,17 @@ registerLocaleData(en);
     NzGridModule,
     NzLayoutModule,
     NzButtonModule,
+    NzPopoverModule,
+    NzDropDownModule,
+    NzModalModule,
+    NzNotificationModule,
+    NzAvatarModule,
+    NzMenuModule
   ],
-  providers: [NgbActiveModal, { provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    NgbActiveModal,
+    { provide: NZ_I18N, useValue: en_US },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

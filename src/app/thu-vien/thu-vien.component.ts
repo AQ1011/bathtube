@@ -18,10 +18,7 @@ import { Room } from '../models/room.model';
 export class ThuVienComponent implements OnInit {
 
   movieLike!: Movie[];
-  constructor(private queueService: QueuePlayerService, private modalService: NgbModal,
-    private router: Router,
-    private roomService: RoomService,
-    private userService: UserService,private firestore: Firestore,) { }
+  constructor(private queueService: QueuePlayerService) { }
 
   ngOnInit(): void {
     this.queueService.getMovie().pipe(
@@ -29,36 +26,5 @@ export class ThuVienComponent implements OnInit {
         this.movieLike = movie
       })
     ).subscribe()
-  }
-  showName(i: number) {
-    let title = document.getElementById(i.toString()) as HTMLElement;
-    title.className += ' show';
-    title.parentElement!.className += ' hover-bg';
-  }
-
-  hideName(i: number) {
-    let title = document.getElementById(i.toString()) as HTMLElement;
-    title.className = 'movie-name';
-    title.parentElement!.className = 'movie';
-  }
-  goMovie(videoId: string) {
-    let roomId = this.makeid(9);
-    let viewer = [this.userService.getDisplayName() || 'annon ' + this.makeid(4)];
-    this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer, doc(this.firestore, 'chat', roomId)))
-    this.router.navigate(['player/'+ roomId])
-  }
-  getDetail(content: Movie){
-    const modalRef = this.modalService.open(MovieDetailComponent, { size: 'lg' } );
-    modalRef.componentInstance.movie = content;
-  }
-  makeid(length: number) {
-    var result           = '';
-    var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-          result += characters.charAt(Math.floor(Math.random() *
-    charactersLength));
-    }
-    return result;
   }
 }
