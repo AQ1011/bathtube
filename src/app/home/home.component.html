@@ -16,8 +16,8 @@
           </li>
         </div>
         <div nz-col [nzSpan]="6" class="account">
-          <div nz-row>
-            <nz-input-group nz-col [nzSpan]="12" [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix" nzSize="large">
+          <div nz-row nzAlign="middle">
+            <nz-input-group nz-col [nzSpan]="12" [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix" nzSize="large" class="my-2">
               <input nz-input nzBorderless type="text" placeholder="" (keyup)="search($event)"/>
             </nz-input-group>
             <ng-template #searchPrefix>

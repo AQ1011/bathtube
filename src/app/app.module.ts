@@ -37,6 +37,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ThuVienComponent } from './thu-vien/thu-vien.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 registerLocaleData(en);
 
@@ -57,6 +58,7 @@ registerLocaleData(en);
     NotFoundComponent,
     SignInComponent,
     ThuVienComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

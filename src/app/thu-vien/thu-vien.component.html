@@ -1,4 +1,4 @@
-<header class="header-container" (scroll)="onScroll()" [ngClass]="navbarfixed ? 'fixed':'nofixed'">
+<!-- <header class="header-container" (scroll)="onScroll()" [ngClass]="navbarfixed ? 'fixed':'nofixed'"> -->
     <div class="container">
       <div nz-row nzJustify="space-between" class="navbar">
         <div nz-col [nzSpan]="6" class="brand">Film</div>
@@ -18,7 +18,7 @@
           <div nz-col [nzSpan]="6" class="account">
             <div nz-row>
               <nz-input-group nz-col [nzSpan]="12" [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix" nzSize="large">
-                <input nz-input nzBorderless type="text" placeholder="" (keyup)="search($event)"/>
+                <!-- <input nz-input nzBorderless type="text" placeholder="" (keyup)="search($event)"/> -->
               </nz-input-group>
               <ng-template #searchPrefix>
                 <span class="material-symbols-outlined">
@@ -26,9 +26,9 @@
                 </span>
               </ng-template>
               <ng-template #removeSuffix>
-                <span class="material-symbols-outlined" style="cursor: pointer;" *ngIf="searchInput != ''" (click)="removeSearch()" >
+                <!-- <span class="material-symbols-outlined" style="cursor: pointer;" *ngIf="searchInput != ''" (click)="removeSearch()" > -->
                   close
-                </span>
+                <!-- </span> -->
               </ng-template>
               <div nz-col [nzSpan]="12">
                 <app-login></app-login>
@@ -37,7 +37,7 @@
           </div>
       </div>
     </div>
-  </header>
+  <!-- </header> -->
 <section class="search__film">
     <div class="search__film-list row row-cols-5">
     <div *ngFor="let movie of movieLike ; index as i " class="search__film-item col">

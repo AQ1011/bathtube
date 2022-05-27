@@ -119,6 +119,7 @@ export class HomeComponent implements OnInit,DoCheck {
     this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer, doc(this.firestore, 'chat', roomId)))
     this.router.navigate(['player/'+ roomId])
   }
+
   getDetail(content: Movie){
     const modalRef = this.modalService.open(MovieDetailComponent, { size: 'lg' } );
     modalRef.componentInstance.movie = content;
@@ -154,6 +155,7 @@ export class HomeComponent implements OnInit,DoCheck {
     title.className = 'movie-name';
     title.parentElement!.className = 'movie';
   }
+
   search(event: any){
     this.searchInput = (event.target as HTMLInputElement).value;
     this.movieService.search.next(this.searchInput);
