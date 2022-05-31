@@ -78,7 +78,7 @@ button {
 }
 .message {
   color: white;
-  font-size: small;
+  font-size: 13px;
   padding-bottom: 8px;
 }
 .message::-webkit-scrollbar {
@@ -210,4 +210,9 @@ button span {
 
 .search-enable {
   height: 80%;
+}
+
+.host-icon {
+  color:#FED80E;
+  font-size: 13px;
 }

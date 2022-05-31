@@ -7,26 +7,26 @@
         <div #pp class="player w-100" (window:resize)="resize()" *ngIf="!queueEnded ;else noVid">
           <div id="yt-player"></div>
         </div>
-        <ng-template #noVid class="no-vid">
+        <ng-template #noVid class="no-vid" class="w-100 h-100">
           KHONG CO PHIM GI HET
         </ng-template>
         <div class="player-option">
           <button nz-button nzType="text" (click)="openInviteUser(content)">
-            <span class="material-symbols-outlined">
-              person_add
+            <span class="material-symbols-outlined" nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Người tham gia">
+              group
             </span>
           </button>
-          <button nz-button nzType="text" (click)="showChat = !showChat">
+          <button nz-button nzType="text" (click)="chat()" nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Khung chat">
             <span class="material-symbols-outlined">
               chat
             </span>
           </button>
-          <button nz-button nzType="text" (click)="showSearchBtn()">
+          <button nz-button nzType="text" (click)="showSearchBtn()"  nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Danh sách phim">
             <span class="material-symbols-outlined">
-              search
+              playlist_add
             </span>
           </button>
-          <button nz-button nzType="text" (click)="BackToHomeBtn()">
+          <button nz-button nzType="text" (click)="BackToHomeBtn()"  nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Về trang chủ">
             <span class="material-symbols-outlined">
               keyboard_return
             </span>
@@ -43,6 +43,10 @@
       <div id="chat-log" [style.flex]="'1'" class="m-2 p-2 chat-log" nzAlign="top">
         <div nz-row *ngFor="let message of chatLog">
           <div nz-col [nzSpan]="24" class="message">
+            <span class="material-symbols-outlined host-icon" *ngIf="message.uid === room.viewer[0]"
+            >
+              star
+            </span>
             <span class="font-weight-bold"
               [ngStyle]="{'color': message.color}">
               {{message.user}}:

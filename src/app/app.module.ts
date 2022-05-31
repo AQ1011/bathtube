@@ -42,6 +42,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { VoiceChatComponent } from './player/voice-chat/voice-chat.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 registerLocaleData(en);
 
@@ -62,6 +64,7 @@ registerLocaleData(en);
     SignInComponent,
     ThuVienComponent,
     NavBarComponent,
+    VoiceChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,8 @@ registerLocaleData(en);
     NzModalModule,
     NzNotificationModule,
     NzAvatarModule,
-    NzMenuModule
+    NzMenuModule,
+    NzToolTipModule
   ],
   providers: [
     NgbActiveModal,

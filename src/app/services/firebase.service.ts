@@ -22,7 +22,10 @@ export class FireBaseService {
   }
 
   setChat(docRef: DocumentReference, data: any): void {
-    setDoc(docRef, data);
+    // setDoc(docRef, data);
+    updateDoc(docRef,{
+      chat: arrayUnion(data)
+    })
   }
 
 }

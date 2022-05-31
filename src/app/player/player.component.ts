@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Firestore, doc, docSnapshots, getDoc,  } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentReference } from '@firebase/firestore';
+import { arrayRemove, arrayUnion, DocumentReference, updateDoc } from '@firebase/firestore';
 import { Chat, Room } from '../models/room.model';
 import { UserService } from '../services/user.service';
 import { FireBaseService } from '../services/firebase.service';
@@ -11,6 +11,7 @@ import { Movie } from '../models/movie.moddel';
 import { RoomService } from '../services/room.service';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { debounce, debounceTime } from 'rxjs/operators';
+import { update } from '@firebase/database';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { debounce, debounceTime } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit, AfterViewInit {
+export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('pp') ref!: ElementRef;
 
@@ -40,6 +41,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   queueEnded = false;
   color: string = '';
   showHeader = false;
+  viewer: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -62,7 +64,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         docSnapshots(chatRef).subscribe(
           (doc) => {
             if(!doc.metadata.hasPendingWrites && doc.data()) {
-              this.chatLog.push(doc.data() as Chat)
+              // this.chatLog.push(doc.data() as Chat)
+              this.chatLog = doc.get('chat') as Chat[];
               var element = document.getElementById("chat-log");
               element!.scrollTop = element!.scrollHeight;
             }
@@ -72,6 +75,13 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     )
     this.roomService.getRoom(this.roomId).subscribe((room) => {
       this.room = room;
+      this.viewer = room.viewer;
+      if(room.viewer[0] !== this.userSvc.getUid()) {
+        let uid = this.userSvc.getUid();
+        updateDoc(doc(this.firestore, 'room', this.roomId), {
+          viewer: arrayUnion(uid)
+        })
+      }
     })
   }
 
@@ -128,6 +138,12 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         if(this.room.viewer[0] !== this.userSvc.getDisplayName())
           this.syncWithHost();
         this.player.loadVideoById(this.room.videos[this.room.currentPlay].id, this.room.videoTime);
+        this.playList = [];
+        this.room.videos.forEach(ref => {
+          getDoc(ref)
+            .then( video => this.playList.push(video.data() as Movie)
+            ).catch(err => console.log(err));
+        })
       });
 
     this.vId.subscribe(id => {
@@ -175,6 +191,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     if(this.chatContent) {
       this.fbSvc.setChat(this.chatRef,
         {
+          uid: this.uid,
           user: this.userSvc.getDisplayName() || 'guest ;_;',
           content: this.chatContent, time: new Date(),
           color: this.color || '#ffffff',
@@ -191,16 +208,27 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     window.scrollBy(80,0);
   }
 
+  chat() {
+    this.showChat = !this.showChat;
+    setTimeout(() =>
+    this.resize(), 500);
+  }
+
   showSearchBtn(){
     this.showSearch = !this.showSearch;
-    if(this.showSearch)
+    if(this.showSearch) {
       this.showChat = true;
+      this.resize();
+    }
   }
 
   openSearchPlayer(longContent : any) {
     const modalRef = this.modalService.open(PlayerListComponent, { size: 'lg' }).result
       .then((videos: DocumentReference[]) => {
         this.roomService.addMovieToList(this.roomId, videos);
+        getDoc(videos[videos.length - 1])
+          .then( video => this.playList.push(video.data() as Movie))
+          .catch( err => console.log(err));
       });
   }
 
@@ -258,5 +286,17 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         console.log(error);
       }
     )
+  }
+
+  get uid() {
+    return this.userSvc.getUid();
+  }
+
+  @HostListener('window:beforeunload')
+  ngOnDestroy() {
+    let uid = this.userSvc.getDisplayName();
+    updateDoc(doc(this.firestore, 'room', this.roomId), {
+      viewer: arrayRemove(uid)
+    })
   }
 }

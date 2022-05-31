@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit,DoCheck {
 
   goMovie(videoId: string) {
     let roomId = this.makeid(9);
-    let viewer = [this.userService.getDisplayName() || 'annon ' + this.makeid(4)];
+    let viewer = [this.userService.getUid()];
     this.roomService.setRoom(new Room(roomId, [doc(this.firestore, 'video', videoId)], viewer, doc(this.firestore, 'chat', roomId)))
     this.router.navigate(['player/'+ roomId])
   }

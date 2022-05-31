@@ -17,6 +17,10 @@ export class UserService {
     return this.auth.currentUser!.photoURL;
   }
 
+  getUid() {
+    return this.auth.currentUser!.uid;
+  }
+
   getUser() {
     var user: User | null;
     try {

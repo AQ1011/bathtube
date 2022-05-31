@@ -20,14 +20,19 @@ export class Room {
 }
 
 export class Chat {
+  uid: string;
   user: string;
   content: string;
   time: Date;
   color: string;
-  constructor( user?: string, content?: string, time?: Date, color?: string) {
+  constructor( uid?: string, user?: string, content?: string, time?: Date, color?: string) {
+    this.uid = '';
     this.user = 'guest ;_;';
     this.content = '';
     this. time = new Date();
+    if(uid) {
+      this.uid = uid;
+    }
     if(user) {
       this.user = user;
     }
