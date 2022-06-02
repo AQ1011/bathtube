@@ -16,7 +16,7 @@
 .modal-popup {
   position: relative;
   width: 100%;
-  background-color: #2F2F2F;
+  background-color: #181818;
   padding-bottom: 32px;
   z-index:99;
 }
@@ -482,7 +482,8 @@
 .modal_body_relevant_content_list_item {
   display: block;
   margin-bottom: 20px;
-  background-color: #737070
+  // background-color: #737070
+  background-color: #2F2F2F;
 }
 
 .modal_body_relevant_content_list_item .relevant_thumbnail {

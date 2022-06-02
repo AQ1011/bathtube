@@ -38,7 +38,7 @@
                 <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movie)">
                   <img src="../../assets/icons/arrow_down.svg" alt="more">
                 </div>
-                <div class="btn-show-details" >
+                <div class="btn-show-details" (click)="goMovie(movie.videoId)">
                   <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
                 </div>
               </div>
@@ -82,7 +82,7 @@
               <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movieY)">
                 <img src="../../assets/icons/arrow_down.svg" alt="more">
               </div>
-              <div class="btn-show-details" >
+              <div class="btn-show-details" (click)="goMovie(movieY.videoId)">
                 <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
               </div>
             </div>

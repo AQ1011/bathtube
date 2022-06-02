@@ -15,6 +15,8 @@ export class PlayerListComponent implements OnInit {
   movieList: Movie[] = []
   movieAdd: DocumentReference[] = [];
   apiLoaded: Boolean = false;
+  searchInput = '';
+  searchKey = '';
   constructor(
     private movieService: MovieService,
     private storage: Storage,
@@ -31,10 +33,22 @@ export class PlayerListComponent implements OnInit {
         });
       })
     }
+    this.movieService.search.subscribe(value => {
+      this.searchKey = value;
+    })
   }
   addMovieToQueue(movie: Movie){
     this.movieAdd.push(doc(this.firestore, 'video', movie.videoId))
     this.activeModal.close(this.movieAdd)
+  }
+  search(event: any){
+    this.searchInput = (event.target as HTMLInputElement).value;
+    this.movieService.search.next(this.searchInput);
+  }
+  removeSearch(){
+    this.searchInput ='';
+    this.movieService.search.next(this.searchInput);
+    this.searchKey = '';
   }
 
 }

@@ -120,7 +120,7 @@
                 <div class="modal_body_relevant_content_list">
                     <div *ngFor="let movie of similars ; index as i" class="modal_body_relevant_content_list_item" id="relevant_{{i+1}}">
                         <div class="relevant_thumbnail">
-                            <img [src]="movie.image" alt="thumbnail">
+                            <img (click)="goToMovie(movie.videoId)" [src]="movie.image" alt="thumbnail">
                         </div>
                         <div class="relevant_body">
                             <div class="relevant_body_info">

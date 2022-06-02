@@ -47,7 +47,25 @@
         <div class="movie">
           <img [src]="movie.image"
             (click)= "goMovie(movie.videoId)"/>
-          <div class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
+            <div class="movie-infor">
+              <div class="movie-infor-left">
+                <div class="movie-intro">
+                  <span>2022</span>
+                  <div>{{movie.age}}+</div>
+                  <span>1 season</span>
+                  <div>HD</div>
+                </div>
+                <div  class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
+              </div>
+              <div class="movie-infor-right">
+                <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movie)">
+                  <img src="../../assets/icons/arrow_down.svg" alt="more">
+                </div>
+                <div class="btn-show-details" (click)="goMovie(movie.videoId)">
+                  <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
+                </div>
+              </div>
+            </div>
         </div>
       </div>
   </div>
