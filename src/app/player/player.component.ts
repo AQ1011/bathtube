@@ -63,12 +63,12 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.roomService.getRoom(this.roomId).subscribe((room) => {
       this.room = room;
       this.viewer = room.viewer;
-      if(room.viewer[0] !== this.userSvc.getUid()) {
-        let uid = this.userSvc.getUid();
-        updateDoc(doc(this.firestore, 'room', this.roomId), {
-          viewer: arrayUnion(uid)
-        })
-      }
+      // if(room.viewer[0] !== this.userSvc.getUid()) {
+      //   let uid = this.userSvc.getUid();
+      //   updateDoc(doc(this.firestore, 'room', this.roomId), {
+      //     viewer: arrayUnion(uid)
+      //   })
+      // }
     })
   }
 
@@ -179,7 +179,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       this.queueEnded = true;
       return;
     }
-    this.roomService.setRoom(this.room);
+    // this.roomService.setRoom(this.room);
     this.player.loadVideoById(this.playList[this.room.currentPlay].videoId, 0);
   }
 
