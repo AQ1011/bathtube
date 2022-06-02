@@ -16,7 +16,7 @@
       [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix"
       nzSize="large" class="my-2" [style.max-width]="'400px'">
       <input nz-input nzBorderless type="text" placeholder="" [(ngModel)]="searchInput"
-        (ngModelChange)="search()"/>
+        (keyup)="search($event)"/>
     </nz-input-group>
   </div>
 
@@ -42,16 +42,14 @@
 </nz-header>
 
 <section *ngIf="searchInput" class="search__film">
-  <div class="container">
-    <div nz-row [nzGutter]="24" [style.width]="'100%'">
-      <div nz-col nzFlex="1" *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="pb-4">
-        <div class="search-item">
+  <div class="search__film-list row row-cols-5">
+      <div *ngFor="let movie of movieList | filter:searchKey:'name'; index as i " class="search__film-item col">
+        <div class="movie">
           <img [src]="movie.image"
             (click)= "goMovie(movie.videoId)"/>
-          <div (click)="getDetail(movie)">{{movie.name}}</div>
+          <div class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
         </div>
       </div>
-    </div>
   </div>
 </section>
 

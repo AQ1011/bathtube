@@ -20,15 +20,29 @@
     <div class="list-title">Thịnh hành</div>
     <li id="poplist" class="popular-list">
 
-      <ul *ngFor="let movie of movieList; index as i" class="popular-item" (click)="goMovie(movie.videoId)">
+      <ul *ngFor="let movie of movieList" class="popular-item">
         <div class="movie">
           <img [src]="movie.image" class="thumbnail"
-            (mouseenter)="showName(i)"
-            (mouseleave)="hideName(i)"
-            (click)= "goMovie(movie.videoId)"/>
-          <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
-            (mouseenter)="showName(i)"
-            (mouseleave)="hideName(i)">{{movie.name}}</div>
+            (click)="goMovie(movie.videoId)"/>
+            <div class="movie-infor">
+              <div class="movie-infor-left">
+                <div class="movie-intro">
+                  <span>2022</span>
+                  <div>{{movie.age}}+</div>
+                  <span>1 season</span>
+                  <div>HD</div>
+                </div>
+                <div  class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
+              </div>
+              <div class="movie-infor-right">
+                <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movie)">
+                  <img src="../../assets/icons/arrow_down.svg" alt="more">
+                </div>
+                <div class="btn-show-details" >
+                  <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
+                </div>
+              </div>
+            </div>
         </div>
       </ul>
     </li>
@@ -50,15 +64,29 @@
   <div class="popular" id="list-film-3">
     <div class="list-title">Phát hành trong năm</div>
     <li id="poplist" class="popular-list">
-      <ul *ngFor="let movieY of movieYear; index as iY" class="popular-item" (click)="goMovie(movieY.videoId)">
+      <ul *ngFor="let movieY of movieYear" class="popular-item">
         <div class="movie">
           <img [src]="movieY.image" class="thumbnail"
-            (mouseenter)="showName(iY)"
-            (mouseleave)="hideName(iY)"
-            (click)= "goMovie(movieY.videoId)"/>
-          <div id="{{iY}}" class="movie-name" (click)="getDetail(movieY)"
-            (mouseenter)="showName(iY)"
-            (mouseleave)="hideName(iY)">{{movieY.name}}</div>
+            (click)="goMovie(movieY.videoId)"/>
+          <div class="movie-infor">
+            <div class="movie-infor-left">
+              <div class="movie-intro">
+                <span>2022</span>
+                <div>{{movieY.age}}+</div>
+                <span>1 season</span>
+                <div>HD</div>
+              </div>
+              <div  class="movie-name" (click)="getDetail(movieY)">{{movieY.name}}</div>
+            </div>
+            <div class="movie-infor-right">
+              <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movieY)">
+                <img src="../../assets/icons/arrow_down.svg" alt="more">
+              </div>
+              <div class="btn-show-details" >
+                <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
+              </div>
+            </div>
+          </div>
         </div>
       </ul>
     </li>

@@ -96,9 +96,6 @@ export class HomeComponent implements OnInit,DoCheck {
     this.movieWatchedService.getMovieWatched().subscribe((movie) => {
       this.movieWatched = movie;
     })
-    this.movieService.search.subscribe((val :any) =>{
-      this.searchKey = val;
-    })
     this.queueService.getMovie().pipe(
       map((movie:Movie[]) =>{
         this.movieLike = movie
@@ -148,17 +145,17 @@ export class HomeComponent implements OnInit,DoCheck {
     }
   }
 
-  showName(i: number) {
-    let title = document.getElementById(i.toString()) as HTMLElement;
-    title.className += ' show';
-    title.parentElement!.className += ' hover-bg';
-  }
+  // showName(i: number) {
+  //   let title = document.getElementById(i.toString()) as HTMLElement;
+  //   title.className += ' show';
+  //   title.parentElement!.className += ' hover-bg';
+  // }
 
-  hideName(i: number) {
-    let title = document.getElementById(i.toString()) as HTMLElement;
-    title.className = 'movie-name';
-    title.parentElement!.className = 'movie';
-  }
+  // hideName(i: number) {
+  //   let title = document.getElementById(i.toString()) as HTMLElement;
+  //   title.className = 'movie-name';
+  //   title.parentElement!.className = 'movie';
+  // }
 
   search(event: any){
     this.searchInput = (event.target as HTMLInputElement).value;

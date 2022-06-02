@@ -1,1 +1,16 @@
 
+<section class="search__film">
+  <div class="search__film-list row row-cols-5">
+  <div *ngFor="let movie of movieLike ; index as i " class="search__film-item col">
+    <div class="movie">
+      <img [src]="movie.image" class="thumbnail"
+        (mouseenter)="showName(i)"
+        (mouseleave)="hideName(i)"
+        (click)= "goMovie(movie.videoId)"/>
+      <div id="{{i}}" class="movie-name" (click)="getDetail(movie)"
+        (mouseenter)="showName(i)"
+        (mouseleave)="hideName(i)">{{movie.name}}</div>
+    </div>
+  </div>
+  </div>
+</section>

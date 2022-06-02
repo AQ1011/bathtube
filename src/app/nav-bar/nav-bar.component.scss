@@ -131,7 +131,9 @@ button {
   height: 128px;
   border-radius: 4px;
 }
-
+.movie{
+  width: 227px !important;
+}
 .movie-name {
   background-color: #282828;
   width: 100%;
@@ -168,7 +170,7 @@ button {
   min-height: calc(100vh - 80px);
   margin-top: 64px;
   padding: 45px;
-  z-index: 10000;
+  z-index: 90;
   background-color: rgba(black,0.95);
   &-list{
     padding: 0 60px;

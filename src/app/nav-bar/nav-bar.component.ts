@@ -23,8 +23,8 @@ import { UserService } from '../services/user.service';
 })
 export class NavBarComponent implements OnInit {
 
-  public searchInput : string = '';
-  searchKey:string ="";
+  public searchInput = '';
+  searchKey ="";
   movieList: Movie[] = []
   isSignedIn: boolean = false;
   user?: User;
@@ -68,6 +68,9 @@ export class NavBarComponent implements OnInit {
           this.isSignedIn = false;
       }
     )
+    this.movieService.search.subscribe((val :any) =>{
+      this.searchKey = val;
+    })
   }
 
   makeid(length: number) {
@@ -105,7 +108,8 @@ export class NavBarComponent implements OnInit {
     title.parentElement!.className = 'movie';
   }
 
-  search(){
+  search(event: any){
+    this.searchInput = (event.target as HTMLInputElement).value;
     this.movieService.search.next(this.searchInput);
   }
   removeSearch(){
@@ -130,6 +134,7 @@ export class NavBarComponent implements OnInit {
       nzOnOk: () =>  {
         this.authService.signOut();
         this.isSignedIn = false;
+        this.router.navigate(['/login']);
         this.notification.create('success',
           'Thông báo',
           'Đăng xuất thành công',
