@@ -1,17 +1,15 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Firestore, doc, docSnapshots, getDoc,  } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { arrayRemove, arrayUnion, DocumentReference, updateDoc } from '@firebase/firestore';
+import { arrayUnion, DocumentReference, updateDoc } from '@firebase/firestore';
 import { Chat, Room } from '../models/room.model';
 import { UserService } from '../services/user.service';
-import { FireBaseService } from '../services/firebase.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Movie } from '../models/movie.moddel';
 import { RoomService } from '../services/room.service';
 import { PlayerListComponent } from './player-list/player-list.component';
-import { debounce, debounceTime } from 'rxjs/operators';
-import { update } from '@firebase/database';
+import { ChatService } from '../services/chat.service';
 
 
 @Component({
@@ -20,10 +18,10 @@ import { update } from '@firebase/database';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PlayerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('pp') ref!: ElementRef;
-
+  @ViewChild('chatLogElement') chatLogElement: HTMLElement;
   roomId: string = '';
   apiLoaded = false;
   messages: Chat[] = [];
@@ -42,37 +40,26 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   color: string = '';
   showHeader = false;
   viewer: string[] = [];
+  chatsound = new Audio();
 
   constructor(
     private route: ActivatedRoute,
     private firestore: Firestore,
-    private fbSvc: FireBaseService,
     private userSvc: UserService,
     private modalService: NgbModal,
     private roomService: RoomService,
-    private router: Router) {
+    private router: Router,
+    private chatSvc: ChatService) {
+    this.chatLogElement = document.getElementById('chat-log') as HTMLElement;
     this.route.params.subscribe((params) => {
       this.roomId = params['id'];
-    })
+    });
+    this.chatsound.src = '../../assets/sounds/facebookchat.mp3';
+    // this.chatsound.volume = 0.3;
   }
 
   ngOnInit(): void {
     this.getChatColor();
-    this.roomService.getChat(this.roomId).then(
-      (chatRef) => {
-        this.chatRef = chatRef;
-        docSnapshots(chatRef).subscribe(
-          (doc) => {
-            if(!doc.metadata.hasPendingWrites && doc.data()) {
-              // this.chatLog.push(doc.data() as Chat)
-              this.chatLog = doc.get('chat') as Chat[];
-              var element = document.getElementById("chat-log");
-              element!.scrollTop = element!.scrollHeight;
-            }
-          }
-        )
-      }
-    )
     this.roomService.getRoom(this.roomId).subscribe((room) => {
       this.room = room;
       this.viewer = room.viewer;
@@ -86,33 +73,43 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
+      window.scrollBy({left: 0, top: 80, behavior: 'smooth'});
+    }, (1000));
+    this.chatSvc.onJoin().subscribe(joinMsg => {
+    })
+    this.chatSvc.connectToRoom(this.userSvc.getDisplayName()!, this.roomId);
+    this.chatSvc.onMessage().subscribe(chat => {
+      this.chatLog.push(chat);
+      this.chatsound.load();
+      this.chatsound.play();
+    })
+
     if (!this.apiLoaded) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
       document.body.appendChild(tag);
     }
 
-    if (!window.YT || !window.YT.Player) {
-      window.onYouTubeIframeAPIReady = () => {
-        this.player = new YT.Player('yt-player', {
-          height: '320',
-          width: '640',
-          videoId: this.currentVideoId,
-          host: 'https://www.youtube.com',
-          playerVars: {
-            'origin': 'http://localhost:4200',
-            'controls': 1,
-            'modestbranding': 0,
-            'rel': 0,
-            'color': 'white',
-            'autoplay': 0,
-          },
-          events: {
-            'onReady': this.onReady.bind(this),
-            'onStateChange': this.onPlayerStateChange.bind(this),
-          }
-        });
-      }
+    window.onYouTubeIframeAPIReady = () => {
+      this.player = new YT.Player('yt-player', {
+        height: '320',
+        width: '640',
+        videoId: this.currentVideoId,
+        host: 'https://www.youtube.com',
+        playerVars: {
+          'origin': 'http://localhost:4200',
+          'controls': 1,
+          'modestbranding': 0,
+          'rel': 0,
+          'color': 'white',
+          'autoplay': 0,
+        },
+        events: {
+          'onReady': this.onReady.bind(this),
+          'onStateChange': this.onPlayerStateChange.bind(this),
+        }
+      });
     }
   }
 
@@ -174,7 +171,6 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.player.pauseVideo();
         break;
     }
-
   }
 
   nextVideo() {
@@ -189,13 +185,12 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sendChat() {
     if(this.chatContent) {
-      this.fbSvc.setChat(this.chatRef,
-        {
-          uid: this.uid,
-          user: this.userSvc.getDisplayName() || 'guest ;_;',
-          content: this.chatContent, time: new Date(),
-          color: this.color || '#ffffff',
-        })
+      this.chatSvc.sendMessageToRoom(this.roomId, {
+        uid: this.uid,
+        user: this.userSvc.getDisplayName() || 'guest ;_;',
+        content: this.chatContent, time: new Date(),
+        color: this.color || '#ffffff',
+      });
     }
     this.chatContent = ''
   }
@@ -290,13 +285,5 @@ export class PlayerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get uid() {
     return this.userSvc.getUid();
-  }
-
-  @HostListener('window:beforeunload')
-  ngOnDestroy() {
-    let uid = this.userSvc.getDisplayName();
-    updateDoc(doc(this.firestore, 'room', this.roomId), {
-      viewer: arrayRemove(uid)
-    })
   }
 }

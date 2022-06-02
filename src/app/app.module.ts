@@ -44,8 +44,11 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { VoiceChatComponent } from './player/voice-chat/voice-chat.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 registerLocaleData(en);
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {transports: ["websocket"]} };
 
 @NgModule({
   declarations: [
@@ -89,7 +92,8 @@ registerLocaleData(en);
     NzNotificationModule,
     NzAvatarModule,
     NzMenuModule,
-    NzToolTipModule
+    NzToolTipModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     NgbActiveModal,

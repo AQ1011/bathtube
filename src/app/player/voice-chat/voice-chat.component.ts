@@ -1,6 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { collection, doc, docSnapshots, Firestore, onSnapshot, setDoc, collectionChanges, getDoc, updateDoc } from '@angular/fire/firestore';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-voice-chat',
@@ -46,11 +46,16 @@ export class VoiceChatComponent implements OnInit, AfterViewInit {
   @Input() viewer: string[] = [];
 
   constructor(
-    private firestore: Firestore
+    private chatSvc: ChatService,
   ) {
   }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.chatSvc.getPeers().subscribe((peers) => {
+      peers.forEach((peer: string) => {
+        this.sendOffer(peer)
+      });
+    })
   }
 
   async ngAfterViewInit() {
@@ -58,8 +63,6 @@ export class VoiceChatComponent implements OnInit, AfterViewInit {
     this.webcamVideo = document.getElementById('webcamVideo') as HTMLVideoElement;
     this.callButton = document.getElementById('callButton') as HTMLButtonElement;
     this.answerButton = document.getElementById('answerButton') as HTMLButtonElement;
-    this.remoteVideo = document.getElementById('remoteVideo') as HTMLVideoElement;
-    this.hangupButton = document.getElementById('hangupButton') as HTMLButtonElement;
     // this.webCamClick();
   }
 
@@ -92,81 +95,22 @@ export class VoiceChatComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async callBtnClick() {
-    const callDoc = collection(this.firestore, 'vcs');
-    const offerCandidates = collection(callDoc, this.roomId, 'offerCandidates');
-    const answerCandidates = collection(callDoc, this.roomId, 'answerCandidates');
+  async sendOffer(peer: string) {
+    const pc = new RTCPeerConnection(this.servers);
 
-    // Get candidates for caller, save to db
-    this.pc.onicecandidate = (event) => {
-      event.candidate && setDoc(doc(offerCandidates), event.candidate.toJSON());
-    };
-
-    // Create offer
-    const offerDescription = await this.pc.createOffer();
-    await this.pc.setLocalDescription(offerDescription);
-
-    const offer = {
-      sdp: offerDescription.sdp,
-      type: offerDescription.type,
-    };
-
-    await setDoc(doc(callDoc, this.roomId), { offer });
-
-    // Listen for remote answer
-    onSnapshot(doc(callDoc,this.roomId), (snapshot) => {
-      const data = snapshot.data();
-      console.log(data);
-      if (!this.pc.currentRemoteDescription && data?.answer) {
-        const answerDescription = new RTCSessionDescription(data.answer);
-        this.pc.setRemoteDescription(answerDescription);
+    this.chatSvc.getAnswer().then(async (message) => {
+      if (message.id == peer) {
+        const remoteDesc = new RTCSessionDescription(message.answer);
+        await pc.setRemoteDescription(remoteDesc);
       }
     })
 
-    // When answered, add candidate to peer connection
-    collectionChanges(answerCandidates).subscribe((changes) => {
-      changes.forEach((change) => {
-        if (change.type === 'added') {
-          const candidate = new RTCIceCandidate(change.doc.data());
-          this.pc.addIceCandidate(candidate);
-        }
-      })
-    })
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    this.chatSvc.sendOffer(offer, peer)
 
-    this.hangupButton.disabled = false;
-  }
+    pc.onicecandidate = () => {
 
-  async answerButtonClick() {
-    const callDoc = collection(this.firestore, 'vcs');
-    const offerCandidates = collection(callDoc, this.roomId, 'offerCandidates');
-    const answerCandidates = collection(callDoc, this.roomId, 'answerCandidates');
-
-    this.pc.onicecandidate = (event) => {
-      event.candidate && setDoc(doc(answerCandidates),  event.candidate.toJSON());
-    };
-
-    const callData = (await getDoc(doc(callDoc, this.roomId))).data();
-
-    const offerDescription = callData!.offer;
-    await this.pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
-
-    const answerDescription = await this.pc.createAnswer();
-    await this.pc.setLocalDescription(answerDescription);
-
-    const answer = {
-      type: answerDescription.type,
-      sdp: answerDescription.sdp,
-    };
-
-    await updateDoc(doc(callDoc, this.roomId), { answer });
-    collectionChanges(offerCandidates).subscribe((changes) => {
-      changes.forEach((change) => {
-        if (change.type === 'added') {
-          let data = change.doc.data();
-          console.log(data);
-          this.pc.addIceCandidate(new RTCIceCandidate(data));
-        }
-      });
-    })
+    }
   }
 }
