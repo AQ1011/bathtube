@@ -1,6 +1,13 @@
 
   <div class="search-player">
-    <input type="text"/>
+    <div nz-col nzFlex="auto" class="text-center">
+      <nz-input-group
+        [nzPrefix]="searchPrefix" [nzSuffix]="removeSuffix"
+        nzSize="large" class="my-2" [style.max-width]="'400px'">
+        <input nz-input nzBorderless type="text" placeholder="" [(ngModel)]="searchInput"
+          (keyup)="search($event)"/>
+      </nz-input-group>
+    </div>
   </div>
   <!-- <div class="list-player">
     <div class="movie" *ngFor="let movie of movieList">
@@ -9,9 +16,10 @@
       <button class="btn btn-primary" (click)="addMovieToQueue(movie)">Add</button>
     </div>
   </div> -->
+
   <div class="modal_body_relevant_content">
     <div class="modal_body_relevant_content_list">
-        <div *ngFor="let movie of movieList" class="modal_body_relevant_content_list_item" id="relevant_1">
+        <div *ngFor="let movie of movieList | filter: searchKey: 'name' ; index as i " class="modal_body_relevant_content_list_item" id="relevant_{{i+1}}">
             <div class="relevant_thumbnail">
                 <img [src]="movie.image" alt="thumbnail">
             </div>
@@ -33,3 +41,13 @@
     </div>
 </div>
 
+<ng-template #searchPrefix>
+  <span class="material-symbols-outlined">
+    search
+  </span>
+</ng-template>
+<ng-template #removeSuffix>
+  <span class="material-symbols-outlined" style="cursor: pointer;" *ngIf="searchInput != ''" (click)="removeSearch()" >
+    close
+  </span>
+</ng-template>
