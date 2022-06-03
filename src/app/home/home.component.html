@@ -27,12 +27,10 @@
             <div class="movie-infor">
               <div class="movie-infor-left">
                 <div class="movie-intro">
-                  <span>2022</span>
-                  <div>{{movie.age}}+</div>
-                  <span>1 season</span>
-                  <div>HD</div>
+                  <nz-tag [nzColor]="'yellow'">{{movie.age}}+</nz-tag>
+                  <nz-tag [nzColor]="'yellow'">HD</nz-tag>
                 </div>
-                <div  class="movie-name" (click)="getDetail(movie)">{{movie.name}}</div>
+                <div class="movie-name" (click)="getDetail(movie)">{{movie.name  | uppercase}}</div>
               </div>
               <div class="movie-infor-right">
                 <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movie)">

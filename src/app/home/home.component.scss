@@ -192,10 +192,12 @@ button {
   position: relative;
   width: var(--item-width);
   height: 128px;
+
   & img{
     width: var(--item-width);
     height: 128px;
     border-radius: 4px;
+    object-fit: cover;
   }
   &:hover{
     transform: scale(1.5);
@@ -204,7 +206,8 @@ button {
     background-color: #282828;
     border-radius: 4px;
     z-index: 100;
-    height: 180px;
+    height: fit-content;
+    overflow: hidden;
     & img{
       border-radius: 4px 4px 0 0;
       transition-delay: 0.5s;
@@ -214,6 +217,9 @@ button {
       visibility: visible;
       transition-delay: 0.5s;
     }
+  }
+  .ant-tag {
+    font-size: 8px;
   }
 }
 
@@ -226,6 +232,7 @@ button {
     display: flex;
   }
 }
+
 .movie-intro{
   width: 100%;
   padding: 8px;
@@ -250,9 +257,9 @@ button {
 .movie-name {
   background-color: #282828;
   width: 100%;
-  padding: 0 8px;
+  padding: 8px 8px;
   color:#FED80E;
-  font-size: 8px;
+  font-size: 10px;
 }
 .btn-show-details{
   display: -webkit-box;
