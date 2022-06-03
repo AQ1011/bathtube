@@ -69,7 +69,7 @@
           <div class="movie-infor">
             <div class="movie-infor-left">
               <div class="movie-intro">
-                <span>2022</span>
+                <span>{{movieY.year}}</span>
                 <div>{{movieY.age}}+</div>
                 <span>1 season</span>
                 <div>HD</div>
@@ -101,7 +101,71 @@
           <div class="movie-infor">
             <div class="movie-infor-left">
               <div class="movie-intro">
-                <span>2022</span>
+                <span>{{movieY.year}}</span>
+                <div>{{movieY.age}}+</div>
+                <span>1 season</span>
+                <div>HD</div>
+              </div>
+              <span class="movie-name" (click)="getDetail(movieY)">{{movieY.name}}</span>
+            </div>
+            <div class="movie-infor-right">
+              <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movieY)">
+                <img src="../../assets/icons/arrow_down.svg" alt="more">
+              </div>
+              <div class="btn-show-details" (click)="goMovie(movieY.videoId)">
+                <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </li>
+    <button type="button" class="btn-prev" appPrev>Prev</button>
+    <button type="button" class="btn-next" appNext>Next</button>
+  </div>
+  <div class="popular" id="list-film-3">
+    <div class="list-title">Phim Châu Á</div>
+    <li id="poplist" class="popular-list">
+      <ul *ngFor="let movieY of asiaMovie" class="popular-item">
+        <div class="movie">
+          <img [src]="movieY.image" class="thumbnail"
+            (click)="goMovie(movieY.videoId)"/>
+          <div class="movie-infor">
+            <div class="movie-infor-left">
+              <div class="movie-intro">
+                <span>{{movieY.year}}</span>
+                <div>{{movieY.age}}+</div>
+                <span>1 season</span>
+                <div>HD</div>
+              </div>
+              <span class="movie-name" (click)="getDetail(movieY)">{{movieY.name}}</span>
+            </div>
+            <div class="movie-infor-right">
+              <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movieY)">
+                <img src="../../assets/icons/arrow_down.svg" alt="more">
+              </div>
+              <div class="btn-show-details" (click)="goMovie(movieY.videoId)">
+                <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </li>
+    <button type="button" class="btn-prev" appPrev>Prev</button>
+    <button type="button" class="btn-next" appNext>Next</button>
+  </div>
+  <div class="popular" id="list-film-3">
+    <div class="list-title">Phim Hoạt Hình</div>
+    <li id="poplist" class="popular-list">
+      <ul *ngFor="let movieY of hoatHinh" class="popular-item">
+        <div class="movie">
+          <img [src]="movieY.image" class="thumbnail"
+            (click)="goMovie(movieY.videoId)"/>
+          <div class="movie-infor">
+            <div class="movie-infor-left">
+              <div class="movie-intro">
+                <span>{{movieY.year}}</span>
                 <div>{{movieY.age}}+</div>
                 <span>1 season</span>
                 <div>HD</div>

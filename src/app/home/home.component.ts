@@ -38,6 +38,8 @@ export class HomeComponent implements OnInit,DoCheck {
   public searchInput : string = '';
   searchKey:string ="";
   hollywood: Movie[] = [];
+  hoatHinh: Movie[] = [];
+  asiaMovie: Movie[] = [];
 
   currentPopular: number = 0;
   navbarfixed: boolean = false;
@@ -87,11 +89,28 @@ export class HomeComponent implements OnInit,DoCheck {
       });
     })
     this.movieService.getAllMovie().pipe(
-      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'hollywood'))
+      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'Hollywood'))
     ).subscribe((movies) => {
       this.hollywood = [...movies];
-      console.log(this.hollywood)
       this.hollywood.forEach(movie => {
+        if(movie.image)
+          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
+      });
+    })
+    this.movieService.getAllMovie().pipe(
+      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'Asia'))
+    ).subscribe((movies) => {
+      this.asiaMovie = [...movies];
+      this.asiaMovie.forEach(movie => {
+        if(movie.image)
+          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
+      });
+    })
+    this.movieService.getAllMovie().pipe(
+      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'HoatHinh'))
+    ).subscribe((movies) => {
+      this.hoatHinh = [...movies];
+      this.hoatHinh.forEach(movie => {
         if(movie.image)
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
