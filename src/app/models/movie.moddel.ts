@@ -14,6 +14,7 @@ export interface Movie {
   image: string;
   age: number;
   theLoai: string;
+  phanLoai: string;
 }
 
 interface Comment {

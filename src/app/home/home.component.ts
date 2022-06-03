@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit,DoCheck {
   movieLike: Movie[] = [];
   public searchInput : string = '';
   searchKey:string ="";
+  hollywood: Movie[] = [];
 
   currentPopular: number = 0;
   navbarfixed: boolean = false;
@@ -73,6 +74,7 @@ export class HomeComponent implements OnInit,DoCheck {
         if(movie.image)
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
+      console.log(this.movieList);
     })
     this.movieService.getAllMovie().pipe(
       map((data: any) =>data.map((videoYear:Movie) => ({...videoYear})).filter((videoYear:Movie) => videoYear.year == 2022))
@@ -80,6 +82,16 @@ export class HomeComponent implements OnInit,DoCheck {
     .subscribe((movies) => {
       this.movieYear = [...movies];
       this.movieYear.forEach(movie => {
+        if(movie.image)
+          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
+      });
+    })
+    this.movieService.getAllMovie().pipe(
+      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'hollywood'))
+    ).subscribe((movies) => {
+      this.hollywood = [...movies];
+      console.log(this.hollywood)
+      this.hollywood.forEach(movie => {
         if(movie.image)
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
