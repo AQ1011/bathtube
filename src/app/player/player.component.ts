@@ -21,7 +21,6 @@ import { ChatService } from '../services/chat.service';
 export class PlayerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('pp') ref!: ElementRef;
-  @ViewChild('chatLogElement') chatLogElement: HTMLElement;
   roomId: string = '';
   apiLoaded = false;
   messages: Chat[] = [];
@@ -50,7 +49,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     private roomService: RoomService,
     private router: Router,
     private chatSvc: ChatService) {
-    this.chatLogElement = document.getElementById('chat-log') as HTMLElement;
     this.route.params.subscribe((params) => {
       this.roomId = params['id'];
     });
@@ -132,8 +130,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     getDoc(doc(this.firestore, 'room', this.roomId!))
       .then((doc) => {
         this.room = doc.data() as Room;
-        if(this.room.viewer[0] !== this.userSvc.getDisplayName())
-          this.syncWithHost();
+        // if(this.room.viewer[0] !== this.userSvc.getDisplayName())
+        //   this.syncWithHost();
         this.player.loadVideoById(this.room.videos[this.room.currentPlay].id, this.room.videoTime);
         this.playList = [];
         this.room.videos.forEach(ref => {
@@ -143,9 +141,9 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         })
       });
 
-    this.vId.subscribe(id => {
-      this.player.loadVideoById(id, 0);
-    })
+    // this.vId.subscribe(id => {
+    //   this.player.loadVideoById(id, 0);
+    // })
   }
 
   @HostListener('window:resize', ['$event'])

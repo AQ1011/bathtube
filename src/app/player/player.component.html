@@ -43,10 +43,9 @@
       <div #chatLogElement id="chat-log" [style.flex]="'1'" class="m-2 p-2 chat-log" nzAlign="top">
         <div nz-row *ngFor="let message of chatLog">
           <div nz-col [nzSpan]="24" class="message">
-            <span class="material-symbols-outlined host-icon" *ngIf="message.uid === room.viewer[0]"
-            >
+            <!-- <span class="material-symbols-outlined host-icon" *ngIf="message.uid === room.viewer[0]">
               star
-            </span>
+            </span> -->
             <span class="font-weight-bold"
               [ngStyle]="{'color': message.color}">
               {{message.user}}:
