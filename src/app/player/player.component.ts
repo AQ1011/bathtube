@@ -124,7 +124,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
           this.color += letters[Math.floor(Math.random() * 16)];
       }
       localStorage.setItem('chatColor', this.color);
-      console.log(this.color);
     } else {
       this.color = localStorage.getItem('chatColor')!;
     }
@@ -141,8 +140,9 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.playList = [];
         this.room.videos.forEach(ref => {
           getDoc(ref)
-            .then( video => this.playList.push(video.data() as Movie)
-            ).catch(err => console.log(err));
+            .then( video => {
+              this.playList.push(video.data() as Movie)
+            }).catch(err => console.log(err));
         })
       });
 
@@ -163,7 +163,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       this.room.videoTime = this.player.getCurrentTime();
       this.roomService.setRoom(this.room);
     }
-    switch (this.room.videoState) {
+    switch (e.data) {
       case 0:
         this.nextVideo();
         break;
@@ -199,10 +199,35 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   resize() {
-    this.player.setSize(
-      this.ref.nativeElement.offsetWidth,
-      this.ref.nativeElement.offsetHeight
-    )
+    try {
+      this.player.setSize(
+        this.ref.nativeElement.offsetWidth,
+        this.ref.nativeElement.offsetHeight
+      )
+    } catch {
+      this.player = new YT.Player('yt-player', {
+        height: '320',
+        width: '640',
+        videoId: this.currentVideoId,
+        host: 'https://www.youtube.com',
+        playerVars: {
+          'origin': 'http://localhost:4200',
+          'controls': 1,
+          'modestbranding': 0,
+          'rel': 0,
+          'color': 'white',
+          'autoplay': 0,
+        },
+        events: {
+          'onReady': this.onReady.bind(this),
+          'onStateChange': this.onPlayerStateChange.bind(this),
+        }
+      });
+      this.player.setSize(
+        this.ref.nativeElement.offsetWidth,
+        this.ref.nativeElement.offsetHeight
+      )
+    }
     window.scrollBy(80,0);
   }
 
