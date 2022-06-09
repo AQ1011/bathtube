@@ -11,11 +11,11 @@
           KHONG CO PHIM GI HET
         </ng-template>
         <div class="player-option">
-          <button nz-button nzType="text" (click)="openInviteUser(content)">
+          <!-- <button nz-button nzType="text" (click)="openInviteUser(content)">
             <span class="material-symbols-outlined" nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Người tham gia">
               group
             </span>
-          </button>
+          </button> -->
           <button nz-button nzType="text" (click)="chat()" nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Khung chat">
             <span class="material-symbols-outlined">
               chat
@@ -24,6 +24,11 @@
           <button nz-button nzType="text" (click)="showSearchBtn()"  nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Danh sách phim">
             <span class="material-symbols-outlined">
               playlist_add
+            </span>
+          </button>
+          <button nz-button nzType="text" (click)="copyLink()">
+            <span class="material-symbols-outlined" nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Copy link">
+              link
             </span>
           </button>
           <button nz-button nzType="text" (click)="BackToHomeBtn()"  nz-tooltip nzTooltipPlacement="left" nzTooltipTitle="Về trang chủ">
@@ -82,5 +87,5 @@
     <app-player-list></app-player-list>
   </ng-template>
   <ng-template #content let-modal>
-    <app-invite></app-invite>
+    <app-invite [roomId]="roomId"></app-invite>
   </ng-template>

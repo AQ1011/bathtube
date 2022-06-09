@@ -10,6 +10,8 @@ import { Movie } from '../models/movie.moddel';
 import { RoomService } from '../services/room.service';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { ChatService } from '../services/chat.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { ClipboardService } from 'ngx-clipboard';
 
 
 @Component({
@@ -39,6 +41,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   color: string = '';
   showHeader = false;
   viewer: string[] = [];
+  urlPlayer = 'http://localhost:4200/player/';
   chatsound = new Audio();
 
   constructor(
@@ -48,9 +51,11 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     private modalService: NgbModal,
     private roomService: RoomService,
     private router: Router,
-    private chatSvc: ChatService) {
+    private chatSvc: ChatService,
+    private _clipboardService: ClipboardService,private notification: NzNotificationService) {
     this.route.params.subscribe((params) => {
       this.roomId = params['id'];
+      this.urlPlayer = this.urlPlayer + this.roomId;
     });
     this.chatsound.src = '../../assets/sounds/facebookchat.mp3';
     // this.chatsound.volume = 0.3;
@@ -228,9 +233,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   openInviteUser(content: any){
     this.modalService.open(content);
   }
-  // copyLink(){
-  //   this.clipboard.copy
-  // }
+  copyLink(){
+    this._clipboardService.copy(this.urlPlayer);
+    this.notification.create('success',
+          'Thông báo',
+          'Copy to clipboard',
+          { nzDuration: 1000  }
+        );
+  }
   BackToHomeBtn(){
     this.router.navigate(['/home']);
   }
