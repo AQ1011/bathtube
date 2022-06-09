@@ -1,30 +1,31 @@
-<div class="popular">
+<div class="popular" id="list-film-1">
   <div class="list-title">{{title}}</div>
+  <li id="poplist" class="popular-list">
+
+    <ul *ngFor="let movie of movieList" class="popular-item">
+      <div class="movie">
+        <img [src]="movie.image" class="thumbnail"
+          (click)="goMovie(movie.videoId)"/>
+          <div class="movie-infor">
+            <div class="movie-infor-left">
+              <div class="movie-intro">
+                <nz-tag [nzColor]="'yellow'">{{movie.age}}+</nz-tag>
+                <nz-tag [nzColor]="'yellow'">HD</nz-tag>
+              </div>
+              <div class="movie-name" (click)="getDetail(movie)">{{movie.name  | uppercase}}</div>
+            </div>
+            <div class="movie-infor-right">
+              <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movie)">
+                <img src="../../assets/icons/arrow_down.svg" alt="more">
+              </div>
+              <div class="btn-show-details" (click)="goMovie(movie.videoId)">
+                <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
+              </div>
+            </div>
+          </div>
+      </div>
+    </ul>
+  </li>
   <button type="button" class="btn-prev" appPrev>Prev</button>
   <button type="button" class="btn-next" appNext>Next</button>
 </div>
-<li class="popular-list">
-  <ul *ngFor="let movie of movieList; " class="popular-item">
-    <div class="movie-container">
-      <div class="movie">
-        <img [src]="movie.image" *ngIf="movie.image" class="thumbnail"
-          (click)="goMovie(movie.videoId)"/>
-        <div class="movie-infor-left">
-          <div class="movie-intro">
-            <nz-tag [nzColor]="'yellow'">{{movie.age}}+</nz-tag>
-            <nz-tag [nzColor]="'yellow'">HD</nz-tag>
-          </div>
-          <div class="movie-name" (click)="getDetail(movie)">{{movie.name  | uppercase}}</div>
-        </div>
-        <div class="movie-infor-right">
-          <div class="btn-show-details" title="Thông tin phim" (click)="getDetail(movie)">
-            <img src="../../assets/icons/arrow_down.svg" alt="more">
-          </div>
-          <div class="btn-show-details" (click)="goMovie(movie.videoId)">
-            <img src="../../assets/icons/play_arrow_black_24dp.svg" alt="">
-          </div>
-        </div>
-      </div>
-    </div>
-  </ul>
-</li>

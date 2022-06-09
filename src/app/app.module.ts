@@ -47,6 +47,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ClipboardModule } from 'ngx-clipboard';
+import { MovieListComponent } from './home/movie-list/movie-list.component';
 
 registerLocaleData(en);
 // const config: SocketIoConfig = { url: 'http://localhost:3000', options: {transports: ["websocket"]} };
@@ -70,6 +71,7 @@ const config: SocketIoConfig = { url: 'https://bath-be.herokuapp.com/', options:
     ThuVienComponent,
     NavBarComponent,
     VoiceChatComponent,
+    MovieListComponent,
   ],
   imports: [
     BrowserModule,

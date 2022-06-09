@@ -76,45 +76,12 @@ export class HomeComponent implements OnInit,DoCheck {
         if(movie.image)
           getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
       });
-      console.log(this.movieList);
+      this.movieYear = this.movieList.filter((videoYear:Movie) => videoYear.year == 2022);
+      this.hollywood = this.movieList.filter((videoH:Movie) => videoH.phanLoai == 'Hollywood');
+      this.asiaMovie = this.movieList.filter((videoH:Movie) => videoH.phanLoai == 'Asia');
+      this.hoatHinh = this.movieList.filter((videoH:Movie) => videoH.phanLoai == 'HoatHinh');
     })
-    this.movieService.getAllMovie().pipe(
-      map((data: any) =>data.map((videoYear:Movie) => ({...videoYear})).filter((videoYear:Movie) => videoYear.year == 2022))
-    )
-    .subscribe((movies) => {
-      this.movieYear = [...movies];
-      this.movieYear.forEach(movie => {
-        if(movie.image)
-          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
-      });
-    })
-    this.movieService.getAllMovie().pipe(
-      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'Hollywood'))
-    ).subscribe((movies) => {
-      this.hollywood = [...movies];
-      this.hollywood.forEach(movie => {
-        if(movie.image)
-          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
-      });
-    })
-    this.movieService.getAllMovie().pipe(
-      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'Asia'))
-    ).subscribe((movies) => {
-      this.asiaMovie = [...movies];
-      this.asiaMovie.forEach(movie => {
-        if(movie.image)
-          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
-      });
-    })
-    this.movieService.getAllMovie().pipe(
-      map((data: any) =>data.map((videoH:Movie) => ({...videoH})).filter((videoH:Movie) => videoH.phanLoai == 'HoatHinh'))
-    ).subscribe((movies) => {
-      this.hoatHinh = [...movies];
-      this.hoatHinh.forEach(movie => {
-        if(movie.image)
-          getDownloadURL(ref(this.storage, 'image/' + movie.image)).then(url => movie.image = url);
-      });
-    })
+
     // document.getElementsByClassName('movie')[0].className += 'active';
     // setInterval(() => {
     //   if(this.currentPopular <= this.movieList.length)

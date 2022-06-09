@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
       (userCredential) => {
         if(userCredential) {
           localStorage.setItem('USER_CREDENTIAL', JSON.stringify(userCredential))
+          this.user = this.userService.getUser();
         }
       }
     )
-    this.user = this.userService.getUser();
   }
 
   signOut() {
