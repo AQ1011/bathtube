@@ -84,7 +84,7 @@
   </nz-layout>
 </nz-layout>
   <ng-template #longContent let-modal>
-    <app-player-list></app-player-list>
+    <app-player-list [videoId]="playList[this.room.currentPlay].videoId"></app-player-list>
   </ng-template>
   <ng-template #content let-modal>
     <app-invite [roomId]="roomId"></app-invite>

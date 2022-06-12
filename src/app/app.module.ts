@@ -48,6 +48,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { ClipboardModule } from 'ngx-clipboard';
 import { MovieListComponent } from './home/movie-list/movie-list.component';
+import { WatchedComponent } from './thu-vien/watched/watched.component';
 
 registerLocaleData(en);
 // const config: SocketIoConfig = { url: 'http://localhost:3000', options: {transports: ["websocket"]} };
@@ -72,6 +73,7 @@ const config: SocketIoConfig = { url: 'https://bath-be.herokuapp.com/', options:
     NavBarComponent,
     VoiceChatComponent,
     MovieListComponent,
+    WatchedComponent,
   ],
   imports: [
     BrowserModule,

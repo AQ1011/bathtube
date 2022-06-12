@@ -43,6 +43,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   viewer: string[] = [];
   urlPlayer = 'http://localhost:4200/player/';
   chatsound = new Audio();
+  userJoin: any[] =[];
 
   constructor(
     private route: ActivatedRoute,
@@ -72,6 +73,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       //     viewer: arrayUnion(uid)
       //   })
       // }
+      console.log(this.viewer);
     })
   }
 
@@ -82,6 +84,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.chatSvc.onJoin().subscribe(joinMsg => {
     })
     this.chatSvc.connectToRoom(this.userSvc.getDisplayName()!, this.roomId);
+    console.log(this.userSvc.getDisplayName());
     this.chatSvc.onMessage().subscribe(chat => {
       this.chatLog.push(chat);
       this.chatsound.load();

@@ -38,7 +38,7 @@ export class MovieDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.movieService.getAllMovie().pipe(
-      map((data: any) =>data.map((videoS:Movie) => ({...videoS})).filter((videoS:Movie) => videoS.age >= this.movie.age))
+      map((data: any) =>data.map((videoS:Movie) => ({...videoS})).filter((videoS:Movie) => videoS.age >= this.movie.age && videoS.phanLoai === this.movie.phanLoai))
     )
     .subscribe((movies) => {
       this.similars = movies;

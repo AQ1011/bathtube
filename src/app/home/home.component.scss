@@ -365,11 +365,14 @@ footer{
     margin-bottom: 48px;
   }
 }
-
+footer{
+  max-width: none;
+}
 .home-footer {
-  background-color: #282828;
-  width: 100vw;
   margin-top: 48px !important;
-  height: 400px;
-  margin: 0;
+  height: 200px;
+  text-align: center;
+  color: #fff !important;
+  opacity: 0.6;
+  position: relative;
 }

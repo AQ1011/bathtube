@@ -16,7 +16,6 @@
       <button class="btn btn-primary" (click)="addMovieToQueue(movie)">Add</button>
     </div>
   </div> -->
-
   <div class="modal_body_relevant_content">
     <div class="modal_body_relevant_content_list">
         <div *ngFor="let movie of movieList | filter: searchKey: 'name' ; index as i " class="modal_body_relevant_content_list_item" id="relevant_{{i+1}}">

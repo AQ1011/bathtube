@@ -1,3 +1,4 @@
+<app-nav-bar></app-nav-bar>
 <main class="home">
   <section class="banner">
     <div class="banner-img ride"></div>
@@ -18,10 +19,10 @@
   </section>
   <app-movie-list [movieList]="movieList" title="Thịnh hành">
   </app-movie-list>
-  <ng-container *ngIf="movieWatched">
+  <!-- <ng-container *ngIf="movieWatched">
     <app-movie-list [movieList]="movieWatched" title="Danh sách tiếp tục xem">
     </app-movie-list>
-  </ng-container>
+  </ng-container> -->
   <app-movie-list [movieList]="movieYear" title="Phát hành trong năm">
   </app-movie-list>
   <app-movie-list [movieList]="hollywood" title="Phim Âu - Mỹ">
@@ -31,5 +32,19 @@
   <app-movie-list [movieList]="hoatHinh" title="Phim Hoạt Hình">
   </app-movie-list>
 </main>
-<div class="home-footer">
-</div>
+<footer class="home-footer">
+  <div class="home-footer__infor">
+    <div class="home-footer__title">
+      <h5>Thuộc về nhóm 7</h5>
+    </div>
+    <div class="home-footer__content">
+      <span>Ngô Anh Quốc - 18110186</span>
+      <br>
+      <span>Phạm Quốc Hưng - 18110128</span>
+      <br>
+      <span>Lê Phước Hưng - 18110297</span>
+      <br>
+      <span>Huỳnh Trần Thảo Nhi – 18110169</span>
+    </div>
+  </div>
+</footer>

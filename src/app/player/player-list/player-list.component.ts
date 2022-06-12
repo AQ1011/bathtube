@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { doc, DocumentReference, Firestore } from '@angular/fire/firestore';
 import { getDownloadURL, ref,  Storage } from '@angular/fire/storage';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { map } from 'rxjs/operators';
 import { MovieService } from 'src/app/services/movie.service';
 import { QueuePlayerService } from 'src/app/services/queue-player.service';
 import { Movie } from '../../models/movie.moddel';
@@ -12,6 +13,7 @@ import { Movie } from '../../models/movie.moddel';
   styleUrls: ['./player-list.component.scss']
 })
 export class PlayerListComponent implements OnInit {
+  @Input() videoId!: string;
   movieList: Movie[] = []
   movieAdd: DocumentReference[] = [];
   apiLoaded: Boolean = false;
@@ -24,6 +26,7 @@ export class PlayerListComponent implements OnInit {
     public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
+    console.log(this.videoId);
     if(!this.apiLoaded){
       this.movieService.getAllMovie().subscribe((movies) => {
         this.movieList = [...movies];

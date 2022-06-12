@@ -135,6 +135,7 @@ export class NavBarComponent implements OnInit {
         this.authService.signOut();
         this.isSignedIn = false;
         this.router.navigate(['/login']);
+        window.location.reload();
         this.notification.create('success',
           'Thông báo',
           'Đăng xuất thành công',

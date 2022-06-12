@@ -1,14 +1,14 @@
 <nz-header nz-row [ngClass]="{'sticky': searchInput}">
   <div class="logo">FILM</div>
-  <li nz-col nzFlex="300px" nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+  <li nz-col nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
     <ul nz-menu-item routerLink="/" >
       Trang chủ
     </ul>
-    <ul nz-menu-item>
-      Series
+    <ul nz-menu-item routerLink="/watched">
+      Danh sách phim đã xem
     </ul>
     <ul nz-menu-item routerLink="/library">
-      Thư viện
+      Danh sách phim của tôi
     </ul>
   </li>
   <div nz-col nzFlex="auto" class="text-center">

@@ -7,6 +7,7 @@ import { PlayerComponent } from './player/player.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ThuVienComponent } from './thu-vien/thu-vien.component';
+import { WatchedComponent } from './thu-vien/watched/watched.component';
 
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -27,6 +28,8 @@ const routes: Routes = [{
     path: 'home', component: HomeComponent,  ...canActivate(redirectUnauthorizedToLogin)
   },{
     path: 'library', component: ThuVienComponent,  ...canActivate(redirectUnauthorizedToLogin)
+  },{
+    path: 'watched', component: WatchedComponent, ...canActivate(redirectUnauthorizedToLogin)
   },{
     path: 'movie/:id',       component: MovieDetailComponent, ...canActivate(redirectUnauthorizedToLogin)
   },{
